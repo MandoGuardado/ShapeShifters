@@ -11,6 +11,14 @@ import java.util.Collection;
 public class PlayerTest {
 
     @Test
+    public void TestToStringMethod_shouldReturnStringRepresentationOfFieldValues() {
+        Player player = new Player("Jane");
+        System.out.println(player);
+        assertEquals("PlayerPlayer name = Jane', Damage received = 100, items collected = []", player.toString());
+    }
+
+
+    @Test
     public void testGetName() {
         Player player = new Player("John");
         assertEquals("John", player.getName());
