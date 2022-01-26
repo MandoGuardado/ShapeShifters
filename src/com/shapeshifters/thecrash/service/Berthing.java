@@ -1,3 +1,5 @@
+package com.shapeshifters.thecrash.service;
+
 public class Berthing {
 
     //Fields
