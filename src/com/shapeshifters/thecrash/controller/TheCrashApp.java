@@ -1,8 +1,10 @@
 package com.shapeshifters.thecrash.controller;
 
+import java.util.Scanner;
+
 public class TheCrashApp {
     private boolean gameOver = false;
-    private String currentRoom;
+    private String currentRoom = "berthing";
 
     //NO-ARG CTOR
     public TheCrashApp() {
@@ -10,8 +12,34 @@ public class TheCrashApp {
 
     //BUSINESS METHODS
     public void execute(){
-        while (!isGameOver()){
+        Scanner in = new Scanner(System.in);
 
+        while (!isGameOver()){
+            System.out.println("What would you like to do?");
+            String[] response = in.nextLine().toLowerCase().split(" ");
+            if ("look".equals(response[0])){
+                look(response[1]);
+            }
+        }
+    }
+
+    private void look(String dir){
+        switch (dir){
+            case "forward":
+                lookForward(currentRoom);
+                break;
+            case "aft":
+                lookAft(currentRoom);
+                break;
+            case "port":
+                lookPort(currentRoom);
+                break;
+            case "stbd":
+            case "starboard":
+                lookStbd(currentRoom);
+                break;
+            default:
+                System.out.println("I don't understand which way you want to look");
         }
     }
 
