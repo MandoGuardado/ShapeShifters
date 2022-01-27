@@ -1,18 +1,70 @@
 package com.shapeshifters.thecrash.controller;
 
+import com.shapeshifters.thecrash.service.Room;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class TheCrashApp {
     private boolean gameOver = false;
     private String currentRoom = "berthing";
+    private Map<String, Room> rooms;
 
     //NO-ARG CTOR
     public TheCrashApp() {
     }
 
     //BUSINESS METHODS
+
+
+    public void setUp(){
+
+        Map<String, String> berthingExits = new HashMap<>();
+        berthingExits.put("Aft", "Armory");
+        berthingExits.put("Port", "Mess Hall");
+        berthingExits.put("Forward", "Bridge");
+        Room berthing = new Room("This is were everybody sleeps", berthingExits);
+
+        Map<String, String> messHallExits = new HashMap<>();
+        messHallExits.put("Aft", "Armory");
+        messHallExits.put("Port", "Mess Hall");
+        messHallExits.put("Forward", "Bridge");
+        Room messHall = new Room("This is were everybody eats", messHallExits);
+
+        Map<String, String> armoryExits = new HashMap<>();
+        armoryExits.put("Aft", "Engineering");
+        armoryExits.put("Port", "Med Bay");
+        armoryExits.put("Forward", "Berthing");
+        Room armory = new Room("This is where all the weapons are held.", armoryExits);
+
+        Map<String, String> medBayExits = new HashMap<>();
+        medBayExits.put("Aft", "Engineering");
+        medBayExits.put("Starboard", "Armory");
+        medBayExits.put("Forward", "Mess Hall");
+        Room medBay = new Room("If you need fixing, then this is the place", medBayExits);
+
+        Map<String, String> engineeringExits = new HashMap<>();
+        medBayExits.put("Forward1", "Armory");
+        medBayExits.put("Forward2", "Med Bay");
+        Room engineering = new Room("The Engineering place", engineeringExits);
+
+        Map<String, String> bridgeExits = new HashMap<>();
+        medBayExits.put("Aft1", "Berthing");
+        medBayExits.put("Aft2", "Mess Hall");
+        Room bridge = new Room("Check out the scene", bridgeExits);
+
+        rooms.put("Berthing", berthing);
+        rooms.put("Armory", armory);
+        rooms.put("Mess Hall", messHall);
+        rooms.put("Med Bay", medBay);
+        rooms.put("Engineering", engineering);
+        rooms.put("Bridge", bridge);
+
+    }
     public void execute(){
         Scanner in = new Scanner(System.in);
+        setUp();
 
         while (!isGameOver()){
             System.out.println("What would you like to do?");
