@@ -19,25 +19,32 @@ public class PlayerTest {
 
 
     @Test
-    public void testGetName() {
+    public void testGetName_shouldReturnValuePassedIn() {
         Player player = new Player("John");
         assertEquals("John", player.getName());
     }
 
     @Test
-    public void testGetHitValue() {
+    public void testGetHitValue_ShouldReturnDefaultHitValue() {
         Player player = new Player("John");
         assertEquals(100, player.getHit());
     }
 
     @Test
-    public void testGetItemsCollectionLength() {
+    public void testGetHitValue_ShouldReturnValueOfFiftyAfterUpdate() {
+        Player player = new Player("John");
+        player.setHit(50);
+        assertEquals(50, player.getHit());
+    }
+
+    @Test
+    public void testItemSizeAtInstantiation_shouldReturnSizeOfZero() {
         Player player = new Player("John");
         assertEquals(0, player.getItems().size());
     }
 
     @Test
-    public void testItemsSizeAfterAddingValues() {
+    public void testItemsSizeAfterAddingValues_shouldReturnValueOfTwo() {
         Player player = new Player("John");
         Collection<String> stringList = new ArrayList<>();
         stringList.add("John");

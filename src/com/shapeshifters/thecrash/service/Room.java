@@ -6,25 +6,17 @@ import java.util.Map;
 public class Room {
     //Fields
     private String description;
-    Map<String, String> exits = new HashMap<>();
-
-
+    private Map<String, String> exits;
 
     //constructors
-
-
     public Room(String description, Map<String, String> exits) {
-        this.description = description;
-        this.exits = exits;
+        setDescription(description);
+        setExits(exits);
     }
 
     //Business Methods
     public boolean isExitAvailable(String direction){
-        boolean result = false;
-        if (exits.containsKey(direction)) {
-            result = true;
-        }
-        return result;
+        return exits.containsKey(direction);
     }
 
     //Setter and getters
