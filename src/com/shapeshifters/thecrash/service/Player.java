@@ -18,7 +18,6 @@ public class Player {
 
     //Business Methods
 
-
     //Setter and getters
 
     public String getName() {
