@@ -259,7 +259,7 @@ public class TheCrashApp {
 
             }
         }
-        while (choice != 4 /*Exit loop when choice is 4*/);
+        while (choice != 1 /*Exit loop when choice is 4*/);
     }
 
 
