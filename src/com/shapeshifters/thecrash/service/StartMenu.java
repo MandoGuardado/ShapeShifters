@@ -1,5 +1,4 @@
 package com.shapeshifters.thecrash.service;
-
 import java.util.Scanner;
 
 public class StartMenu {
