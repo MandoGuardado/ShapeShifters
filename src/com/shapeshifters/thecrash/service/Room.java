@@ -3,21 +3,20 @@ package com.shapeshifters.thecrash.service;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Berthing {
+public class Room {
     //Fields
-    String description ="This is the Berthing (Will read off file)";
+    private String description;
     Map<String, String> exits = new HashMap<>();
 
 
 
     //constructors
-    public Berthing() {
-        exits.put("Aft", "Armory");
-        exits.put("Port", "Mess Hall");
-        exits.put("Forward", "Bridge");
 
+
+    public Room(String description, Map<String, String> exits) {
+        this.description = description;
+        this.exits = exits;
     }
-
 
     //Business Methods
     public boolean isExitAvailable(String direction){
@@ -35,6 +34,14 @@ public class Berthing {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setExits(Map<String, String> exits) {
+        this.exits = exits;
     }
 
     //toString()
