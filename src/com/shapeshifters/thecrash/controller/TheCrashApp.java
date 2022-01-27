@@ -19,7 +19,7 @@ public class TheCrashApp {
 
 
     public void setUp(){
-
+        Map<String, Room> setUpRoomsMap = new HashMap<>();
         Map<String, String> berthingExits = new HashMap<>();
         berthingExits.put("Aft", "Armory");
         berthingExits.put("Port", "Mess Hall");
@@ -54,12 +54,13 @@ public class TheCrashApp {
         medBayExits.put("Aft2", "Mess Hall");
         Room bridge = new Room("Check out the scene", bridgeExits);
 
-        rooms.put("Berthing", berthing);
-        rooms.put("Armory", armory);
-        rooms.put("Mess Hall", messHall);
-        rooms.put("Med Bay", medBay);
-        rooms.put("Engineering", engineering);
-        rooms.put("Bridge", bridge);
+        setUpRoomsMap.put("Berthing", berthing);
+        setUpRoomsMap.put("Armory", armory);
+        setUpRoomsMap.put("Mess Hall", messHall);
+        setUpRoomsMap.put("Med Bay", medBay);
+        setUpRoomsMap.put("Engineering", engineering);
+        setUpRoomsMap.put("Bridge", bridge);
+        this.setRooms(setUpRoomsMap);
 
     }
     public void execute(){
@@ -203,5 +204,13 @@ public class TheCrashApp {
 
     public void setCurrentRoom(String currentRoom) {
         this.currentRoom = currentRoom;
+    }
+
+    public Map<String, Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Map<String, Room> rooms) {
+        this.rooms = rooms;
     }
 }
