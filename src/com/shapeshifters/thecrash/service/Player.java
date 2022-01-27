@@ -17,6 +17,12 @@ public class Player {
 
 
     //Business Methods
+    //Player should be able to look around a room
+    //Player should be able to pick up items
+    //Player should be able to go to and adjacent room
+    //Extra:
+    //Player will fight with ShapeShifter
+
 
     //Setter and getters
 
