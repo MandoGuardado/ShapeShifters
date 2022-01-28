@@ -34,6 +34,8 @@ public class TheCrashApp {
                 look(response[1]);
             } else if ("go".equals(response[0])){
                 currentRoom = go(currentRoom, response[1]);
+            } else if ("map".equals(response[0])){
+                viewMap();
             }
         }
     }
@@ -316,6 +318,9 @@ public class TheCrashApp {
         }
     }
 
+    private static void viewMap(){
+        printBanner("map");
+    }
         //GETTERS AND SETTERS
     public boolean isGameOver() {
         return gameOver;
