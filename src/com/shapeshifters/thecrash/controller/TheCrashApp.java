@@ -1,17 +1,21 @@
 package com.shapeshifters.thecrash.controller;
 
+import com.apps.util.Console;
 import com.shapeshifters.thecrash.service.Room;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
     private boolean gameOver = false;
     private String currentRoom = "Berthing";
     private Map<String, Room> rooms;
-    private static Scanner in = new Scanner(System.in);
+    private static final Scanner in = new Scanner(System.in);
     //NO-ARG CTOR
     public TheCrashApp() {
     }
@@ -262,7 +266,24 @@ public class TheCrashApp {
         while (choice != 1 /*Exit loop when choice is 4*/);
     }
 
+    private static void printBanner(String banner) {
+        Console.clear();
+        Console.blankLines(2);
+        try {
+            Files.lines(Path.of("resources", banner + ".txt")).forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Console.blankLines(2);
+    }
 
+    private static void pause(int seconds){
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
         //GETTERS AND SETTERS
     public boolean isGameOver() {
