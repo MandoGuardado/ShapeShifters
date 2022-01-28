@@ -25,6 +25,7 @@ public class TheCrashApp {
         Scanner in = new Scanner(System.in);
         setUp();
         startMainMenu();
+        introduction();
         while (!isGameOver()){
             System.out.println("You are now in " + currentRoom);
             System.out.println("What would you like to do?");
@@ -264,6 +265,10 @@ public class TheCrashApp {
             }
         }
         while (choice != 1 /*Exit loop when choice is 4*/);
+    }
+
+    private void introduction(){
+        printBanner("introduction");
     }
 
     private static void printBanner(String banner) {
