@@ -15,7 +15,7 @@ public class RoomTest {
         exits.put("Forward", "Bridge");
 
 
-        Room berthing = new Room("Berthing", exits);
+        Room berthing = new Room("Berthing","Berthing", exits);
 
         assertEquals(false, berthing.isExitAvailable("Starboard"));
     }
@@ -28,7 +28,7 @@ public class RoomTest {
         exits.put("Forward", "Bridge");
 
 
-        Room room = new Room("Berthing", exits);
+        Room room = new Room("Berthing","Berthing", exits);
         assertEquals(true, room.isExitAvailable("Aft"));
     }
 
@@ -40,7 +40,7 @@ public class RoomTest {
         exits.put("Forward", "Bridge");
 
 
-        Room room = new Room("Berthing", exits);
+        Room room = new Room("Berthing","Berthing", exits);
         assertEquals(true, room.isExitAvailable("Forward"));
     }
 
@@ -52,7 +52,7 @@ public class RoomTest {
         exits.put("Forward", "Bridge");
 
 
-        Room room = new Room("Berthing", exits);
+        Room room = new Room("Berthing","Berthing", exits);
         assertEquals(true, room.isExitAvailable("Port"));
     }
 
@@ -64,7 +64,7 @@ public class RoomTest {
         exits.put("Forward", "Bridge");
 
 
-        Room room = new Room("Berthing is place to sleep", exits);
+        Room room = new Room("Berthing","Berthing is place to sleep", exits);
         assertEquals(false, room.isExitAvailable("Random"));
 
     }
@@ -76,7 +76,7 @@ public class RoomTest {
         exits.put("Port", "Mess Hall");
         exits.put("Forward", "Bridge");
 
-        Room room = new Room("Berthing is place to sleep", exits);
+        Room room = new Room("Berthing","Berthing is place to sleep", exits);
         assertEquals("Berthing is place to sleep", room.getDescription());
     }
 
@@ -87,7 +87,7 @@ public class RoomTest {
         exits.put("Port", "Mess Hall");
         exits.put("Forward", "Bridge");
 
-        Room room = new Room("Berthing is place to sleep", exits);
+        Room room = new Room("Berthing","Berthing is place to sleep", exits);
         room.setDescription("New Berthing description");
         assertEquals("New Berthing description", room.getDescription());
     }
