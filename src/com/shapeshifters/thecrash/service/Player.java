@@ -1,6 +1,5 @@
 package com.shapeshifters.thecrash.service;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
@@ -10,47 +9,23 @@ public class Player {
     private String name;
     private int hit =  100;
     private Collection<String> items = new ArrayList<>(10);
-    private Room currentLocation;
+    private Room currentRoom;
     private Scanner in = new Scanner(System.in);
 
 
     //constructors
     public Player(String name, Room startingRoom) {
         setName(name);
-        setCurrentLocation(startingRoom);
+        setCurrentRoom(startingRoom);
     }
 
 
     //Business Methods
-    public String goToAdjacentRoom(String desiredDirection){
-        String currentRoom = this.getCurrentLocation().getName();
-        String result = currentRoom;
-        if ("Bridge".equals(currentRoom) && "aft".equals(desiredDirection)){
-            System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
-            int input = in.nextInt();
-            switch (input){
-                case 1:
-                    result = "Berthing";
-                    break;
-                case 2:
-                    result = "Mess Hall";
-                    break;
-            }
-        }else if ("Engineering".equals(currentRoom) && "forward".equals(desiredDirection)){
-            System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
-            int input = in.nextInt();
-            switch (input){
-                case 1:
-                    result = "Armory";
-                    break;
-                case 2:
-                    result = "Med Bay";
-                    break;
-            }
-        } else if (getCurrentLocation().isExitAvailable(desiredDirection)){
-            result =getCurrentLocation().getExits().get(desiredDirection);
-        } else {
-            System.out.println("You can't go in that direction");
+    public boolean isDesiredDirectionValid(String desiredDirection){
+        boolean result = false;
+        String roomName = getCurrentRoom().getName();
+        if (("Bridge".equals(roomName) && "aft".equals(desiredDirection)) || ("Engineering".equals(roomName) && "forward".equals(desiredDirection)) || getCurrentRoom().isExitAvailable(desiredDirection)){
+            result = true;
         }
         return result;
     }
@@ -81,12 +56,12 @@ public class Player {
         this.items = items;
     }
 
-    public Room getCurrentLocation() {
-        return currentLocation;
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 
-    public void setCurrentLocation(Room currentLocation) {
-        this.currentLocation = currentLocation;
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     //toString()

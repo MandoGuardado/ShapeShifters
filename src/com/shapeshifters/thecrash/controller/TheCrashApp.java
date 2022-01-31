@@ -35,8 +35,7 @@ public class TheCrashApp {
             if ("look".equals(response[0])){
                 look(response[1]);
             } else if ("go".equals(response[0])){
-                currentRoom = go(currentRoom, response[1]);
-                getPlayer().setCurrentLocation(getRooms().get(currentRoom));
+                currentRoom = go(response[1]);
             } else if ("map".equals(response[0])){
                 viewMap();
             }
@@ -91,8 +90,45 @@ public class TheCrashApp {
         setPlayer(new Player("Armando", getRooms().get("Berthing")));
     }
 
-    private String go(String currentRoom, String dir){
-        return player.goToAdjacentRoom(dir);
+
+    public String go(String dir){
+        String currentRoom = player.getCurrentRoom().getName();
+        String result = currentRoom;
+        boolean isDirectionValid = player.isDesiredDirectionValid(dir);
+        if (isDirectionValid){
+            if ("Bridge".equals(currentRoom) && "aft".equals(dir)){
+                System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
+                int input = in.nextInt();
+                switch (input){
+                    case 1:
+                        result = "Berthing";
+                        break;
+                    case 2:
+                        result = "Mess Hall";
+                        break;
+                }
+            }
+            else if ("Engineering".equals(currentRoom) && "forward".equals(dir)){
+                System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
+                int input = in.nextInt();
+                switch (input){
+                    case 1:
+                        result = "Armory";
+                        break;
+                    case 2:
+                        result = "Med Bay";
+                        break;
+                }
+            }
+            else {
+                result = player.getCurrentRoom().getExits().get(dir);
+            }
+        }
+        else {
+            System.out.println("You can't go in that direction");
+        }
+        getPlayer().setCurrentRoom(getRooms().get(currentRoom));
+        return result;
     }
 
     private void look(String dir){
