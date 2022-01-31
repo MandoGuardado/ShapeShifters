@@ -1,6 +1,7 @@
 package com.shapeshifters.thecrash.controller;
 
 import com.apps.util.Console;
+import com.shapeshifters.thecrash.service.Player;
 import com.shapeshifters.thecrash.service.Room;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class TheCrashApp {
     private String currentRoom = "Berthing";
     private Map<String, Room> rooms;
     private static final Scanner in = new Scanner(System.in);
+    private Player player;
     //NO-ARG CTOR
     public TheCrashApp() {
     }
@@ -33,6 +35,7 @@ public class TheCrashApp {
                 look(response[1]);
             } else if ("go".equals(response[0])){
                 currentRoom = go(currentRoom, response[1]);
+                getPlayer().setCurrentLocation(getRooms().get(currentRoom));
             }
         }
     }
@@ -43,37 +46,37 @@ public class TheCrashApp {
         berthingExits.put("aft", "Armory");
         berthingExits.put("port", "Mess Hall");
         berthingExits.put("forward", "Bridge");
-        Room berthing = new Room("This is were everybody sleeps", berthingExits);
+        Room berthing = new Room("Berthing","This is were everybody sleeps", berthingExits);
 
         Map<String, String> messHallExits = new HashMap<>();
         messHallExits.put("aft", "Med Bay");
         messHallExits.put("stbd", "Berthing");
         messHallExits.put("starboard", "Berthing");
         messHallExits.put("forward", "Bridge");
-        Room messHall = new Room("This is were everybody eats", messHallExits);
+        Room messHall = new Room("Mess Hall","This is were everybody eats", messHallExits);
 
         Map<String, String> armoryExits = new HashMap<>();
         armoryExits.put("aft", "Engineering");
         armoryExits.put("port", "Med Bay");
         armoryExits.put("forward", "Berthing");
-        Room armory = new Room("This is where all the weapons are held.", armoryExits);
+        Room armory = new Room("Armory","This is where all the weapons are held.", armoryExits);
 
         Map<String, String> medBayExits = new HashMap<>();
         medBayExits.put("aft", "Engineering");
         medBayExits.put("stbd", "Armory");
         medBayExits.put("starboard", "Armory");
         medBayExits.put("forward", "Mess Hall");
-        Room medBay = new Room("If you need fixing, then this is the place", medBayExits);
+        Room medBay = new Room("Med Bay","If you need fixing, then this is the place", medBayExits);
 
         Map<String, String> engineeringExits = new HashMap<>();
         engineeringExits.put("Forward1", "Armory");
         engineeringExits.put("Forward2", "Med Bay");
-        Room engineering = new Room("The Engineering place", engineeringExits);
+        Room engineering = new Room("Engineering","The Engineering place", engineeringExits);
 
         Map<String, String> bridgeExits = new HashMap<>();
         bridgeExits.put("Aft1", "Berthing");
         bridgeExits.put("Aft2", "Mess Hall");
-        Room bridge = new Room("Check out the scene", bridgeExits);
+        Room bridge = new Room("Bridge","Check out the scene", bridgeExits);
 
         setUpRoomsMap.put("Berthing", berthing);
         setUpRoomsMap.put("Armory", armory);
@@ -82,40 +85,11 @@ public class TheCrashApp {
         setUpRoomsMap.put("Engineering", engineering);
         setUpRoomsMap.put("Bridge", bridge);
         this.setRooms(setUpRoomsMap);
-
+        setPlayer(new Player("Armando", getRooms().get("Berthing")));
     }
 
     private String go(String currentRoom, String dir){
-
-        String result = currentRoom;
-        if ("Bridge".equals(currentRoom) && "aft".equals(dir)){
-            System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
-            int input = in.nextInt();
-            switch (input){
-                case 1:
-                    result = "Berthing";
-                    break;
-                case 2:
-                    result = "Mess Hall";
-                    break;
-            }
-        }else if ("Engineering".equals(currentRoom) && "forward".equals(dir)){
-            System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
-            int input = in.nextInt();
-            switch (input){
-                case 1:
-                    result = "Armory";
-                    break;
-                case 2:
-                    result = "Med Bay";
-                    break;
-            }
-        } else if (rooms.get(currentRoom).getExits().containsKey(dir)){
-            result = rooms.get(currentRoom).getExits().get(dir);
-        } else {
-            System.out.println("You can't go in that direction");
-        }
-        return result;
+        return player.goToAdjacentRoom(dir);
     }
 
     private void look(String dir){
@@ -308,5 +282,13 @@ public class TheCrashApp {
 
     public void setRooms(Map<String, Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

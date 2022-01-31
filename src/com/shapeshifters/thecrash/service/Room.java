@@ -5,11 +5,14 @@ import java.util.Map;
 
 public class Room {
     //Fields
+    private String name;
     private String description;
     private Map<String, String> exits;
 
+
     //constructors
-    public Room(String description, Map<String, String> exits) {
+    public Room(String name, String description, Map<String, String> exits) {
+        this.name = name;
         setDescription(description);
         setExits(exits);
     }
@@ -35,6 +38,11 @@ public class Room {
     public void setExits(Map<String, String> exits) {
         this.exits = exits;
     }
+
+    public String getName() {
+        return name;
+    }
+
 
     //toString()
     @Override
