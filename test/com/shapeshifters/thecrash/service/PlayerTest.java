@@ -86,7 +86,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testGoingAftFromBerthing_ShouldReturnArmoryString() {
+    public void testGoingFromBerthingToValidDirectionAft_ShouldReturnTrue() {
         Map<String, String> berthingExits = new HashMap<>();
         berthingExits.put("aft", "Armory");
         berthingExits.put("port", "Mess Hall");
@@ -94,6 +94,86 @@ public class PlayerTest {
 
         Room berthing = new Room("Berthing","This is were everybody sleeps", berthingExits);
         Player player = new Player("John", berthing);
-        assertEquals(player.goToAdjacentRoom("aft"),"Armory");
+        assertTrue(player.isDesiredDirectionValid("aft"));
+
     }
+
+    @Test
+    public void testGoingFromBerthingToValidDirectionForward_ShouldReturnTrue() {
+        Map<String, String> berthingExits = new HashMap<>();
+        berthingExits.put("aft", "Armory");
+        berthingExits.put("port", "Mess Hall");
+        berthingExits.put("forward", "Bridge");
+
+        Room berthing = new Room("Berthing","This is were everybody sleeps", berthingExits);
+        Player player = new Player("John", berthing);
+
+        assertTrue(player.isDesiredDirectionValid("forward"));
+
+    }
+    @Test
+    public void testGoingFromBerthingToValidDirectionPort_ShouldReturnTrue() {
+        Map<String, String> berthingExits = new HashMap<>();
+        berthingExits.put("aft", "Armory");
+        berthingExits.put("port", "Mess Hall");
+        berthingExits.put("forward", "Bridge");
+
+        Room berthing = new Room("Berthing","This is were everybody sleeps", berthingExits);
+        Player player = new Player("John", berthing);
+        assertTrue(player.isDesiredDirectionValid("port"));
+    }
+    @Test
+    public void testGoingFromBerthingToValidDirectionStarboard_ShouldReturnFalse() {
+        Map<String, String> berthingExits = new HashMap<>();
+        berthingExits.put("aft", "Armory");
+        berthingExits.put("port", "Mess Hall");
+        berthingExits.put("forward", "Bridge");
+
+        Room berthing = new Room("Berthing","This is were everybody sleeps", berthingExits);
+        Player player = new Player("John", berthing);
+        assertFalse(player.isDesiredDirectionValid("Starboard"));
+    }
+    @Test
+    public void testGoingFromEngineeringToStarboard_ShouldReturnFalse() {
+        Map<String, String> engineeringExits = new HashMap<>();
+        engineeringExits.put("Forward1", "Armory");
+        engineeringExits.put("Forward2", "Med Bay");
+
+        Room engineering = new Room("Engineering","This is were everybody sleeps", engineeringExits);
+        Player player = new Player("John", engineering);
+        assertFalse(player.isDesiredDirectionValid("Starboard"));
+    }
+    @Test
+    public void testGoingFromEngineeringToAft_ShouldReturnFalse() {
+        Map<String, String> engineeringExits = new HashMap<>();
+        engineeringExits.put("Forward1", "Armory");
+        engineeringExits.put("Forward2", "Med Bay");
+
+        Room engineering = new Room("Engineering","This is were everybody sleeps", engineeringExits);
+        Player player = new Player("John", engineering);
+        assertFalse(player.isDesiredDirectionValid("aft"));
+    }
+
+    @Test
+    public void testGoingFromEngineeringToPort_ShouldReturnFalse() {
+        Map<String, String> engineeringExits = new HashMap<>();
+        engineeringExits.put("Forward1", "Armory");
+        engineeringExits.put("Forward2", "Med Bay");
+
+        Room engineering = new Room("Engineering","This is were everybody sleeps", engineeringExits);
+        Player player = new Player("John", engineering);
+        assertFalse(player.isDesiredDirectionValid("port"));
+    }
+
+    @Test
+    public void testGoingFromEngineeringToForward_ShouldReturnTrue() {
+        Map<String, String> engineeringExits = new HashMap<>();
+        engineeringExits.put("Forward1", "Armory");
+        engineeringExits.put("Forward2", "Med Bay");
+
+        Room engineering = new Room("Engineering","This is were everybody sleeps", engineeringExits);
+        Player player = new Player("John", engineering);
+        assertTrue(player.isDesiredDirectionValid("forward"));
+    }
+
 }
