@@ -36,7 +36,6 @@ public class TheCrashApp {
                 look(response[1]);
             } else if ("go".equals(response[0])){
                 currentRoom = go(response[1]);
-                getPlayer().setCurrentRoom(getRooms().get(currentRoom));
             } else if ("map".equals(response[0])){
                 viewMap();
             }
@@ -128,6 +127,7 @@ public class TheCrashApp {
         else {
             System.out.println("You can't go in that direction");
         }
+        getPlayer().setCurrentRoom(getRooms().get(currentRoom));
         return result;
     }
 
