@@ -91,7 +91,8 @@ public class TheCrashApp {
         setPlayer(new Player("Armando", getRooms().get("Berthing")));
     }
 
-    private String go(String dir){
+
+    public String go(String dir){
         String currentRoom = player.getCurrentRoom().getName();
         String result = currentRoom;
         boolean isDirectionValid = player.isDesiredDirectionValid(dir);
