@@ -24,10 +24,11 @@ public class TheCrashApp {
 
     //BUSINESS METHODS
     public void execute(){
-        Scanner in = new Scanner(System.in);
         setUp();
         startMainMenu();
+        introduction();
         while (!isGameOver()){
+            Console.clear();
             System.out.println("You are now in " + currentRoom);
             System.out.println("What would you like to do?");
             String[] response = in.nextLine().toLowerCase().split(" ");
@@ -36,6 +37,8 @@ public class TheCrashApp {
             } else if ("go".equals(response[0])){
                 currentRoom = go(currentRoom, response[1]);
                 getPlayer().setCurrentLocation(getRooms().get(currentRoom));
+            } else if ("map".equals(response[0])){
+                viewMap();
             }
         }
     }
@@ -113,6 +116,7 @@ public class TheCrashApp {
     }
 
     private void lookForward(String room){
+        Console.clear();
         switch (room){
             case "bridge":
                 System.out.println("You see the forward bulkhead in the bridge");
@@ -133,9 +137,11 @@ public class TheCrashApp {
                 System.out.println("You see the forward bulkhead in engineering");
                 break;
         }
+        promptEnterKey();
     }
 
     private void lookAft(String room){
+        Console.clear();
         switch (room){
             case "bridge":
                 System.out.println("You see the aft bulkhead in the bridge");
@@ -156,9 +162,11 @@ public class TheCrashApp {
                 System.out.println("You see the aft bulkhead in engineering");
                 break;
         }
+        promptEnterKey();
     }
 
     private void lookPort(String room){
+        Console.clear();
         switch (room){
             case "bridge":
                 System.out.println("You see the port bulkhead in the bridge");
@@ -179,9 +187,11 @@ public class TheCrashApp {
                 System.out.println("You see the port bulkhead in engineering");
                 break;
         }
+        promptEnterKey();
     }
 
     private void lookStbd(String room){
+        Console.clear();
         switch (room){
             case "bridge":
                 System.out.println("You see the starboard bulkhead in the bridge");
@@ -202,11 +212,17 @@ public class TheCrashApp {
                 System.out.println("You see the starboard bulkhead in engineering");
                 break;
         }
+        promptEnterKey();
     }
 
     public void startMainMenu() {
+        Console.clear();
+        Console.blankLines(2);
+        printBanner("opening");
+        pause(4);
         int choice;
         do {
+            Console.clear();
             System.out.println("Tʜᴇ Cʀᴀsʜ!\n" +
                     "Wʜᴏ's ᴅʀɪᴠɪɴɢ ᴛʜɪs ᴛʜɪɴɢ ᴀɴʏᴡᴀʏ?");
             System.out.println("==========================================");
@@ -223,9 +239,11 @@ public class TheCrashApp {
                     break;
 
                 case 2:
+                    Console.clear();
                     System.out.println("The player can move forward, aft, port, and starboard(stbd) to explore\n" +
                             "different rooms in the ship. You have to find items by exploring the different rooms\n" +
-                            "and use those items to repair the ship! ");
+                            "and use those items to repair the ship!\n");
+                    promptEnterKey();
                     break;
 
                 case 3:
@@ -240,6 +258,11 @@ public class TheCrashApp {
         while (choice != 1 /*Exit loop when choice is 4*/);
     }
 
+    private void introduction(){
+        printBanner("introduction");
+        promptEnterKey();
+    }
+
     private static void printBanner(String banner) {
         Console.clear();
         Console.blankLines(2);
@@ -251,6 +274,16 @@ public class TheCrashApp {
         Console.blankLines(2);
     }
 
+    private static void promptEnterKey(){
+        System.out.println("Press \"ENTER\" to continue...");
+        try {
+            int read = System.in.read(new byte[2]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private static void pause(int seconds){
         try {
             TimeUnit.SECONDS.sleep(seconds);
@@ -259,6 +292,9 @@ public class TheCrashApp {
         }
     }
 
+    private static void viewMap(){
+        printBanner("map");
+    }
         //GETTERS AND SETTERS
     public boolean isGameOver() {
         return gameOver;
