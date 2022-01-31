@@ -3,27 +3,34 @@ package com.shapeshifters.thecrash.controller;
 import com.apps.util.Console;
 import com.shapeshifters.thecrash.service.Player;
 import com.shapeshifters.thecrash.service.Room;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
+    private static final Scanner in = new Scanner(System.in);
     private boolean gameOver = false;
     private String currentRoom = "Berthing";
     private Map<String, Room> rooms;
-    private static final Scanner in = new Scanner(System.in);
+    private Map<String,String> verbs = new LinkedHashMap<>();
     private Player player;
     //NO-ARG CTOR
     public TheCrashApp() {
     }
 
     //BUSINESS METHODS
-    public void execute(){
+    public void execute() {
+        loadWords();
         setUp();
         startMainMenu();
         introduction();
@@ -32,7 +39,10 @@ public class TheCrashApp {
             System.out.println("You are now in " + currentRoom);
             System.out.println("What would you like to do?");
             String[] response = in.nextLine().toLowerCase().split(" ");
-            if ("look".equals(response[0])){
+            if (response.length == 0) {
+                System.out.println("Invalid input: response must contain at least one word");
+                promptEnterKey();
+            } else if ("look".equals(response[0])){
                 look(response[1]);
             } else if ("go".equals(response[0])){
                 currentRoom = go(response[1]);
@@ -292,6 +302,19 @@ public class TheCrashApp {
             }
         }
         while (choice != 1 /*Exit loop when choice is 4*/);
+    }
+
+    private void loadWords() {
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources","verbs.json")))));
+            JSONObject actionWords = (JSONObject) obj;
+            verbs.putAll(actionWords);
+            verbs.forEach((key, value) -> System.out.println(key + ":" + value ));
+        }catch (IOException | ParseException e){
+            e.printStackTrace();
+        }
+
     }
 
     private void introduction(){
