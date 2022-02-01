@@ -3,6 +3,7 @@ package com.shapeshifters.thecrash.controller;
 import com.apps.util.Console;
 import com.shapeshifters.thecrash.service.Player;
 import com.shapeshifters.thecrash.service.Room;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -91,48 +92,24 @@ public class TheCrashApp {
 
     public void setUp() {
         Map<String, Room> setUpRoomsMap = new HashMap<>();
-        Map<String, String> berthingExits = new HashMap<>();
-        berthingExits.put("aft", "Armory");
-        berthingExits.put("port", "Mess Hall");
-        berthingExits.put("forward", "Bridge");
-        Room berthing = new Room("Berthing", "This is were everybody sleeps", berthingExits);
 
-        Map<String, String> messHallExits = new HashMap<>();
-        messHallExits.put("aft", "Med Bay");
-        messHallExits.put("stbd", "Berthing");
-        messHallExits.put("starboard", "Berthing");
-        messHallExits.put("forward", "Bridge");
-        Room messHall = new Room("Mess Hall", "This is were everybody eats", messHallExits);
+        try {
+            JSONParser jsonparser = new JSONParser();
+            FileReader reader = new FileReader(".\\resources\\rooms.json");
+            Object obj = jsonparser.parse(reader);
+            JSONArray roomArray = (JSONArray) obj;
 
-        Map<String, String> armoryExits = new HashMap<>();
-        armoryExits.put("aft", "Engineering");
-        armoryExits.put("port", "Med Bay");
-        armoryExits.put("forward", "Berthing");
-        Room armory = new Room("Armory", "This is where all the weapons are held.", armoryExits);
+            for (Object o : roomArray) {
+                JSONObject roomJsonObject = (JSONObject) o;
+                JSONObject exitsObject = (JSONObject) roomJsonObject.get("exits");
+                Map<String, String> exits = new HashMap<>(exitsObject);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits));
 
-        Map<String, String> medBayExits = new HashMap<>();
-        medBayExits.put("aft", "Engineering");
-        medBayExits.put("stbd", "Armory");
-        medBayExits.put("starboard", "Armory");
-        medBayExits.put("forward", "Mess Hall");
-        Room medBay = new Room("Med Bay", "If you need fixing, then this is the place", medBayExits);
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
 
-        Map<String, String> engineeringExits = new HashMap<>();
-        engineeringExits.put("Forward1", "Armory");
-        engineeringExits.put("Forward2", "Med Bay");
-        Room engineering = new Room("Engineering", "The Engineering place", engineeringExits);
-
-        Map<String, String> bridgeExits = new HashMap<>();
-        bridgeExits.put("Aft1", "Berthing");
-        bridgeExits.put("Aft2", "Mess Hall");
-        Room bridge = new Room("Bridge", "Check out the scene", bridgeExits);
-
-        setUpRoomsMap.put("Berthing", berthing);
-        setUpRoomsMap.put("Armory", armory);
-        setUpRoomsMap.put("Mess Hall", messHall);
-        setUpRoomsMap.put("Med Bay", medBay);
-        setUpRoomsMap.put("Engineering", engineering);
-        setUpRoomsMap.put("Bridge", bridge);
         this.setRooms(setUpRoomsMap);
         setPlayer(new Player("Armando", getRooms().get("Berthing")));
     }
@@ -196,6 +173,8 @@ public class TheCrashApp {
                 result = directions.get(word);
             }
         }
+        getPlayer().setCurrentRoom(getRooms().get(result));
+
         return result;
     }
 
