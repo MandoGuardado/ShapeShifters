@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Berthing",
+    "description": "This is were everybody sleeps",
+    "exits": {
+      "aft": "Armory",
+      "port": "Mess Hall",
+      "forward": "Bridge"
+    }
+  },
+  {
+    "name": "Mess Hall",
+    "description": "This is were everybody eats",
+    "exits": {
+      "aft": "Med Bay",
+      "stbd": "Berthing",
+      "starboard": "Berthing",
+      "forward": "Bridge"
+    }
+  },
+  {
+    "name": "Armory",
+    "description": "This is were all the weapons are held.",
+    "exits": {
+      "aft": "Engineering",
+      "port": "Med Bay",
+      "forward": "Berthing"
+    }
+  },
+  {
+    "name": "Med Bay",
+    "description": "If you need fixing, then this is the place.",
+    "exits": {
+      "aft": "Engineering",
+      "stbd": "Armory",
+      "starboard": "Armory",
+      "forward": "Mess Hall"
+    }
+  },
+  {
+    "name": "Engineering",
+    "description": "The Engineering Place",
+    "exits": {
+      "Forward1": "Armory",
+      "Forward2": "Med Bay"
+    }
+  },
+  {
+    "name": "Bridge",
+    "description": "Checkout the scene",
+    "exits": {
+      "Aft1": "Berthing",
+      "Aft2": "Mess Hall"
+    }
+  }
+
+]
