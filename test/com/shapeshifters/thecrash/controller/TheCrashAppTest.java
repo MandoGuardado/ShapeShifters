@@ -15,26 +15,34 @@ public class TheCrashAppTest {
 
     @Test
     public void testGoMethodStartingAtBerthingAndGoingAft_ShouldReturnArmoryString() {
+        String[] aft = new String[1];
+        aft[0] = "aft";
         TheCrashApp app = new TheCrashApp();
         app.setUp();
-        assertEquals(app.go("aft"), "Armory");
+        assertEquals(app.go(aft), "Armory");
     }
     @Test
     public void testGoMethodStartingAtBerthingAndGoingPort_ShouldReturnMessHallString() {
+        String[] port = new String[1];
+        port[0] = "port";
         TheCrashApp app = new TheCrashApp();
         app.setUp();
-        assertEquals(app.go("port"), "Mess Hall");
+        assertEquals(app.go(port), "Mess Hall");
     }
     @Test
     public void testGoMethodStartingAtBerthingAndGoingForward_ShouldReturnArmoryString() {
+        String[] forward = new String[1];
+        forward[0] = "forward";
         TheCrashApp app = new TheCrashApp();
         app.setUp();
-        assertEquals(app.go("forward"), "Bridge");
+        assertEquals(app.go(forward), "Bridge");
     }
     @Test
     public void testGoMethodStartingAtBerthingAndGoingStarboard_ShouldReturnArmoryString() {
+        String[] starboard = new String[1];
+        starboard[0] = "starboard";
         TheCrashApp app = new TheCrashApp();
         app.setUp();
-        assertEquals(app.go("Starboard"), "Berthing");
+        assertEquals(app.go(starboard), "Berthing");
     }
 }
