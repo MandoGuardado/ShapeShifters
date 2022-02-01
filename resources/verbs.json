@@ -14,5 +14,8 @@
   "pick": "get",
   "add": "get",
   "remove": "remove",
-  "drop": "remove"
+  "drop": "remove",
+  "show": "show",
+  "quit": "q",
+  "q": "q"
 }

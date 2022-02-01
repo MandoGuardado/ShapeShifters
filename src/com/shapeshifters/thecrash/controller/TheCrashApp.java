@@ -66,6 +66,7 @@ public class TheCrashApp {
                                 break;
                             case "q":
                             case "quit":
+                                setGameOver(true);
                                 break;
                         }
                     } else {
@@ -173,7 +174,7 @@ public class TheCrashApp {
                 System.out.println("You can't go in that direction");
                 promptEnterKey();
             }
-            getPlayer().setCurrentRoom(getRooms().get(currentRoom));
+            getPlayer().setCurrentRoom(getRooms().get(result));
 
         } else {
             directionError();
