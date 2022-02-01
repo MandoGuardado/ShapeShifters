@@ -47,43 +47,43 @@ public class TheCrashApp {
                 promptEnterKey();
             } else {
                 String verb = verbChecker(response);
-                    if (!verb.equals("null")) {
-                        switch (verb) {
-                            case "go":
-                                currentRoom = go(response);
-                                break;
-                            case "look":
-                                look(response);
-                                break;
-                            case "use":
-                                break;
-                            case "inspect":
-                                break;
-                            case "get":
-                                break;
-                            case "remove":
-                                break;
-                            case "view":
-                                break;
-                            case "q":
-                            case "quit":
-                                setGameOver(true);
-                                break;
-                        }
-                    } else {
-                        System.out.println("Command not recognized.\n" +
-                                "Try using words like go, look, use, inspect, get, remove, and view.\n" +
-                                "For additional help enter I for information screen.");
-                        promptEnterKey();
+                if (!verb.equals("null")) {
+                    switch (verb) {
+                        case "go":
+                            currentRoom = go(response);
+                            break;
+                        case "look":
+                            look(response);
+                            break;
+                        case "use":
+                            break;
+                        case "inspect":
+                            break;
+                        case "get":
+                            break;
+                        case "remove":
+                            break;
+                        case "view":
+                            break;
+                        case "q":
+                        case "quit":
+                            setGameOver(true);
+                            break;
                     }
+                } else {
+                    System.out.println("Command not recognized.\n" +
+                            "Try using words like go, look, use, inspect, get, remove, and view.\n" +
+                            "For additional help enter I for information screen.");
+                    promptEnterKey();
+                }
             }
         }
     }
 
     private String verbChecker(String[] response) {
         String result = "null";
-        for (String word: response) {
-            if(verbs.containsKey(word)){
+        for (String word : response) {
+            if (verbs.containsKey(word)) {
                 result = verbs.get(word);
             }
         }
@@ -95,15 +95,17 @@ public class TheCrashApp {
 
         try {
             JSONParser jsonparser = new JSONParser();
-            FileReader reader = new FileReader(String.valueOf(Path.of("resources","rooms.json")));
+            FileReader reader = new FileReader(String.valueOf(Path.of("resources", "rooms.json")));
             Object obj = jsonparser.parse(reader);
             JSONArray roomArray = (JSONArray) obj;
 
             for (Object o : roomArray) {
                 JSONObject roomJsonObject = (JSONObject) o;
                 JSONObject exitsObject = (JSONObject) roomJsonObject.get("exits");
+                JSONObject viewsObject = (JSONObject) roomJsonObject.get("views");
                 Map<String, String> exits = new HashMap<>(exitsObject);
-                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits));
+                Map<String, String> views = new HashMap<>(viewsObject);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views));
 
             }
         } catch (IOException | ParseException e) {
@@ -179,125 +181,10 @@ public class TheCrashApp {
     private void look(String[] response) {
         String dir = checkDirection(response);
         if (!dir.equals("null")) {
-            switch (dir) {
-                case "forward":
-                    lookForward(currentRoom.toLowerCase());
-                    break;
-                case "aft":
-                    lookAft(currentRoom.toLowerCase());
-                    break;
-                case "port":
-                    lookPort(currentRoom.toLowerCase());
-                    break;
-                case "stbd":
-                case "starboard":
-                    lookStbd(currentRoom.toLowerCase());
-                    break;
-                default:
-                    System.out.println("I don't understand which way you want to look");
-            }
+            Console.clear();
+            System.out.println(player.lookAt(dir));
         } else {
             directionError();
-        }
-
-    }
-
-    private void lookForward(String room) {
-        Console.clear();
-        switch (room) {
-            case "bridge":
-                System.out.println("You see the forward bulkhead in the bridge");
-                break;
-            case "berthing":
-                System.out.println("You see the forward bulkhead in the berthing");
-                break;
-            case "mess hall":
-                System.out.println("You see the forward bulkhead in the mess hall");
-                break;
-            case "armory":
-                System.out.println("You see the forward bulkhead in the armory");
-                break;
-            case "med bay":
-                System.out.println("You see the forward bulkhead in the med bay");
-                break;
-            case "engineering":
-                System.out.println("You see the forward bulkhead in engineering");
-                break;
-        }
-        promptEnterKey();
-    }
-
-    private void lookAft(String room) {
-        Console.clear();
-        switch (room) {
-            case "bridge":
-                System.out.println("You see the aft bulkhead in the bridge");
-                break;
-            case "berthing":
-                System.out.println("You see the aft bulkhead in the berthing");
-                break;
-            case "mess hall":
-                System.out.println("You see the aft bulkhead in the mess hall");
-                break;
-            case "armory":
-                System.out.println("You see the aft bulkhead in the armory");
-                break;
-            case "med bay":
-                System.out.println("You see the aft bulkhead in the med bay");
-                break;
-            case "engineering":
-                System.out.println("You see the aft bulkhead in engineering");
-                break;
-        }
-        promptEnterKey();
-    }
-
-    private void lookPort(String room) {
-        Console.clear();
-        switch (room) {
-            case "bridge":
-                System.out.println("You see the port bulkhead in the bridge");
-                break;
-            case "berthing":
-                System.out.println("You see the port bulkhead in the berthing");
-                break;
-            case "mess hall":
-                System.out.println("You see the port bulkhead in the mess hall");
-                break;
-            case "armory":
-                System.out.println("You see the port bulkhead in the armory");
-                break;
-            case "med bay":
-                System.out.println("You see the port bulkhead in the med bay");
-                break;
-            case "engineering":
-                System.out.println("You see the port bulkhead in engineering");
-                break;
-        }
-        promptEnterKey();
-    }
-
-    private void lookStbd(String room) {
-        Console.clear();
-        switch (room) {
-            case "bridge":
-                System.out.println("You see the starboard bulkhead in the bridge");
-                break;
-            case "berthing":
-                System.out.println("You see the starboard bulkhead in the berthing");
-                break;
-            case "mess hall":
-                System.out.println("You see the starboard bulkhead in the mess hall");
-                break;
-            case "armory":
-                System.out.println("You see the starboard bulkhead in the armory");
-                break;
-            case "med bay":
-                System.out.println("You see the starboard bulkhead in the med bay");
-                break;
-            case "engineering":
-                System.out.println("You see the starboard bulkhead in engineering");
-                break;
         }
         promptEnterKey();
     }
