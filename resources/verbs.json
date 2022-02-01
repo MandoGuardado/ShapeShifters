@@ -1,0 +1,21 @@
+{
+  "go": "go",
+  "move": "go",
+  "walk": "go",
+  "run": "go",
+  "proceed": "go",
+  "look": "look",
+  "glance": "look",
+  "use": "use",
+  "inspect": "inspect",
+  "examine": "inspect",
+  "get": "get",
+  "grab": "get",
+  "pick": "get",
+  "add": "get",
+  "remove": "remove",
+  "drop": "remove",
+  "show": "show",
+  "quit": "q",
+  "q": "q"
+}

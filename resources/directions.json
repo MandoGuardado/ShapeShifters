@@ -1,0 +1,14 @@
+{
+  "forward": "forward",
+  "straight": "forward",
+  "ahead": "forward",
+  "front": "forward",
+  "aft": "aft",
+  "back": "aft",
+  "behind": "aft",
+  "port": "port",
+  "left": "port",
+  "starboard": "stbd",
+  "stbd": "stbd",
+  "right": "stbd"
+}
