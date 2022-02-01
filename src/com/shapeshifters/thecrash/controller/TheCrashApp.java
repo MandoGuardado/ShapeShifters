@@ -95,7 +95,7 @@ public class TheCrashApp {
 
         try {
             JSONParser jsonparser = new JSONParser();
-            FileReader reader = new FileReader(".\\resources\\rooms.json");
+            FileReader reader = new FileReader(String.valueOf(Path.of("resources","rooms.json")));
             Object obj = jsonparser.parse(reader);
             JSONArray roomArray = (JSONArray) obj;
 
@@ -160,7 +160,7 @@ public class TheCrashApp {
     }
 
     private void directionError() {
-        System.out.println("Command not recognized.\n" +
+        System.out.println("Direction not recognized.\n" +
                 "Try using words like port, starboard, forward, aft, left, right, ahead, and behind.\n" +
                 "For additional help enter I for the information screen.");
         promptEnterKey();
@@ -173,8 +173,6 @@ public class TheCrashApp {
                 result = directions.get(word);
             }
         }
-        getPlayer().setCurrentRoom(getRooms().get(result));
-
         return result;
     }
 
