@@ -30,6 +30,10 @@ public class Player {
         return result;
     }
 
+    public String lookAt(String wall){
+        return getCurrentRoom().getRoomView(wall);
+    }
+
     //Setter and getters
 
     public String getName() {
