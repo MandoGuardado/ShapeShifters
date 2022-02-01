@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -22,8 +21,10 @@ public class TheCrashApp {
     private boolean gameOver = false;
     private String currentRoom = "Berthing";
     private Map<String, Room> rooms;
-    private Map<String,String> verbs = new LinkedHashMap<>();
+    private Map<String, String> verbs;
+    private Map<String, String> directions;
     private Player player;
+
     //NO-ARG CTOR
     public TheCrashApp() {
     }
@@ -34,61 +35,96 @@ public class TheCrashApp {
         setUp();
         startMainMenu();
         introduction();
-        while (!isGameOver()){
+        while (!isGameOver()) {
             Console.clear();
+            System.out.println(player.getCurrentRoom().getExits());
             System.out.println("You are now in " + currentRoom);
             System.out.println("What would you like to do?");
             String[] response = in.nextLine().toLowerCase().split(" ");
             if (response.length == 0) {
                 System.out.println("Invalid input: response must contain at least one word");
                 promptEnterKey();
-            } else if ("look".equals(response[0])){
-                look(response[1]);
-            } else if ("go".equals(response[0])){
-                currentRoom = go(response[1]);
-            } else if ("map".equals(response[0])){
-                viewMap();
+            } else {
+                String verb = verbChecker(response);
+                    if (!verb.equals("null")) {
+                        switch (verb) {
+                            case "go":
+                                currentRoom = go(response);
+                                break;
+                            case "look":
+                                look(response);
+                                break;
+                            case "use":
+                                break;
+                            case "inspect":
+                                break;
+                            case "get":
+                                break;
+                            case "remove":
+                                break;
+                            case "view":
+                                break;
+                            case "q":
+                            case "quit":
+                                break;
+                        }
+                    } else {
+                        System.out.println("Command not recognized.\n" +
+                                "Try using words like go, look, use, inspect, get, remove, and view.\n" +
+                                "For additional help enter I for information screen.");
+                        promptEnterKey();
+                    }
             }
         }
     }
 
-    public void setUp(){
+    private String verbChecker(String[] response) {
+        String result = "null";
+        for (String word: response) {
+            if(verbs.containsKey(word)){
+                result = verbs.get(word);
+            }
+        }
+        return result;
+    }
+
+    public void setUp() {
         Map<String, Room> setUpRoomsMap = new HashMap<>();
         Map<String, String> berthingExits = new HashMap<>();
         berthingExits.put("aft", "Armory");
         berthingExits.put("port", "Mess Hall");
         berthingExits.put("forward", "Bridge");
-        Room berthing = new Room("Berthing","This is were everybody sleeps", berthingExits);
+        Room berthing = new Room("Berthing", "This is were everybody sleeps", berthingExits);
 
         Map<String, String> messHallExits = new HashMap<>();
         messHallExits.put("aft", "Med Bay");
         messHallExits.put("stbd", "Berthing");
         messHallExits.put("starboard", "Berthing");
         messHallExits.put("forward", "Bridge");
-        Room messHall = new Room("Mess Hall","This is were everybody eats", messHallExits);
+        Room messHall = new Room("Mess Hall", "This is were everybody eats", messHallExits);
 
         Map<String, String> armoryExits = new HashMap<>();
         armoryExits.put("aft", "Engineering");
         armoryExits.put("port", "Med Bay");
         armoryExits.put("forward", "Berthing");
-        Room armory = new Room("Armory","This is where all the weapons are held.", armoryExits);
+        Room armory = new Room("Armory", "This is where all the weapons are held.", armoryExits);
 
         Map<String, String> medBayExits = new HashMap<>();
         medBayExits.put("aft", "Engineering");
         medBayExits.put("stbd", "Armory");
         medBayExits.put("starboard", "Armory");
         medBayExits.put("forward", "Mess Hall");
-        Room medBay = new Room("Med Bay","If you need fixing, then this is the place", medBayExits);
+        Room medBay = new Room("Med Bay", "If you need fixing, then this is the place", medBayExits);
 
         Map<String, String> engineeringExits = new HashMap<>();
         engineeringExits.put("Forward1", "Armory");
         engineeringExits.put("Forward2", "Med Bay");
-        Room engineering = new Room("Engineering","The Engineering place", engineeringExits);
+        Room engineering = new Room("Engineering", "The Engineering place", engineeringExits);
 
         Map<String, String> bridgeExits = new HashMap<>();
         bridgeExits.put("Aft1", "Berthing");
         bridgeExits.put("Aft2", "Mess Hall");
-        Room bridge = new Room("Bridge","Check out the scene", bridgeExits);
+        Room bridge = new Room("Bridge", "Check out the scene", bridgeExits);
 
         setUpRoomsMap.put("Berthing", berthing);
         setUpRoomsMap.put("Armory", armory);
@@ -101,69 +137,96 @@ public class TheCrashApp {
     }
 
 
-    public String go(String dir){
+    public String go(String[] response) {
+        String dir = checkDirection(response);
         String currentRoom = player.getCurrentRoom().getName();
         String result = currentRoom;
-        boolean isDirectionValid = player.isDesiredDirectionValid(dir);
-        if (isDirectionValid){
-            if ("Bridge".equals(currentRoom) && "aft".equals(dir)){
-                System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
-                int input = in.nextInt();
-                switch (input){
-                    case 1:
-                        result = "Berthing";
-                        break;
-                    case 2:
-                        result = "Mess Hall";
-                        break;
+        if (!dir.equals("null")) {
+            boolean isDirectionValid = player.isDesiredDirectionValid(dir);
+            if (isDirectionValid) {
+                if ("Bridge".equals(currentRoom) && "aft".equals(dir)) {
+                    System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
+                    int input = in.nextInt();
+                    switch (input) {
+                        case 1:
+                            result = "Berthing";
+                            break;
+                        case 2:
+                            result = "Mess Hall";
+                            break;
+                    }
+                } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
+                    System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
+                    int input = in.nextInt();
+                    switch (input) {
+                        case 1:
+                            result = "Armory";
+                            break;
+                        case 2:
+                            result = "Med Bay";
+                            break;
+                    }
+                } else {
+                    result = player.getCurrentRoom().getExits().get(dir);
                 }
+            } else {
+                System.out.println("You can't go in that direction");
+                promptEnterKey();
             }
-            else if ("Engineering".equals(currentRoom) && "forward".equals(dir)){
-                System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
-                int input = in.nextInt();
-                switch (input){
-                    case 1:
-                        result = "Armory";
-                        break;
-                    case 2:
-                        result = "Med Bay";
-                        break;
-                }
-            }
-            else {
-                result = player.getCurrentRoom().getExits().get(dir);
-            }
+            getPlayer().setCurrentRoom(getRooms().get(currentRoom));
+
+        } else {
+            directionError();
         }
-        else {
-            System.out.println("You can't go in that direction");
-        }
-        getPlayer().setCurrentRoom(getRooms().get(currentRoom));
         return result;
     }
 
-    private void look(String dir){
-        switch (dir){
-            case "forward":
-                lookForward(currentRoom.toLowerCase());
-                break;
-            case "aft":
-                lookAft(currentRoom.toLowerCase());
-                break;
-            case "port":
-                lookPort(currentRoom.toLowerCase());
-                break;
-            case "stbd":
-            case "starboard":
-                lookStbd(currentRoom.toLowerCase());
-                break;
-            default:
-                System.out.println("I don't understand which way you want to look");
-        }
+    private void directionError() {
+        System.out.println("Command not recognized.\n" +
+                "Try using words like port, starboard, forward, aft, left, right, ahead, and behind.\n" +
+                "For additional help enter I for the information screen.");
+        promptEnterKey();
     }
 
-    private void lookForward(String room){
+    private String checkDirection(String[] dir) {
+        String result = "null";
+        for (String word : dir) {
+            if (directions.containsKey(word)) {
+                result = directions.get(word);
+            }
+        }
+        return result;
+    }
+
+    private void look(String[] response) {
+        String dir = checkDirection(response);
+        if (!dir.equals("null")) {
+            switch (dir) {
+                case "forward":
+                    lookForward(currentRoom.toLowerCase());
+                    break;
+                case "aft":
+                    lookAft(currentRoom.toLowerCase());
+                    break;
+                case "port":
+                    lookPort(currentRoom.toLowerCase());
+                    break;
+                case "stbd":
+                case "starboard":
+                    lookStbd(currentRoom.toLowerCase());
+                    break;
+                default:
+                    System.out.println("I don't understand which way you want to look");
+            }
+        } else {
+            directionError();
+        }
+
+    }
+
+    private void lookForward(String room) {
         Console.clear();
-        switch (room){
+        switch (room) {
             case "bridge":
                 System.out.println("You see the forward bulkhead in the bridge");
                 break;
@@ -186,9 +249,9 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    private void lookAft(String room){
+    private void lookAft(String room) {
         Console.clear();
-        switch (room){
+        switch (room) {
             case "bridge":
                 System.out.println("You see the aft bulkhead in the bridge");
                 break;
@@ -211,9 +274,9 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    private void lookPort(String room){
+    private void lookPort(String room) {
         Console.clear();
-        switch (room){
+        switch (room) {
             case "bridge":
                 System.out.println("You see the port bulkhead in the bridge");
                 break;
@@ -236,9 +299,9 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    private void lookStbd(String room){
+    private void lookStbd(String room) {
         Console.clear();
-        switch (room){
+        switch (room) {
             case "bridge":
                 System.out.println("You see the starboard bulkhead in the bridge");
                 break;
@@ -304,20 +367,26 @@ public class TheCrashApp {
         while (choice != 1 /*Exit loop when choice is 4*/);
     }
 
+    @SuppressWarnings("unchecked")
     private void loadWords() {
         JSONParser parser = new JSONParser();
+        verbs = new HashMap<>();
+        directions = new HashMap<>();
         try {
-            Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources","verbs.json")))));
+            Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
+            Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
+            JSONObject directionWords = (JSONObject) obj1;
             JSONObject actionWords = (JSONObject) obj;
             verbs.putAll(actionWords);
-            verbs.forEach((key, value) -> System.out.println(key + ":" + value ));
-        }catch (IOException | ParseException e){
+            directions.putAll(directionWords);
+
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void introduction(){
+    private void introduction() {
         printBanner("introduction");
         promptEnterKey();
     }
@@ -333,7 +402,7 @@ public class TheCrashApp {
         Console.blankLines(2);
     }
 
-    private static void promptEnterKey(){
+    private static void promptEnterKey() {
         System.out.println("Press \"ENTER\" to continue...");
         try {
             int read = System.in.read(new byte[2]);
@@ -343,7 +412,7 @@ public class TheCrashApp {
     }
 
 
-    private static void pause(int seconds){
+    private static void pause(int seconds) {
         try {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {
@@ -351,10 +420,11 @@ public class TheCrashApp {
         }
     }
 
-    private static void viewMap(){
+    private static void viewMap() {
         printBanner("map");
     }
-        //GETTERS AND SETTERS
+
+    //GETTERS AND SETTERS
     public boolean isGameOver() {
         return gameOver;
     }
