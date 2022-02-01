@@ -6,6 +6,12 @@
       "aft": "Armory",
       "port": "Mess Hall",
       "forward": "Bridge"
+    },
+    "views": {
+      "aft": "You see a door that leads to the Armory and a bulletin board with a map of the ship attached to it.",
+      "forward": "You see a door that leads to the Bridge and a locker for storing the crew's gear.",
+      "port": "You see a door that leads to the Mess Hall and beds for all of the crew.",
+      "stbd": "You see cryo-pods for the crew and it looks like you are the only one awake."
     }
   },
   {
@@ -14,8 +20,13 @@
     "exits": {
       "aft": "Med Bay",
       "stbd": "Berthing",
-      "starboard": "Berthing",
       "forward": "Bridge"
+    },
+    "views": {
+      "aft": "You see a door that leads to the Med Bay.",
+      "forward": "You see a door that leads to the Bridge and a rack of empty trays.",
+      "port": "You see a stove with an empty pot on it and a fryer with used oil in it.",
+      "stbd": "You see a door that leads to the Berthing compartment."
     }
   },
   {
@@ -25,6 +36,12 @@
       "aft": "Engineering",
       "port": "Med Bay",
       "forward": "Berthing"
+    },
+    "views": {
+      "aft": "You see a door that leads to the Engineering compartment.",
+      "forward": "You see a door that leads to the Berthing compartment.",
+      "port": "You see a door that leads to the Med Bay and shelves that contain tools.",
+      "stbd": "You see a locked weapons cage."
     }
   },
   {
@@ -35,6 +52,12 @@
       "stbd": "Armory",
       "starboard": "Armory",
       "forward": "Mess Hall"
+    },
+    "views": {
+      "aft": "You see a door that leads to the Engineering compartment.",
+      "forward": "You see a door that leads to the Mess Hall.",
+      "port": "You see a desk.",
+      "stbd": "You see a door that leads to the Armory and a locked medical cabinet."
     }
   },
   {
@@ -43,6 +66,12 @@
     "exits": {
       "Forward1": "Armory",
       "Forward2": "Med Bay"
+    },
+    "views": {
+      "aft": "You see the main reactor for the ship.",
+      "forward": "You see a door that leads to the Med Bay and a door that leads to the Armory.",
+      "port": "You see the coolant tanks for the reactor and some liquid on the ground.",
+      "stbd": "You see a toolbox."
     }
   },
   {
@@ -51,6 +80,12 @@
     "exits": {
       "Aft1": "Berthing",
       "Aft2": "Mess Hall"
+    },
+    "views": {
+      "aft": "You see a door that leads to the Berthing compartment and a door that leads to the Mess Hall.",
+      "forward": "You see a control panel with what loos like soot around the edges.",
+      "port": "You see a window that looks out into a strange world.",
+      "stbd": "You see a window that looks out into a strange world."
     }
   }
 
