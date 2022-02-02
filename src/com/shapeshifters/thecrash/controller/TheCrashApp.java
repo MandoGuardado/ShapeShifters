@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -68,6 +67,10 @@ public class TheCrashApp {
                         case "q":
                         case "quit":
                             setGameOver(true);
+                            break;
+                        case "i":
+                            viewInfo();
+                            promptEnterKey();
                             break;
                     }
                 } else {
@@ -285,8 +288,8 @@ public class TheCrashApp {
         }
     }
 
-    private static void viewMap() {
-        printBanner("map");
+    private static void viewInfo() {
+        printBanner("info");
     }
 
     //GETTERS AND SETTERS
