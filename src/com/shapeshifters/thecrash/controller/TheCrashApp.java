@@ -68,6 +68,9 @@ public class TheCrashApp {
                         case "quit":
                             setGameOver(true);
                             break;
+                        case "i":
+                            viewInfo();
+                            break;
                     }
                 } else {
                     System.out.println("Command not recognized.\n" +
@@ -283,8 +286,10 @@ public class TheCrashApp {
         }
     }
 
-    private static void viewMap() {
-        printBanner("map");
+    private static void viewInfo() {
+
+        printBanner("info");
+        promptEnterKey();
     }
 
     //GETTERS AND SETTERS
