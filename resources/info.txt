@@ -1,0 +1,19 @@
+|********************************************************************************************|
+|                                                                                            |
+| Want to check out the room?                                                                |
+|    Try using words like "look" or "glance" to peek at your surroundings.                   |
+|                                                                                            |
+| Want to see a different room?                                                              |
+|    Try using words like "go", "move", or "walk" in the direction you'd like to travel.     |
+|                                                                                            |
+| Unsure of the proper direction?                                                            |
+|    Use words like "forward" or "straight" to go toward the front of the ship               |
+|    Use words like "aft" or "behind" to go toward the rear of the ship                      |
+|    Use words like "port" or "left" to go toward the left side of the ship                  |
+|    Use words like "starboard" or "stbd" to toward the right side of the ship               |
+|                                                                                            |
+| Don't forget to "inspect" or "examine" items you encounter for a closer look               |
+|         or                                                                                 |
+| "grab" or "get" items to add them to your inventory!                                       |
+|                                                                                            |
+|********************************************************************************************|
