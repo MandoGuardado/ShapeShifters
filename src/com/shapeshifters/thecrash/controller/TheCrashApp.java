@@ -70,7 +70,6 @@ public class TheCrashApp {
                             break;
                         case "i":
                             viewInfo();
-                            promptEnterKey();
                             break;
                     }
                 } else {
@@ -289,7 +288,9 @@ public class TheCrashApp {
     }
 
     private static void viewInfo() {
+
         printBanner("info");
+        promptEnterKey();
     }
 
     //GETTERS AND SETTERS
