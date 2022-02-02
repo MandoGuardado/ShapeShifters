@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -38,8 +39,7 @@ public class TheCrashApp {
         introduction();
         while (!isGameOver()) {
             Console.clear();
-            System.out.println(player.getCurrentRoom().getExits());
-            System.out.println("You are now in " + currentRoom);
+            printBanner(currentRoom);
             System.out.println("What would you like to do?");
             String[] response = in.nextLine().toLowerCase().split(" ");
             if (response.length == 0) {
@@ -370,14 +370,14 @@ public class TheCrashApp {
     }
 
     private static void printBanner(String banner) {
+        String fileName = banner.replaceAll("\\s", "").toLowerCase();
         Console.clear();
         Console.blankLines(2);
         try {
-            Files.lines(Path.of("resources", banner + ".txt")).forEach(System.out::println);
+            Files.lines(Path.of("resources", fileName + ".txt")).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Console.blankLines(2);
     }
 
     private static void promptEnterKey() {
