@@ -9,5 +9,5 @@
 ||~~~~~~~~~~~~~~~~~~~||     ||~~~~~~~~~~~~~~~~~~~||     ||~~~~~~~~~~~~~~~~~~~||
 ||                   ||     ||                   ||     ||                   ||
 
-You are in the Berthing compartment. There are beds and cryo-pods for all of the crew members,
+You are in the Berthing compartment. There are beds and cryo-pods for all the crew members,
 lockers for crew gear, and a bulletin board.
