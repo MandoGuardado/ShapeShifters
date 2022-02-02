@@ -246,7 +246,6 @@ public class TheCrashApp {
                 counter++;
             }
         }
-
     }
 
     @SuppressWarnings("unchecked")
