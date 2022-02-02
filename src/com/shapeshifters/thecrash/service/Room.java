@@ -8,18 +8,24 @@ public class Room {
     private String name;
     private String description;
     private Map<String, String> exits;
+    private Map<String, String> views;
 
 
     //constructors
-    public Room(String name, String description, Map<String, String> exits) {
+    public Room(String name, String description, Map<String, String> exits, Map<String, String> views) {
         this.name = name;
         setDescription(description);
         setExits(exits);
+        setViews(views);
     }
 
     //Business Methods
     public boolean isExitAvailable(String direction){
         return exits.containsKey(direction);
+    }
+
+    public String getRoomView(String side){
+        return getViews().get(side);
     }
 
     //Setter and getters
@@ -43,6 +49,13 @@ public class Room {
         return name;
     }
 
+    public Map<String, String> getViews() {
+        return views;
+    }
+
+    public void setViews(Map<String, String> views) {
+        this.views = views;
+    }
 
     //toString()
     @Override
