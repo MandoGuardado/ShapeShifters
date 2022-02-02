@@ -30,7 +30,7 @@
       "port": "You see a stove with an empty pot on it and a fryer with used oil in it.",
       "stbd": "You see a door that leads to the Berthing compartment."
     },
-    "items": ["Trays", "Hose"]
+    "items": ["Trays", "Hose", "Empty Pot"]
   },
   {
     "name": "Armory",
@@ -46,7 +46,7 @@
       "port": "You see a door that leads to the Med Bay and shelves that contain tools.",
       "stbd": "You see a locked weapons cage."
     },
-    "items": ["Weapon"]
+    "items": ["Weapon", "Screwdriver"]
   },
   {
     "name": "Med Bay",
