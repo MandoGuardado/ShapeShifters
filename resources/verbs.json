@@ -17,5 +17,9 @@
   "drop": "remove",
   "show": "show",
   "quit": "q",
-  "q": "q"
+  "q": "q",
+  "i": "i",
+  "info": "i",
+  "information": "i",
+  "help": "i"
 }
