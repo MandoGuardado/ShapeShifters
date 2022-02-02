@@ -233,6 +233,18 @@ public class TheCrashApp {
         }
         while (choice != 1 /*Exit loop when choice is 4*/);
     }
+    public void viewInventory() {
+        Collection<String> items = player.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println("You have " + items + " items in your inventory list");
+            System.out.println((i + 1) + ". " + items);
+            if (items.size() < 0) {
+                System.out.println("You don't have any items in your inventory");
+            } else {
+                System.out.println(items);
+            }
+        }
+    }
 
     @SuppressWarnings("unchecked")
     private void loadWords() {
