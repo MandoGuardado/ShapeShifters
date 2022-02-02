@@ -233,6 +233,7 @@ public class TheCrashApp {
         }
         while (choice != 1 /*Exit loop when choice is 4*/);
     }
+
     public void viewInventory() {
         Collection<String> items = player.getItems();
         if (items.size() < 0) {
