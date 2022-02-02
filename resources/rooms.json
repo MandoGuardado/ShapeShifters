@@ -20,6 +20,7 @@
     "exits": {
       "aft": "Med Bay",
       "stbd": "Berthing",
+      "starboard": "Berthing",
       "forward": "Bridge"
     },
     "views": {
