@@ -103,8 +103,8 @@ public class TheCrashApp {
                 JSONArray itemsArray = (JSONArray) roomJsonObject.get("items");
                 Map<String, String> exits = new HashMap<>(exitsObject);
                 Map<String, String> views = new HashMap<>(viewsObject);
-                List<String> items = new ArrayList<>(itemsArray);
-                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views,items));
+                Collection<String> items = new ArrayList<>(itemsArray);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views, items));
 
             }
         } catch (IOException | ParseException e) {

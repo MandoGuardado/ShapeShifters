@@ -33,6 +33,11 @@ public class Player {
     public String lookAt(String wall){
         return getCurrentRoom().getRoomView(wall);
     }
+    public Collection<String> getCurrentRoomItems(){
+        return this.getCurrentRoom().getItems();
+
+    }
+
 
     //Setter and getters
 
