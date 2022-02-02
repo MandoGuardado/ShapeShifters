@@ -13,10 +13,7 @@ import org.junit.Test;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerTest {
     private static Player playerBerthing;
@@ -43,9 +40,11 @@ public class PlayerTest {
                 JSONObject roomJsonObject = (JSONObject) o;
                 JSONObject exitsObject = (JSONObject) roomJsonObject.get("exits");
                 JSONObject viewsObject = (JSONObject) roomJsonObject.get("views");
+                JSONArray itemsArray = (JSONArray) roomJsonObject.get("items");
                 Map<String, String> exits = new HashMap<>(exitsObject);
                 Map<String, String> views = new HashMap<>(viewsObject);
-                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views));
+                List<String> items = new ArrayList<>(itemsArray);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views, items));
 
             }
         } catch (IOException | ParseException e) {
