@@ -8,14 +8,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.Console;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
@@ -231,6 +229,23 @@ public class TheCrashApp {
         }
         while (choice != 1 /*Exit loop when choice is 4*/);
     }
+
+    public void viewInventory() {
+        Collection<String> items = player.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println("You have " + items + " items in your inventory list");
+            System.out.println((i + 1) + ". " + items);
+            if (items.size() < 0) {
+                System.out.println("You don't have any items in your inventory");
+            } else {
+                System.out.println(items);
+            }
+        }
+    }
+
+
+
+
 
     @SuppressWarnings("unchecked")
     private void loadWords() {
