@@ -12,10 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
@@ -103,9 +100,11 @@ public class TheCrashApp {
                 JSONObject roomJsonObject = (JSONObject) o;
                 JSONObject exitsObject = (JSONObject) roomJsonObject.get("exits");
                 JSONObject viewsObject = (JSONObject) roomJsonObject.get("views");
+                JSONArray itemsArray = (JSONArray) roomJsonObject.get("items");
                 Map<String, String> exits = new HashMap<>(exitsObject);
                 Map<String, String> views = new HashMap<>(viewsObject);
-                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views));
+                List<String> items = new ArrayList<>(itemsArray);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views,items));
 
             }
         } catch (IOException | ParseException e) {
