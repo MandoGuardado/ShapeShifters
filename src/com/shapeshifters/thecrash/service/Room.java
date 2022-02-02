@@ -1,6 +1,8 @@
 package com.shapeshifters.thecrash.service;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Room {
@@ -9,14 +11,16 @@ public class Room {
     private String description;
     private Map<String, String> exits;
     private Map<String, String> views;
+    private Collection<String> items;
 
 
     //constructors
-    public Room(String name, String description, Map<String, String> exits, Map<String, String> views) {
+    public Room(String name, String description, Map<String, String> exits, Map<String, String> views, Collection<String> items) {
         this.name = name;
         setDescription(description);
         setExits(exits);
         setViews(views);
+        setItems(items);
     }
 
     //Business Methods
@@ -55,6 +59,14 @@ public class Room {
 
     public void setViews(Map<String, String> views) {
         this.views = views;
+    }
+
+    public Collection<String> getItems() {
+        return items;
+    }
+
+    public void setItems(Collection<String> items) {
+        this.items = items;
     }
 
     //toString()

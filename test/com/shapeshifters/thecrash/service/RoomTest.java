@@ -12,8 +12,7 @@ import org.junit.Test;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RoomTest {
 
@@ -42,9 +41,11 @@ public class RoomTest {
                 JSONObject roomJsonObject = (JSONObject) o;
                 JSONObject exitsObject = (JSONObject) roomJsonObject.get("exits");
                 JSONObject viewsObject = (JSONObject) roomJsonObject.get("views");
+                JSONArray itemsArray = (JSONArray) roomJsonObject.get("items");
                 Map<String, String> exits = new HashMap<>(exitsObject);
                 Map<String, String> views = new HashMap<>(viewsObject);
-                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views));
+                Collection<String> items = new ArrayList<>(itemsArray);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views, items));
 
             }
         } catch (IOException | ParseException e) {
@@ -58,7 +59,7 @@ public class RoomTest {
         roomArmory = rooms.get("Armory") ;
         roomMessHall = rooms.get("Mess Hall") ;
         roomMedBay = rooms.get("Med Bay") ;
-        roomBerthing2 = new Room(roomBerthing.getName(), roomBerthing.getDescription(), roomBerthing.getExits(), roomBerthing.getViews());
+        roomBerthing2 = new Room(roomBerthing.getName(), roomBerthing.getDescription(), roomBerthing.getExits(), roomBerthing.getViews(), roomBerthing.getItems());
 
     }
 

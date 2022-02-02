@@ -12,7 +12,8 @@
       "forward": "You see a door that leads to the Bridge and a locker for storing the crew's gear.",
       "port": "You see a door that leads to the Mess Hall and beds for all of the crew.",
       "stbd": "You see cryo-pods for the crew and it looks like you are the only one awake."
-    }
+    },
+    "items": ["Map", "Bubble Gum"]
   },
   {
     "name": "Mess Hall",
@@ -28,7 +29,8 @@
       "forward": "You see a door that leads to the Bridge and a rack of empty trays.",
       "port": "You see a stove with an empty pot on it and a fryer with used oil in it.",
       "stbd": "You see a door that leads to the Berthing compartment."
-    }
+    },
+    "items": ["Trays", "Hose", "Empty Pot"]
   },
   {
     "name": "Armory",
@@ -43,7 +45,8 @@
       "forward": "You see a door that leads to the Berthing compartment.",
       "port": "You see a door that leads to the Med Bay and shelves that contain tools.",
       "stbd": "You see a locked weapons cage."
-    }
+    },
+    "items": ["Weapon", "Screwdriver"]
   },
   {
     "name": "Med Bay",
@@ -59,7 +62,8 @@
       "forward": "You see a door that leads to the Mess Hall.",
       "port": "You see a desk.",
       "stbd": "You see a door that leads to the Armory and a locked medical cabinet."
-    }
+    },
+    "items": ["Bolt Cutters", "Med Kit", "Cryo Manual", "Paper Clip"]
   },
   {
     "name": "Engineering",
@@ -73,7 +77,8 @@
       "forward": "You see a door that leads to the Med Bay and a door that leads to the Armory.",
       "port": "You see the coolant tanks for the reactor and some liquid on the ground.",
       "stbd": "You see a toolbox."
-    }
+    },
+    "items": ["Soldering Iron", "Bolt Cutters", "Coolant Hose", "Empty Pail"]
   },
   {
     "name": "Bridge",
@@ -87,7 +92,8 @@
       "forward": "You see a control panel with what loos like soot around the edges.",
       "port": "You see a window that looks out into a strange world.",
       "stbd": "You see a window that looks out into a strange world."
-    }
+    },
+    "items": ["Replacement Wire"]
   }
 
 ]
