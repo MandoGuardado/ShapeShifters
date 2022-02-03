@@ -6,9 +6,10 @@ import java.util.Scanner;
 
 public class Player {
     //Fields
+    private static final int MaxItemInventorySize = 5;
     private String name;
     private int hit =  100;
-    private Collection<String> items = new ArrayList<>(10);
+    private Collection<String> items = new ArrayList<>(5);
     private Room currentRoom;
     private Scanner in = new Scanner(System.in);
 
@@ -35,7 +36,42 @@ public class Player {
     }
     public Collection<String> getCurrentRoomItems(){
         return this.getCurrentRoom().getItems();
+    }
 
+    public String pickUpItem(String item){
+        String message;
+        if(getItems().size() == Player.MaxItemInventorySize){
+            message = "Unable to add your item, You are limited to " + Player.MaxItemInventorySize + " items.";
+        }
+        else if (getItems().contains(item)){
+            message = "You already have this item in your inventory!. Item was not added.";
+
+        }
+        else{
+            message = "Item was added to your inventory";
+            addToInventory(item);
+        }
+
+       return message;
+    }
+
+    private void addToInventory(String item){
+        getItems().add(item);
+    }
+
+    public String dropItem(String item){
+        String message;
+        if (getItems().contains(item)){
+            message= "Item was remove from you inventory and dropped.";
+            removeFromInventory(item);
+        }else{
+            message = "You don't have that item in your inventory";
+        }
+        return message;
+    }
+
+    private void removeFromInventory(String item){
+        getItems().remove(item);
     }
 
 
