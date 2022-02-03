@@ -307,6 +307,19 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
+    private static void viewMap() {
+
+        printBanner("map");
+        promptEnterKey();
+    }
+
+    private void viewStatus() {
+    // Need to display Health, current location, list inventory items
+       String currentRoom = getCurrentRoom();
+       int health = player.getHit();
+
+    }
+
     //GETTERS AND SETTERS
     public boolean isGameOver() {
         return gameOver;
