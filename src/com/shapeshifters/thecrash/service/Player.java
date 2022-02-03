@@ -8,16 +8,18 @@ public class Player {
     //Fields
     private static final int MaxItemInventorySize = 5;
     private String name;
-    private int hit = 100;
+    private long health;
     private Collection<String> items = new ArrayList<>(5);
     private Room currentRoom;
     private Scanner in = new Scanner(System.in);
 
 
     //constructors
-    public Player(String name, Room startingRoom) {
+    public Player(String name, Room startingRoom, long health, ArrayList<String> itemsList) {
         setName(name);
         setCurrentRoom(startingRoom);
+        setHealth(health);
+        setItems(itemsList);
     }
 
 
@@ -42,12 +44,17 @@ public class Player {
     public boolean isItemInInventory(String item) {
         return getItems().contains(item);
     }
-    public boolean isItemSizeOverLimit(){
-        return getItems().size() <= Player.MaxItemInventorySize;
+    public boolean isItemSizeUnderLimit(){
+        return getItems().size() < Player.MaxItemInventorySize;
     }
 
-    public void pickUpItem(String item) {
-        addToInventory(item);
+    public boolean pickUpItem(String item) {
+        boolean result = false;
+        if (isItemSizeUnderLimit()){
+            addToInventory(item);
+            result = true;
+        }
+        return result;
     }
 
     private void addToInventory(String item) {
@@ -74,12 +81,12 @@ public class Player {
         this.name = name;
     }
 
-    public int getHit() {
-        return hit;
+    public long getHealth() {
+        return health;
     }
 
-    public void setHit(int hit) {
-        this.hit = hit;
+    public void setHealth(long health) {
+        this.health = health;
     }
 
     public Collection<String> getItems() {
@@ -104,7 +111,7 @@ public class Player {
     public String toString() {
         return this.getClass().getSimpleName() +
                 "Player name = " + getName() + '\'' +
-                ", Damage received = " + getHit() +
+                ", Damage received = " + getHealth() +
                 ", items collected = " + getItems();
     }
 }
