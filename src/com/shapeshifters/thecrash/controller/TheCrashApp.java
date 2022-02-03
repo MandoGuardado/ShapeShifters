@@ -336,9 +336,36 @@ public class TheCrashApp {
     }
 
     private void viewStatus() {
-    // Need to display Health, current location, list inventory items
+
        String currentRoom = getCurrentRoom();
-       int health = player.getHit();
+       long health = player.getHealth();
+       String items = "";
+
+
+       for(String item : player.getItems()){
+            items += (item + "\n");
+        }
+
+       String fileName = "resources/status.txt";
+       String data = currentRoom + System.lineSeparator() + health + System.lineSeparator() + items;
+
+
+        List<String> lines = null;
+        try {
+            lines = Files.readAllLines(Path.of(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < lines.size(); i++){
+            if(i == 1){
+                lines.set(1, data);
+            }
+        }
+        try {
+            Files.write(Path.of(fileName), lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
