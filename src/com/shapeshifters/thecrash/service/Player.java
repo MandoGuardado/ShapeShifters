@@ -42,12 +42,17 @@ public class Player {
     public boolean isItemInInventory(String item) {
         return getItems().contains(item);
     }
-    public boolean isItemSizeOverLimit(){
-        return getItems().size() <= Player.MaxItemInventorySize;
+    public boolean isItemSizeUnderLimit(){
+        return getItems().size() < Player.MaxItemInventorySize;
     }
 
-    public void pickUpItem(String item) {
-        addToInventory(item);
+    public boolean pickUpItem(String item) {
+        boolean result = false;
+        if (isItemSizeUnderLimit()){
+            addToInventory(item);
+            result = true;
+        }
+        return result;
     }
 
     private void addToInventory(String item) {

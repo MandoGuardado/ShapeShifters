@@ -335,46 +335,39 @@ public class PlayerTest {
         assertEquals("You see a door that leads to the Bridge and a locker for storing the crew's gear.", playerBerthing.lookAt("forward") );
     }
 
-//    @Test
-//    public void testPickUpItemWhenEmptyAddingOneItem_shouldReturnSuccessStringItemAdded() {
-//       Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
-//        assertEquals(playerPickUp.pickUpItem("Hose"), "Item was added to your inventory");
-//    }
-//    @Test
-//    public void testPickUpItemWhenOneItemInCollectionAddingOneItem_shouldReturnSuccessStringItemAdded() {
-//        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
-//        playerPickUp.pickUpItem("Layer");
-//        assertEquals(playerPickUp.pickUpItem("Hose"), "Item was added to your inventory");
-//
-//    }
-//    @Test
-//    public void testPickUpItemWhenTwoItemsInCollectionAddingOneItem_shouldReturnSuccessStringItemAdded() {
-//        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
-//        playerPickUp.pickUpItem("Layer");
-//        playerPickUp.pickUpItem("Hose");
-//
-//        assertEquals(playerPickUp.pickUpItem("Wrench"), "Item was added to your inventory");
-//
-//    }
-//
-//    @Test
-//    public void testPickUpItemWhenThreeItemsInCollectionAddingOneItem_shouldReturnFailureStringMessage() {
-//        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
-//        playerPickUp.pickUpItem("Layer");
-//        playerPickUp.pickUpItem("Hose");
-//        playerPickUp.pickUpItem("Wrench");
-//
-//        assertEquals(playerPickUp.pickUpItem("Screwdriver"), "Unable to add your item, You are limited to 3 items.");
-//
-//    }
-//    @Test
-//    public void testPickUpItemWhenThreeItemsInCollectionAddingOneItem_shouldStringMessageAdvisingItemIsAlreadyInCollection() {
-//        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
-//        playerPickUp.pickUpItem("Layer");
-//        playerPickUp.pickUpItem("Screwdriver");
-//        assertEquals(playerPickUp.pickUpItem("Screwdriver"), "You already have this item in your inventory!. Item was not added.");
-//    }
+    @Test
+    public void testPickUpItemWhenEmptyAddingOneItem_shouldReturnTrue() {
+       Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        assertTrue(playerPickUp.pickUpItem("Hose"));
+    }
+    @Test
+    public void testPickUpItemWhenOneItemInCollectionAddingOneItem_shouldReturnTrue() {
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        playerPickUp.pickUpItem("Layer");
+        assertTrue(playerPickUp.pickUpItem("Hose"));
 
+    }
+    @Test
+    public void testPickUpItemWhenTwoItemsInCollectionAddingOneItem_shouldReturnTrue() {
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        playerPickUp.pickUpItem("Layer");
+        playerPickUp.pickUpItem("Hose");
+
+        assertTrue(playerPickUp.pickUpItem("Wrench"));
+
+    }
+    @Test
+    public void testPickUpItemWhenFiveItemsInCollectionAddingOneItem_shouldReturnFalse() {
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        playerPickUp.pickUpItem("Layer");
+        playerPickUp.pickUpItem("Hose");
+        playerPickUp.pickUpItem("Wrench");
+        playerPickUp.pickUpItem("map");
+        playerPickUp.pickUpItem("water");
+
+        assertFalse(playerPickUp.pickUpItem("Screwdriver"));
+
+    }
     @Test
     public void testItemCollectionAfterAddingItems_shouldReturnTrue() {
         Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
