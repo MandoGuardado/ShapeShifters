@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class Player {
     //Fields
-    private static final int MaxItemInventorySize = 3;
+    private static final int MaxItemInventorySize = 5;
     private String name;
     private int hit =  100;
-    private Collection<String> items = new ArrayList<>(10);
+    private Collection<String> items = new ArrayList<>(5);
     private Room currentRoom;
     private Scanner in = new Scanner(System.in);
 
@@ -57,6 +57,21 @@ public class Player {
 
     private void addToInventory(String item){
         getItems().add(item);
+    }
+
+    public String dropItem(String item){
+        String message;
+        if (getItems().contains(item)){
+            message= "Item was remove from you inventory and dropped.";
+            removeFromInventory(item);
+        }else{
+            message = "You don't have that item in your inventory";
+        }
+        return message;
+    }
+
+    private void removeFromInventory(String item){
+        getItems().remove(item);
     }
 
 
