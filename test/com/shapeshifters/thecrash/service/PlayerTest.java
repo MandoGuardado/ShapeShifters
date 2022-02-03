@@ -356,7 +356,6 @@ public class PlayerTest {
         assertTrue(playerPickUp.pickUpItem("Wrench"));
 
     }
-
     @Test
     public void testPickUpItemWhenFiveItemsInCollectionAddingOneItem_shouldReturnFalse() {
         Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
@@ -366,11 +365,9 @@ public class PlayerTest {
         playerPickUp.pickUpItem("map");
         playerPickUp.pickUpItem("water");
 
-        assertFalse("There is a limit on the number of items you can add", playerPickUp.pickUpItem("Screwdriver"));
+        assertFalse(playerPickUp.pickUpItem("Screwdriver"));
 
     }
-
-
     @Test
     public void testItemCollectionAfterAddingItems_shouldReturnTrue() {
         Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
