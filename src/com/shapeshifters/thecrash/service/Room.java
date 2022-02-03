@@ -12,6 +12,7 @@ public class Room {
     private Map<String, String> exits;
     private Map<String, String> views;
     private Collection<String> items;
+    private Collection<String> droppedItems;
 
 
     //constructors
@@ -31,6 +32,33 @@ public class Room {
     public String getRoomView(String side){
         return getViews().get(side);
     }
+
+    public boolean isItemInRoomInventory(String item){
+        return getItems().contains(item);
+    }
+    public boolean isItemInDroppedRoomInventory(String item){
+       return getDroppedItems().contains(item);
+    }
+
+    public void addToDroppedItemInventory(String item){
+        getDroppedItems().add(item);
+    }
+
+    public String removedItemDroppedInv(String item){
+        String message ="Item has been picked up from the floor.";
+        getDroppedItems().remove(item);
+        return message;
+    }
+    public String removedItemInv(String item){
+        String message ="Item has been picked up.";
+        getItems().remove(item);
+        return message;
+    }
+
+
+
+
+
 
     //Setter and getters
     public Map<String, String> getExits() {
@@ -67,6 +95,14 @@ public class Room {
 
     public void setItems(Collection<String> items) {
         this.items = items;
+    }
+
+    public Collection<String> getDroppedItems() {
+        return droppedItems;
+    }
+
+    public void setDroppedItems(Collection<String> droppedItems) {
+        this.droppedItems = droppedItems;
     }
 
     //toString()
