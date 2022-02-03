@@ -52,12 +52,12 @@ public class PlayerTest {
         }
 
         rooms = setUpRoomsMap;
-        playerBerthing = new Player("Jane Berthing", rooms.get("Berthing"));
-        playerEngineering = new Player("Jane Engineering", rooms.get("Engineering"));
-        playerBridge = new Player("Jane Engineering", rooms.get("Bridge"));
-        playerArmory = new Player("Jane Armory", rooms.get("Armory"));
-        playerMessHall = new Player("Jane Mess Hall", rooms.get("Mess Hall"));
-        playerMedBay = new Player("Jane Med Bay", rooms.get("Med Bay"));
+        playerBerthing = new Player("Jane Berthing", rooms.get("Berthing"),100,new ArrayList<>());
+        playerEngineering = new Player("Jane Engineering", rooms.get("Engineering"),100,new ArrayList<>());
+        playerBridge = new Player("Jane Engineering", rooms.get("Bridge"), 100,new ArrayList<>());
+        playerArmory = new Player("Jane Armory", rooms.get("Armory"), 100,new ArrayList<>());
+        playerMessHall = new Player("Jane Mess Hall", rooms.get("Mess Hall"), 100,new ArrayList<>());
+        playerMedBay = new Player("Jane Med Bay", rooms.get("Med Bay"), 100,new ArrayList<>());
     }
 
 
@@ -75,13 +75,13 @@ public class PlayerTest {
 
     @Test
     public void testGetHitValue_ShouldReturnDefaultHitValueOf100() {
-        assertEquals(100, playerBerthing.getHit());
+        assertEquals(100, playerBerthing.getHealth());
     }
 
     @Test
     public void testGetHitValue_ShouldReturnValueOfFiftyAfterUpdate() {
-        playerBerthing.setHit(50);
-        assertEquals(50, playerBerthing.getHit());
+        playerBerthing.setHealth(50);
+        assertEquals(50, playerBerthing.getHealth());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class PlayerTest {
         Collection<String> stringList = new ArrayList<>();
         stringList.add("John");
         stringList.add("Jane");
-        Player player2 = new Player("Jhon", rooms.get("Berthing"));
+        Player player2 = new Player("Jhon", rooms.get("Berthing"), 100,new ArrayList<>());
         player2.setItems(stringList);
         assertEquals(2, player2.getItems().size());
     }
@@ -377,13 +377,13 @@ public class PlayerTest {
 
     @Test
     public void testItemCollectionAfterAddingItems_shouldReturnTrue() {
-        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"), 100,new ArrayList<>());
         ArrayList<String> testing = new ArrayList<>();
         assertTrue(playerPickUp.getItems().containsAll(testing));
     }
     @Test
     public void testItemCollectionAfterAddingTwoItems_shouldReturnTrue() {
-        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"), 100,new ArrayList<>());
         ArrayList<String> testing = new ArrayList<>();
         testing.add("Wrench");
         testing.add("Map");
