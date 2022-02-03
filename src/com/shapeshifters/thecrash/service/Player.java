@@ -6,9 +6,10 @@ import java.util.Scanner;
 
 public class Player {
     //Fields
+    private static final int MaxItemInventorySize = 5;
     private String name;
-    private int hit =  100;
-    private Collection<String> items = new ArrayList<>(10);
+    private int hit = 100;
+    private Collection<String> items = new ArrayList<>(5);
     private Room currentRoom;
     private Scanner in = new Scanner(System.in);
 
@@ -21,21 +22,45 @@ public class Player {
 
 
     //Business Methods
-    public boolean isDesiredDirectionValid(String desiredDirection){
+    public boolean isDesiredDirectionValid(String desiredDirection) {
         boolean result = false;
         String roomName = getCurrentRoom().getName();
-        if (("Bridge".equals(roomName) && "aft".equals(desiredDirection)) || ("Engineering".equals(roomName) && "forward".equals(desiredDirection)) || getCurrentRoom().isExitAvailable(desiredDirection)){
+        if (("Bridge".equals(roomName) && "aft".equals(desiredDirection)) || ("Engineering".equals(roomName) && "forward".equals(desiredDirection)) || getCurrentRoom().isExitAvailable(desiredDirection)) {
             result = true;
         }
         return result;
     }
 
-    public String lookAt(String wall){
+    public String lookAt(String wall) {
         return getCurrentRoom().getRoomView(wall);
     }
-    public Collection<String> getCurrentRoomItems(){
-        return this.getCurrentRoom().getItems();
 
+    public Collection<String> getCurrentRoomItems() {
+        return this.getCurrentRoom().getItems();
+    }
+
+    public boolean isItemInInventory(String item) {
+        return getItems().contains(item);
+    }
+    public boolean isItemSizeOverLimit(){
+        return getItems().size() <= Player.MaxItemInventorySize;
+    }
+
+    public void pickUpItem(String item) {
+        addToInventory(item);
+    }
+
+    private void addToInventory(String item) {
+        getItems().add(item);
+    }
+
+
+    public void dropItem(String item) {
+        removeFromInventory(item);
+    }
+
+    private void removeFromInventory(String item) {
+        getItems().remove(item);
     }
 
 
