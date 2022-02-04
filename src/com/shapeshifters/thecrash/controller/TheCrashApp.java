@@ -22,6 +22,7 @@ public class TheCrashApp {
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
     private Map<String, String> directions;
+    private Map<String, String> views;
     private Map<String, Player> players;
     private Player player;
     private inspectController inspect = new inspectController();
@@ -34,7 +35,6 @@ public class TheCrashApp {
     public void execute() {
         loadWords();
         setUp();
-        viewStatus();
         startMainMenu();
         introduction();
         while (!isGameOver()) {
@@ -65,6 +65,7 @@ public class TheCrashApp {
                         case "remove":
                             break;
                         case "view":
+                            view(response);
                             break;
                         case "q":
                         case "quit":
@@ -205,6 +206,35 @@ public class TheCrashApp {
         return result;
     }
 
+    private String checkView(String[] view) {
+        String result = "null";
+        for (String word : view) {
+            if (views.containsKey(word)) {
+                result = views.get(word);
+            }
+        }
+        return result;
+    }
+
+    public void view(String[] response){
+        String viewItem = checkView(response);
+
+        if(!viewItem.equals("null")){
+            switch (viewItem) {
+                    case "map":
+                        viewMap();
+                        break;
+                    case "status":
+                        viewStatus();
+                        break;
+                    case "inventory":
+                        viewInventory();
+                        break;
+                }
+
+        }
+    }
+
     private void look(String[] response) {
         String dir = checkDirection(response);
         if (!dir.equals("null")) {
@@ -278,13 +308,18 @@ public class TheCrashApp {
         JSONParser parser = new JSONParser();
         verbs = new HashMap<>();
         directions = new HashMap<>();
+        views = new HashMap<>();
+
         try {
             Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
             Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
+            Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
             JSONObject directionWords = (JSONObject) obj1;
             JSONObject actionWords = (JSONObject) obj;
+            JSONObject viewsWords = (JSONObject) obj2;
             verbs.putAll(actionWords);
             directions.putAll(directionWords);
+            views.putAll(viewsWords);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
