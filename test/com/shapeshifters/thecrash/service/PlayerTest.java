@@ -337,19 +337,19 @@ public class PlayerTest {
 
     @Test
     public void testPickUpItemWhenEmptyAddingOneItem_shouldReturnTrue() {
-       Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+       Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"), 100,new ArrayList<>());
         assertTrue(playerPickUp.pickUpItem("Hose"));
     }
     @Test
     public void testPickUpItemWhenOneItemInCollectionAddingOneItem_shouldReturnTrue() {
-        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"), 100,new ArrayList<>());
         playerPickUp.pickUpItem("Layer");
         assertTrue(playerPickUp.pickUpItem("Hose"));
 
     }
     @Test
     public void testPickUpItemWhenTwoItemsInCollectionAddingOneItem_shouldReturnTrue() {
-        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"), 100,new ArrayList<>());
         playerPickUp.pickUpItem("Layer");
         playerPickUp.pickUpItem("Hose");
 
@@ -358,7 +358,7 @@ public class PlayerTest {
     }
     @Test
     public void testPickUpItemWhenFiveItemsInCollectionAddingOneItem_shouldReturnFalse() {
-        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"));
+        Player playerPickUp = new Player("Jane Pick Up", rooms.get("Berthing"), 100,new ArrayList<>());
         playerPickUp.pickUpItem("Layer");
         playerPickUp.pickUpItem("Hose");
         playerPickUp.pickUpItem("Wrench");
