@@ -13,15 +13,17 @@ public class Room {
     private Map<String, String> views;
     private Collection<String> items;
     private Collection<String> droppedItems;
+    private Collection<String > inventory;
 
 
     //constructors
-    public Room(String name, String description, Map<String, String> exits, Map<String, String> views, Collection<String> items) {
-        this.name = name;
+    public Room(String name, String description, Map<String, String> exits, Map<String, String> views, Collection<String> items, Collection<String> inventory) {
+        setName(name);
         setDescription(description);
         setExits(exits);
         setViews(views);
         setItems(items);
+        setInventory(inventory);
     }
 
     //Business Methods
@@ -81,6 +83,10 @@ public class Room {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Map<String, String> getViews() {
         return views;
     }
@@ -103,6 +109,14 @@ public class Room {
 
     public void setDroppedItems(Collection<String> droppedItems) {
         this.droppedItems = droppedItems;
+    }
+
+    public Collection<String> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Collection<String> inventory) {
+        this.inventory = inventory;
     }
 
     //toString()

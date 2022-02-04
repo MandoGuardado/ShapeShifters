@@ -41,10 +41,12 @@ public class PlayerTest {
                 JSONObject exitsObject = (JSONObject) roomJsonObject.get("exits");
                 JSONObject viewsObject = (JSONObject) roomJsonObject.get("views");
                 JSONArray itemsArray = (JSONArray) roomJsonObject.get("items");
+                JSONArray inventoryArray = (JSONArray) roomJsonObject.get("inventory");
                 Map<String, String> exits = new HashMap<>(exitsObject);
                 Map<String, String> views = new HashMap<>(viewsObject);
                 List<String> items = new ArrayList<>(itemsArray);
-                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views, items));
+                Collection<String> inventory = new ArrayList<>(inventoryArray);
+                setUpRoomsMap.put((String) roomJsonObject.get("name"), new Room((String) roomJsonObject.get("name"), (String) roomJsonObject.get("description"), exits, views, items, inventory));
 
             }
         } catch (IOException | ParseException e) {
