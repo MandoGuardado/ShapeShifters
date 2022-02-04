@@ -22,7 +22,6 @@ public class TheCrashApp {
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
     private Map<String, String> directions;
-    private Collection<String> items = new ArrayList<>();
     private Player player;
 
     //NO-ARG CTOR
