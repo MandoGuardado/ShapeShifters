@@ -331,7 +331,7 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    private static void viewMap() {
+    static void viewMap() {
 
         printBanner("map");
         promptEnterKey();

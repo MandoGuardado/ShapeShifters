@@ -285,6 +285,7 @@ class inspectController {
     }
 
     private void inspectMap() {
+        TheCrashApp.viewMap();
     }
 
     private void inspectPanel(Player player) {
