@@ -22,6 +22,7 @@ public class TheCrashApp {
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
     private Map<String, String> directions;
+    private Collection<String> items = new ArrayList<>();
     private Player player;
 
     //NO-ARG CTOR
@@ -247,6 +248,29 @@ public class TheCrashApp {
             }
         }
     }
+    public String getItem(String item){
+        String message = "";
+        if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInDroppedRoomInventory(item)){
+            if(player.isItemInInventory(item)){
+                message = "Item is already in the inventory";
+            }else if (player.isItemSizeOverLimit()){
+                message = "You already have the max limit of items, you need to drop one";
+            }else{
+                player.pickUpItem(item);
+                message = "You have successfully added the item to your inventory";
+            }
+        }
+        return message;
+    }
+
+    public String removeItemInRoomWhenPickedUp(String item){
+        String message = "";
+        if(player.getCurrentRoom().isItemInRoomInventory(item)){
+            message = "There's nothing to pick up in this room";
+            removeItemInRoomWhenPickedUp(item);
+        }
+        return message;
+    }
 
     @SuppressWarnings("unchecked")
     private void loadWords() {
@@ -302,7 +326,6 @@ public class TheCrashApp {
     }
 
     private static void viewInfo() {
-
         printBanner("info");
         promptEnterKey();
     }
