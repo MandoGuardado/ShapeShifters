@@ -232,6 +232,10 @@ public class TheCrashApp {
                     case "inventory":
                         viewInventory();
                         break;
+                    case "health":
+                        viewHealth();
+                        break;
+
                 }
 
         }
@@ -374,6 +378,11 @@ public class TheCrashApp {
         }else{
             System.out.println("You don't have a map in your possession.");
         }
+        promptEnterKey();
+    }
+
+    public void viewHealth() {
+        System.out.println("Current Health: " + player.getHealth());
         promptEnterKey();
     }
 
