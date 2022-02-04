@@ -70,6 +70,16 @@ public class Player {
         getItems().remove(item);
     }
 
+    public void applyDamage(long damage){
+        long updateHealth = getHealth() - damage;
+        if (updateHealth < 0){
+            setHealth(0);
+        }
+        else {
+            setHealth(updateHealth);
+        }
+    }
+
 
     //Setter and getters
 
