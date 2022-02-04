@@ -367,11 +367,12 @@ public class TheCrashApp {
     }
 
     static void viewMap(Player player) {
-        if(player.isItemInInventory("Map")){
+        if(player.isItemInInventory("map")){
             printBanner("map");
-            promptEnterKey();
+        }else{
+            System.out.println("You don't have a map in your possession.");
         }
-
+        promptEnterKey();
     }
 
     private void viewStatus(){
