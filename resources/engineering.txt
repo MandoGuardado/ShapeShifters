@@ -14,6 +14,6 @@
  |||_____________|||      | \ \ \ \ \ \|    #
  ''===============''      `""""""""""""`  #####
 
-You are in the Engineering compartment. You see a toolbox, the reactor, and a water cooling tower
-for the reactor. Under the hose that connects the cooling tower to the reactor, you can see some
-fluid on the floor.
+You are in the Engineering compartment. You see a toolbox and the ship's engine. The engine has
+a reactor and a water cooling tower for the reactor. Under the hose that connects the cooling tower
+to the reactor, you can see some fluid on the floor.
