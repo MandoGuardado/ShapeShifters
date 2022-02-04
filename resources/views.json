@@ -1,0 +1,12 @@
+{
+  "health": "health",
+  "hp": "health",
+  "hit points": "health",
+  "map": "map",
+  "directions": "map",
+  "status": "status",
+  "stats": "status",
+  "inventory": "inventory",
+  "items": "inventory",
+  "stuff": "inventory"
+}

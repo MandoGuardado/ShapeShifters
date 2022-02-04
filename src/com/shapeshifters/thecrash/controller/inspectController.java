@@ -44,7 +44,7 @@ class inspectController {
                     inspectBoard(player);
                     break;
                 case "map":
-                    inspectMap();
+                    inspectMap(player);
                     break;
                 case "panel":
                     inspectPanel(player);
@@ -284,7 +284,8 @@ class inspectController {
         prompter.prompt("\nPress Enter to continue...");
     }
 
-    private void inspectMap() {
+    private void inspectMap(Player player) {
+        TheCrashApp.viewMap(player);
     }
 
     private void inspectPanel(Player player) {
