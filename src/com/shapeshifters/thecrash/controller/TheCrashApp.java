@@ -22,6 +22,7 @@ public class TheCrashApp {
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
     private Map<String, String> directions;
+    private Map<String, Player> players;
     private Player player;
     private inspectController inspect = new inspectController();
 
@@ -94,9 +95,9 @@ public class TheCrashApp {
 
     public void setUp() {
         Map<String, Room> setUpRoomsMap = new HashMap<>();
+        JSONParser jsonparser = new JSONParser();
 
         try {
-            JSONParser jsonparser = new JSONParser();
             FileReader reader = new FileReader(String.valueOf(Path.of("resources", "rooms.json")));
             Object obj = jsonparser.parse(reader);
             JSONArray roomArray = (JSONArray) obj;
@@ -115,9 +116,30 @@ public class TheCrashApp {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
         this.setRooms(setUpRoomsMap);
-        setPlayer(new Player("Armando", getRooms().get("Berthing")));
+
+        Map<String, Player> playerSetUpMap = new HashMap<>();
+        try {
+            FileReader reader2 = new FileReader(String.valueOf(Path.of("resources", "player.json")));
+            Object obj2 = jsonparser.parse(reader2);
+            JSONArray playersArray = (JSONArray) obj2;
+            for (Object o: playersArray) {
+                JSONObject playerJsonObject = (JSONObject) o;
+                String name = (String) playerJsonObject.get("name");
+                JSONArray items = (JSONArray) playerJsonObject.get("items");
+                ArrayList<String> itemsList = new ArrayList<>(items);
+                long health = (long) playerJsonObject.get("health");
+                String currentRoom = (String) playerJsonObject.get("current room");
+                playerSetUpMap.put(name, new Player(name,getRooms().get(currentRoom),health, itemsList));
+
+            }
+
+
+        }catch (IOException | ParseException e){
+            e.printStackTrace();;
+        }
+        setPlayers(playerSetUpMap);
+        setPlayer(players.get("John"));
     }
 
 
@@ -339,5 +361,13 @@ public class TheCrashApp {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Map<String, Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Map<String, Player> players) {
+        this.players = players;
     }
 }
