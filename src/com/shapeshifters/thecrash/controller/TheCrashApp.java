@@ -33,6 +33,7 @@ public class TheCrashApp {
     public void execute() {
         loadWords();
         setUp();
+        viewStatus();
         startMainMenu();
         introduction();
         while (!isGameOver()) {
@@ -335,20 +336,26 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    private void viewStatus() {
+    private void viewStatus(){
+        writeStatus();
+        printBanner("status");
+        promptEnterKey();
+    }
 
-       String currentRoom = getCurrentRoom();
-       long health = player.getHealth();
+    private void writeStatus() {
+       String currentRoom = "Location: " + getCurrentRoom();
+       String health = "Health: " + player.getHealth();
        String items = "";
+       int counter = 1;
 
 
        for(String item : player.getItems()){
-            items += (item + "\n");
+            items += (counter + ". " + item + "\n");
+            counter++;
         }
 
        String fileName = "resources/status.txt";
-       String data = currentRoom + System.lineSeparator() + health + System.lineSeparator() + items;
-
+       String data = currentRoom + "\n" + health + "\n" + items;
 
         List<String> lines = null;
         try {
@@ -356,11 +363,19 @@ public class TheCrashApp {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         for(int i = 0; i < lines.size(); i++){
-            if(i == 1){
-                lines.set(1, data);
+            if(i > 0 && i < lines.size() - 1){
+                if(i == 1){
+                    lines.set(i, "");
+                } else {
+                    lines.remove(lines.get(i));
+                    i -=1;
+                }
             }
         }
+
+        lines.set(1, data);
         try {
             Files.write(Path.of(fileName), lines);
         } catch (IOException e) {
@@ -368,6 +383,7 @@ public class TheCrashApp {
         }
 
     }
+
 
     //GETTERS AND SETTERS
     public boolean isGameOver() {
