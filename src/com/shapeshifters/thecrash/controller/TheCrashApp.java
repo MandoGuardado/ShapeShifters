@@ -22,6 +22,7 @@ public class TheCrashApp {
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
     private Map<String, String> directions;
+    private Map<String, String> views;
     private Map<String, Player> players;
     private Player player;
     private inspectController inspect = new inspectController();
@@ -64,6 +65,7 @@ public class TheCrashApp {
                         case "remove":
                             break;
                         case "view":
+                            view(response);
                             break;
                         case "q":
                         case "quit":
@@ -204,6 +206,35 @@ public class TheCrashApp {
         return result;
     }
 
+    private String checkView(String[] view) {
+        String result = "null";
+        for (String word : view) {
+            if (views.containsKey(word)) {
+                result = views.get(word);
+            }
+        }
+        return result;
+    }
+
+    public void view(String[] response){
+        String viewItem = checkView(response);
+
+        if(!viewItem.equals("null")){
+            switch (viewItem) {
+                    case "map":
+                        viewMap(player);
+                        break;
+                    case "status":
+                        viewStatus();
+                        break;
+                    case "inventory":
+                        viewInventory();
+                        break;
+                }
+
+        }
+    }
+
     private void look(String[] response) {
         String dir = checkDirection(response);
         if (!dir.equals("null")) {
@@ -277,13 +308,18 @@ public class TheCrashApp {
         JSONParser parser = new JSONParser();
         verbs = new HashMap<>();
         directions = new HashMap<>();
+        views = new HashMap<>();
+
         try {
             Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
             Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
+            Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
             JSONObject directionWords = (JSONObject) obj1;
             JSONObject actionWords = (JSONObject) obj;
+            JSONObject viewsWords = (JSONObject) obj2;
             verbs.putAll(actionWords);
             directions.putAll(directionWords);
+            views.putAll(viewsWords);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -329,6 +365,64 @@ public class TheCrashApp {
         printBanner("info");
         promptEnterKey();
     }
+
+    static void viewMap(Player player) {
+        if(player.isItemInInventory("map")){
+            printBanner("map");
+        }else{
+            System.out.println("You don't have a map in your possession.");
+        }
+        promptEnterKey();
+    }
+
+    private void viewStatus(){
+        writeStatus();
+        printBanner("status");
+        promptEnterKey();
+    }
+
+    private void writeStatus() {
+       String currentRoom = "Location: " + getCurrentRoom();
+       String health = "Health: " + player.getHealth();
+       String items = "";
+       int counter = 1;
+
+
+       for(String item : player.getItems()){
+            items += (counter + ". " + item + "\n");
+            counter++;
+        }
+
+       String fileName = "resources/status.txt";
+       String data = currentRoom + "\n" + health + "\n" + items;
+
+        List<String> lines = null;
+        try {
+            lines = Files.readAllLines(Path.of(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i < lines.size(); i++){
+            if(i > 0 && i < lines.size() - 1){
+                if(i == 1){
+                    lines.set(i, "");
+                } else {
+                    lines.remove(lines.get(i));
+                    i -=1;
+                }
+            }
+        }
+
+        lines.set(1, data);
+        try {
+            Files.write(Path.of(fileName), lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     //GETTERS AND SETTERS
     public boolean isGameOver() {
