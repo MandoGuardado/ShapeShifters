@@ -222,7 +222,7 @@ public class TheCrashApp {
         if(!viewItem.equals("null")){
             switch (viewItem) {
                     case "map":
-                        viewMap();
+                        viewMap(player);
                         break;
                     case "status":
                         viewStatus();
@@ -366,9 +366,12 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    static void viewMap() {
-        printBanner("map");
-        promptEnterKey();
+    static void viewMap(Player player) {
+        if(player.isItemInInventory("Map")){
+            printBanner("map");
+            promptEnterKey();
+        }
+
     }
 
     private void viewStatus(){
