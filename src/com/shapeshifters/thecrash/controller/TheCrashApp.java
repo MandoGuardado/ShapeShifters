@@ -17,12 +17,13 @@ import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
     private static final Scanner in = new Scanner(System.in);
-    private boolean gameOver = false;
+    private static boolean gameOver = false;
     private String currentRoom = "Berthing";
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
     private Map<String, String> directions;
     private Player player;
+    private inspectController inspect = new inspectController();
 
     //NO-ARG CTOR
     public TheCrashApp() {
@@ -55,6 +56,7 @@ public class TheCrashApp {
                         case "use":
                             break;
                         case "inspect":
+                            inspect.inspect(response, getPlayer());
                             break;
                         case "get":
                             break;
@@ -282,7 +284,7 @@ public class TheCrashApp {
         }
     }
 
-    private static void promptEnterKey() {
+     private static void promptEnterKey() {
         System.out.println("Press \"ENTER\" to continue...");
         try {
             int read = System.in.read(new byte[2]);
@@ -311,8 +313,8 @@ public class TheCrashApp {
         return gameOver;
     }
 
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
+    public static void setGameOver(boolean gameOver) {
+        TheCrashApp.gameOver = gameOver;
     }
 
     public String getCurrentRoom() {

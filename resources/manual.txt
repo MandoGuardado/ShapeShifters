@@ -1,0 +1,21 @@
+ __________________________________________________________________
+|                                                                  |
+|              CRYO-BED OPERATION CODES                            |
+|                                                                  |
+| 1. Pilot - Can only be awakened by Main console on the Bridge.   |
+|                                                                  |
+| 2. Weapons Master - UUDDLRLRBA                     ____________--|
+|                                       ____________|              |
+| 3. Engineer - ABBACADABBA   _________|                           |
+|__________        __________|                                     |
+|          |______|                                                |
+|                                                                  |
+|                                                                  |
+|                                                                  |
+|                                                                  |
+|                                                                  |
+|                                                                  |
+|__________________________________________________________________|
+
+It appears that some ink spilled on the manual and only a few entries
+are legible.
