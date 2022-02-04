@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.*;
 
 class ShapeShiftersController {
@@ -23,20 +24,40 @@ class ShapeShiftersController {
         setUp();
     }
 
-    public boolean encounterShapeShifter() {
+    public boolean encounterShapeShifter(Player player, String item) {
         boolean didPlayerWin =false;
+        boolean isShapeShifterDead =false;
         Console.clear();
         System.out.println("\n\nYou have encountered a ShapeShifter...\n\n");
-        System.out.println("In order to surpass this obstacle you will need to answer the following questions correctly or face some damage!\n\n");
+        System.out.println("In order to obtain the item you must defeat the ShapeShifter!\n\n");
         printBanner("alien");
         promptEnterKey();
         boolean isEncounterOver = false;
         int correctAnswer = 0;
         int numberOfQuestion = 0;
+        if (player.isItemInInventory(item)){
+            System.out.println("You have a gun in your inventory do you want to use it against the ShapeShifter?");
+            String response = in.nextLine().toLowerCase();
+            if ("y".equals(response) || "yes".equals(response)){
+                System.out.println("Boom!!");
+                printBanner("shooting");
+                if (randomNumberGenerator(0,1) == 1){
+                    System.out.println("You killed the alien!");
+                    isShapeShifterDead = true;
+                }else{
+                    System.out.println("You missed and the ShapeShifter was able to get close enough to inflict some damage and has gotten away.");
+                }
+                isEncounterOver = true;
+            }
+            else{
+                System.out.println("No worries, you can still defeat the ShapeShifter by answer the following questions.");
+            }
+        }
 
         while (!isEncounterOver) {
+            System.out.println("You must answer at least 2 of the following 3 questions.");
             if (numberOfQuestion < NUMBER_OF_QUESTIONS) {
-                int randomIndex = randomNumberGenerator();
+                int randomIndex = randomNumberGenerator(0, getQuestions().size() - 1);
                 Map<String, String> question = questions.get(randomIndex);
                 questions.remove(randomIndex);
                 System.out.println("Question: " + question.get("question"));
@@ -53,14 +74,14 @@ class ShapeShiftersController {
                 isEncounterOver = true;
             }
         }
-        if (correctAnswer >= 2){
+        if (correctAnswer >= 2 || isShapeShifterDead){
             didPlayerWin =true;
-            System.out.println("You won! You have now picked up the item.");;
+            System.out.println("You won! You can now pick up the item.");;
 
         }
         else {
-            System.out.println("Nice effort, You lost and the ShapeShifter has disappeared");
-//            applyDamage();
+            System.out.println("Nice effort");
+            applyDamage(player);
         }
 
         return didPlayerWin;
@@ -122,22 +143,8 @@ class ShapeShiftersController {
         }
     }
 
-    public int randomNumberGenerator() {
-        int min = 0;
-        int max = getQuestions().size() - 1;
-
+    public int randomNumberGenerator(int min, int max) {
         return (int) Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    public static void main(String[] args) {
-        ShapeShiftersController shapShifter = new ShapeShiftersController();
-       boolean result = shapShifter.encounterShapeShifter();
-        if(result){
-            System.out.println("Great job you have won you beat the ShapeShifter");
-        }
-        else{
-            System.out.println("Better luck next time..");
-        }
-
-    }
 }
