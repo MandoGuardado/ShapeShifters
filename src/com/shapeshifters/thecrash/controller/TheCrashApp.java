@@ -262,14 +262,6 @@ public class TheCrashApp {
         return message;
     }
 
-    public String removeItemInRoomWhenPickedUp(String item){
-        String message = "";
-        if(player.getCurrentRoom().isItemInRoomInventory(item)){
-            message = "There's nothing to pick up in this room";
-            removeItemInRoomWhenPickedUp(item);
-        }
-        return message;
-    }
 
     @SuppressWarnings("unchecked")
     private void loadWords() {
