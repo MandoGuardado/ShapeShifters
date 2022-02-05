@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
-    private Prompter prompter = new Prompter(new Scanner(System.in));
+    private final Prompter prompter = new Prompter(new Scanner(System.in));
     private static final Scanner in = new Scanner(System.in);
     private static boolean gameOver = false;
     private String currentRoom = "Berthing";
@@ -27,7 +27,7 @@ public class TheCrashApp {
     private Map<String, String> views;
     private Map<String, Player> players;
     private Player player;
-    private inspectController inspect = new inspectController();
+    private final inspectController inspect = new inspectController();
 
     //NO-ARG CTOR
     public TheCrashApp() {
@@ -51,7 +51,7 @@ public class TheCrashApp {
                 if (!verb.equals("null")) {
                     switch (verb) {
                         case "go":
-                            currentRoom = go(response);
+                            setCurrentRoom(go(response));
                             break;
                         case "look":
                             look(response);
@@ -78,9 +78,10 @@ public class TheCrashApp {
                             break;
                     }
                 } else {
-                    System.out.println("Command not recognized.\n" +
-                            "Try using words like go, look, use, inspect, get, remove, and view.\n" +
-                            "For additional help enter I for information screen.");
+                    System.out.println("""
+                            Command not recognized.
+                            Try using words like go, look, use, inspect, get, remove, and view.
+                            For additional help enter I for information screen.""");
                     promptEnterKey();
                 }
             }
@@ -112,6 +113,7 @@ public class TheCrashApp {
         return result;
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public void setUp() {
         Map<String, Room> setUpRoomsMap = new HashMap<>();
         JSONParser jsonparser = new JSONParser();
@@ -157,7 +159,7 @@ public class TheCrashApp {
 
 
         }catch (IOException | ParseException e){
-            e.printStackTrace();;
+            e.printStackTrace();
         }
         setPlayers(playerSetUpMap);
         setPlayer(players.get("John"));
@@ -175,24 +177,17 @@ public class TheCrashApp {
                     System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
                     int input = in.nextInt();
                     switch (input) {
-                        case 1:
-                            result = "Berthing";
-                            break;
-                        case 2:
-                            result = "Mess Hall";
-                            break;
+                        case 1 -> result = "Berthing";
+                        case 2 -> result = "Mess Hall";
                     }
                 } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
                     System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
                     int input = in.nextInt();
-                    switch (input) {
-                        case 1:
-                            result = "Armory";
-                            break;
-                        case 2:
-                            result = "Med Bay";
-                            break;
-                    }
+                    result = switch (input) {
+                        case 1 -> "Armory";
+                        case 2 -> "Med Bay";
+                        default -> result;
+                    };
                 } else {
                     result = player.getCurrentRoom().getExits().get(dir);
                 }
@@ -209,9 +204,10 @@ public class TheCrashApp {
     }
 
     private void directionError() {
-        System.out.println("Direction not recognized.\n" +
-                "Try using words like port, starboard, forward, aft, left, right, ahead, and behind.\n" +
-                "For additional help enter I for the information screen.");
+        System.out.println("""
+                Direction not recognized.
+                Try using words like port, starboard, forward, aft, left, right, ahead, and behind.
+                For additional help enter I for the information screen.""");
         promptEnterKey();
     }
 
@@ -240,20 +236,11 @@ public class TheCrashApp {
 
         if(!viewItem.equals("null")){
             switch (viewItem) {
-                    case "map":
-                        viewMap(player);
-                        break;
-                    case "status":
-                        viewStatus();
-                        break;
-                    case "inventory":
-                        viewInventory();
-                        break;
-                    case "health":
-                        viewHealth();
-                        break;
-
-                }
+                case "map" -> viewMap(player);
+                case "status" -> viewStatus();
+                case "inventory" -> viewInventory();
+                case "health" -> viewHealth();
+            }
 
         }
     }
@@ -294,9 +281,11 @@ public class TheCrashApp {
 
                 case 2:
                     Console.clear();
-                    System.out.println("The player can move forward, aft, port, and starboard(stbd) to explore\n" +
-                            "different rooms in the ship. You have to find items by exploring the different rooms\n" +
-                            "and use those items to repair the ship!\n");
+                    System.out.println("""
+                            The player can move forward, aft, port, and starboard(stbd) to explore
+                            different rooms in the ship. You have to find items by exploring the different rooms
+                            and use those items to repair the ship!
+                            """);
                     promptEnterKey();
                     break;
 
@@ -314,7 +303,7 @@ public class TheCrashApp {
 
     public void viewInventory() {
         Collection<String> items = player.getItems();
-        if (items.size() < 0) {
+        if (items.size() == 0) {
             System.out.println("You don't have any items in your inventory");
         } else {
             int counter = 1;
@@ -373,7 +362,6 @@ public class TheCrashApp {
             e.printStackTrace();
         }
     }
-
 
     private static void pause(int seconds) {
         try {
@@ -483,10 +471,6 @@ public class TheCrashApp {
 
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    public Map<String, Player> getPlayers() {
-        return players;
     }
 
     public void setPlayers(Map<String, Player> players) {
