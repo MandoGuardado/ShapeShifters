@@ -57,6 +57,7 @@ public class TheCrashApp {
                             look(response);
                             break;
                         case "use":
+                            use(response);
                             break;
                         case "inspect":
                             inspect.inspect(response, getPlayer());
@@ -82,6 +83,21 @@ public class TheCrashApp {
                             "For additional help enter I for information screen.");
                     promptEnterKey();
                 }
+            }
+        }
+    }
+
+    private void use(String[] response) {
+        for (String word:response) {
+            if (("medkit".equals(word) || "kit".equals(word)) && player.getItems().contains("med kit")){
+                if (player.getHealth()<100){
+                        System.out.println("25 health points have been added to your health");
+                        player.getItems().remove("med kit");
+                } else {
+                        System.out.println("You are already at max health");
+                }
+            } else {
+                System.out.println("Type 'use med kit' to use the med kit and add 25 health if it is in your inventory");
             }
         }
     }

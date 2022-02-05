@@ -3,7 +3,6 @@ package com.shapeshifters.thecrash.controller;
 import com.apps.util.Console;
 import com.apps.util.Prompter;
 import com.shapeshifters.thecrash.service.Player;
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -179,6 +178,11 @@ class inspectController {
                     if ("954".equals(answer)){
                         setCabinetOpen(true);
                         System.out.println("The lock opens and you see a med kit inside the cabinet");
+                        System.out.println("med kit has been added to your inventory.\n" +
+                                "Type 'use med kit' at anytime to regain 25 health points");
+                        player.getItems().add("med kit");
+                        player.getCurrentRoom().getItems().remove("med kit");
+                        player.getCurrentRoom().getItems().remove("med kit");
                         prompter.prompt("\nPress Enter to continue...");
                         break;
                     } else if ("l".equals(answer)){
