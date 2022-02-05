@@ -1,6 +1,7 @@
 package com.shapeshifters.thecrash.controller;
 
 import com.apps.util.Console;
+import com.apps.util.Prompter;
 import com.shapeshifters.thecrash.service.Player;
 import com.shapeshifters.thecrash.service.Room;
 import org.json.simple.JSONArray;
@@ -16,6 +17,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
+    private Prompter prompter = new Prompter(new Scanner(System.in));
     private static final Scanner in = new Scanner(System.in);
     private static boolean gameOver = false;
     private String currentRoom = "Berthing";
@@ -40,8 +42,7 @@ public class TheCrashApp {
         while (!isGameOver()) {
             Console.clear();
             printBanner(currentRoom);
-            System.out.println("What would you like to do?");
-            String[] response = in.nextLine().toLowerCase().split(" ");
+            String[] response = prompter.prompt("What would you like to do?\n").toLowerCase().split(" ");
             if (response.length == 0) {
                 System.out.println("Invalid input: response must contain at least one word");
                 promptEnterKey();
