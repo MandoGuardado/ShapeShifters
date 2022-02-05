@@ -3,6 +3,7 @@ package com.shapeshifters.thecrash.controller;
 import com.apps.util.Console;
 import com.apps.util.Prompter;
 import com.shapeshifters.thecrash.service.Player;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,74 +31,79 @@ class inspectController {
 
     public void inspect(String[] input, Player player){
         String item = itemChecker(input);
-        if (player.getCurrentRoom().getItems().contains(item) ||
-                player.getCurrentRoom().getDroppedItems().contains(item) ||
-                player.getItems().contains(item)){
-            switch (item){
-                case "pods":
-                    inspectPods();
-                    break;
-                case "locker":
-                    inspectLocker(player);
-                    break;
-                case "board":
-                    inspectBoard(player);
-                    break;
-                case "map":
-                    inspectMap(player);
-                    break;
-                case "panel":
-                    inspectPanel(player);
-                    break;
-                case "seat":
-                    inspectSeat(player);
-                    break;
-                case "rack":
-                    inspectRack(player);
-                    break;
-                case "stove":
-                    inspectStove(player);
-                    break;
-                case "fryer":
-                    inspectFryer(player);
-                    break;
-                case "manual":
-                    inspectManual();
-                    break;
-                case "desk":
-                    inspectDesk(player);
-                    break;
-                case "cabinet":
-                    inspectCabinet(player);
-                    break;
-                case "medkit":
-                    inspectMedkit();
-                    break;
-                case "container":
-                    inspectContainer(player);
-                    break;
-                case "shelf":
-                    inspectShelf(player);
-                    break;
-                case "toolbox":
-                    inspectToolbox(player);
-                    break;
-                case "engine":
-                    inspectEngine(player);
-                    break;
-                case "bolt cutter":
-                case "bucket":
-                case "screwdriver":
-                case "wire":
-                case "tray":
-                case "pot":
-                case "paper clip":
-                case "bed":
-                case "bubble gum":
-                    inspectGeneric(item);
-                    break;
-        }
+        if(!"null".equals(item)){
+            if (player.getCurrentRoom().getItems().contains(item) ||
+                    player.getCurrentRoom().getDroppedItems().contains(item) ||
+                    player.getItems().contains(item)){
+                switch (item){
+                    case "pods":
+                        inspectPods();
+                        break;
+                    case "locker":
+                        inspectLocker(player);
+                        break;
+                    case "board":
+                        inspectBoard(player);
+                        break;
+                    case "map":
+                        inspectMap(player);
+                        break;
+                    case "panel":
+                        inspectPanel(player);
+                        break;
+                    case "seat":
+                        inspectSeat(player);
+                        break;
+                    case "rack":
+                        inspectRack(player);
+                        break;
+                    case "stove":
+                        inspectStove(player);
+                        break;
+                    case "fryer":
+                        inspectFryer(player);
+                        break;
+                    case "manual":
+                        inspectManual();
+                        break;
+                    case "desk":
+                        inspectDesk(player);
+                        break;
+                    case "cabinet":
+                        inspectCabinet(player);
+                        break;
+                    case "medkit":
+                        inspectMedkit();
+                        break;
+                    case "container":
+                        inspectContainer(player);
+                        break;
+                    case "shelf":
+                        inspectShelf(player);
+                        break;
+                    case "toolbox":
+                        inspectToolbox(player);
+                        break;
+                    case "engine":
+                        inspectEngine(player);
+                        break;
+                    case "bolt cutter":
+                    case "bucket":
+                    case "screwdriver":
+                    case "wire":
+                    case "tray":
+                    case "pot":
+                    case "paper clip":
+                    case "bed":
+                    case "bubble gum":
+                        inspectGeneric(item);
+                        break;
+                }
+            }
 
+        }else {
+            System.out.println("Invalid Object: Try typing the names of items in the room description.");
+            prompter.prompt("Press ENTER to continue...");
         }
     }
 
@@ -207,7 +213,7 @@ class inspectController {
     }
 
     private void inspectContainer(Player player) {
-        if (player.getCurrentRoom().getItems().contains("gum")){
+        if (player.getCurrentRoom().getItems().contains("bubble gum")){
             System.out.println("Inside the crew storage container you see a pack of bubblegum.");
         } else {
             System.out.println("The container is now empty");
