@@ -22,8 +22,8 @@
   "desk": "desk",
   "medicine": "cabinet",
   "cabinet": "cabinet",
-  "medkit": "medkit",
-  "kit": "medkit",
+  "medkit": "med kit",
+  "kit": "med kit",
   "storage": "container",
   "container": "container",
   "containers": "container",
@@ -52,5 +52,8 @@
   "gum": "bubble gum",
   "bubblegum": "bubble gum",
   "bucket": "bucket",
-  "pail": "bucket"
+  "pail": "bucket",
+  "soldering": "soldering iron",
+  "iron": "soldering iron",
+  "solderingiron": "soldering iron"
 }

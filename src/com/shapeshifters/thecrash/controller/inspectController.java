@@ -108,21 +108,27 @@ class inspectController {
 
     private void inspectStove(Player player) {
         if (player.getCurrentRoom().getItems().contains("pot")){
-            System.out.println("You see a stove with a large empty pot on one of the burners.\n" +
-                    "It appears as though the crash must have damaged it because it won't turn on.\n");
+            System.out.println("""
+                    You see a stove with a large empty pot on one of the burners.
+                    It appears as though the crash must have damaged it because it won't turn on.
+                    """);
         } else {
-            System.out.println("You see a stove with 4 large burners.\n" +
-                    "It appears as though the crash must have damaged it because it won't turn on.\n");
+            System.out.println("""
+                    You see a stove with 4 large burners.
+                    It appears as though the crash must have damaged it because it won't turn on.
+                    """);
         }
         prompter.prompt("\nPress Enter to continue...");
     }
 
     private void inspectFryer(Player player) {
         if (!isFryerEmpty()){
-            System.out.println("It looks like the cook forgot to drain the old oil from the fryer.\n" +
-                    "There is a valve on the side of the fryer that is used for draining the oil.\n" +
-                    "When you try to operate the valve, you get an error that says:\n" +
-                    "Container must be in place before fryer will drain.\n");
+            System.out.println("""
+                    It looks like the cook forgot to drain the old oil from the fryer.
+                    There is a valve on the side of the fryer that is used for draining the oil.
+                    When you try to operate the valve, you get an error that says:
+                    Container must be in place before fryer will drain.
+                    """);
             if(player.getItems().contains("pot") || player.getItems().contains("bucket")){
                 System.out.println("\nIt looks like you might have something in your inventory that would work.");
                 String container;
@@ -340,9 +346,11 @@ class inspectController {
             if (!isEngineFixed){
                 System.out.println("SYSTEM ERROR: ENGINE NEEDS TO BE FIXED BEFORE START UP SEQUENCE CAN BEGIN");
             } else {
-                System.out.println("SYSTEM START-UP SEQUENCE COMPLETE - ALL SYSTEMS GO\n" +
-                        "\nPRESS 1 TO WAKE THE PILOT\n" +
-                        "PRESS 2 TO ACTIVATE SELF-DESTRUCT");
+                System.out.println("""
+                        SYSTEM START-UP SEQUENCE COMPLETE - ALL SYSTEMS GO
+
+                        PRESS 1 TO WAKE THE PILOT
+                        PRESS 2 TO ACTIVATE SELF-DESTRUCT""");
                 String answer = prompter.prompt(">> ","[1-2]","INVALID SELECTION");
                 switch (answer){
                     case "1":
@@ -354,6 +362,7 @@ class inspectController {
                         TheCrashApp.setGameOver(true);
                         break;
                 }
+
             }
         }
         prompter.prompt("\nPress Enter to continue...");
@@ -393,17 +402,22 @@ class inspectController {
     }
 
     private void inspectPods(){
-        System.out.println("Which pod would you like to inspect?\n" +
-                "\n1. Pilot\n" +
-                "2. Doctor\n" +
-                "3. Engineer\n" +
-                "4. Cook\n" +
-                "5. Weapon's Master\n");
+        System.out.println("""
+                Which pod would you like to inspect?
+
+                1. Pilot
+                2. Doctor
+                3. Engineer
+                4. Cook
+                5. Weapon's Master
+                """);
         String answer = prompter.prompt(">> ","[1-5]", "Please select between 1 and 5.");
         if ("5".equals(answer)) {
             if (!isPodOpen()){
-                System.out.println("It looks like the Weapons Master's pod was damaged during the crash\n" +
-                        "His vitals don't look good, you should probably use the keypad to wake him.\n");
+                System.out.println("""
+                        It looks like the Weapons Master's pod was damaged during the crash
+                        His vitals don't look good, you should probably use the keypad to wake him.
+                        """);
                 String response = prompter.prompt("\nWould you like to enter the code to wake the Weapons Master? (y/n)",
                         "y|Y|n|N","Please select Y or N.").toLowerCase();
                 if ("y".equals(response)){
@@ -413,10 +427,11 @@ class inspectController {
                             break;
                         } else if ("UUDDLRLRBA".equals(answer1)){
                             setPodOpen(true);
-                            System.out.println("The pod opens and the Weapons Master jolt's awake.\n" +
-                                    "He clutches his chest and stumbles aft towards the Armory\n" +
-                                    "You hear a beep, a click, and then a thud as the Weapon's Master\n" +
-                                    "falls over, dead.");
+                            System.out.println("""
+                                    The pod opens and the Weapons Master jolt's awake.
+                                    He clutches his chest and stumbles aft towards the Armory
+                                    You hear a beep, a click, and then a thud as the Weapon's Master
+                                    falls over, dead.""");
                             break;
                         }
                     }
@@ -464,15 +479,6 @@ class inspectController {
             }
         }
         prompter.prompt("\nPress Enter to continue...");
-    }
-
-    private static void promptEnterKey() {
-        System.out.println("Press \"ENTER\" to continue...");
-        try {
-            int read = System.in.read(new byte[2]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean isFryerEmpty() {
