@@ -96,6 +96,9 @@ public class TheCrashApp {
         for (String word:response) {
             if (("medkit".equals(word) || "kit".equals(word)) && player.getItems().contains("med kit")){
                 if (player.getHealth()<100){
+                        long health = player.getHealth();
+                        health += 25;
+                        player.setHealth(health);
                         System.out.println("25 health points have been added to your health");
                         player.getItems().remove("med kit");
                 } else {
