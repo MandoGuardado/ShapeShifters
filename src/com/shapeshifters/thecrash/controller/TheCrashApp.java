@@ -444,7 +444,7 @@ public class TheCrashApp {
     }
 
     static void viewMap(Player player) {
-        if(player.isItemInItems("map")){
+        if(player.isItemInInventory("map")){
             printBanner("map");
         }else{
             System.out.println("You don't have a map in your possession.");

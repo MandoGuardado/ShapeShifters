@@ -41,7 +41,7 @@ public class Player {
         return this.getCurrentRoom().getItems();
     }
 
-    public boolean isItemInItems(String item) {
+    public boolean isItemInInventory(String item) {
         return getItems().contains(item);
     }
     public boolean isItemSizeUnderLimit(){

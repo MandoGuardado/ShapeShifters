@@ -34,7 +34,7 @@ class ShapeShiftersController {
         boolean isEncounterOver = false;
         int correctAnswer = 0;
         int numberOfQuestion = 0;
-        if (player.isItemInItems("gun")){
+        if (player.isItemInInventory("gun")){
             System.out.println("You have a gun in your inventory do you want to use it against the ShapeShifter?");
             String response = in.nextLine().toLowerCase();
             if ("y".equals(response) || "yes".equals(response)){
