@@ -47,22 +47,7 @@ public class Room {
         getDroppedItems().add(item);
     }
 
-    public String removedItemDroppedInv(String item){
-        String message ="Item has been picked up from the floor.";
-        getDroppedItems().remove(item);
-        return message;
-    }
-    public String removedItemInItemList(String item){
-        String message ="Item has been removed from item list";
-        getItems().remove(item);
-        return message;
-    }
 
-    public String removeItemInInventoryItems(String item){
-        String message = "Item has been removed from Inventory list.";
-        getInventory().remove(item);
-        return message;
-    }
 
 
 
