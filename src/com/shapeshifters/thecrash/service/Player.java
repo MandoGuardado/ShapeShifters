@@ -51,22 +51,22 @@ public class Player {
     public boolean pickUpItem(String item) {
         boolean result = false;
         if (isItemSizeUnderLimit()){
-            addToItems(item);
+            addToInventory(item);
             result = true;
         }
         return result;
     }
 
-    private void addToItems(String item) {
+    private void addToInventory(String item) {
         getItems().add(item);
     }
 
 
     public void dropItem(String item) {
-        removeFromItems(item);
+        removeFromInventory(item);
     }
 
-    private void removeFromItems(String item) {
+    private void removeFromInventory(String item) {
         getItems().remove(item);
     }
 
