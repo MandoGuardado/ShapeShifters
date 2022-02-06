@@ -326,7 +326,7 @@ public class TheCrashApp {
         String item = itemChecker(response);
         String message = "";
         if(!item.equals("null")){
-            if(player.getCurrentRoom().isItemInRoomItems(item) || player.getCurrentRoom().isItemInRoomDroppedItems(item)){
+            if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInRoomDroppedItems(item)){
                 if(player.getItems().contains(item)){
                     message = "Item is already in the inventory";
                 }else if (!player.isItemSizeUnderLimit()){

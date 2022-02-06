@@ -43,7 +43,7 @@ public class Room {
        return getDroppedItems().contains(item);
     }
 
-    public void addToRoomDroppedItems(String item){
+    public void addToDroppedItemInventory(String item){
         getDroppedItems().add(item);
     }
 
