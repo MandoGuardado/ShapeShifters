@@ -1,9 +1,6 @@
 package com.shapeshifters.thecrash.service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Room {
     //Fields
@@ -12,7 +9,7 @@ public class Room {
     private Map<String, String> exits;
     private Map<String, String> views;
     private Collection<String> items;
-    private Collection<String> droppedItems;
+    private Collection<String> droppedItems = new ArrayList<>();
     private Collection<String > inventory;
 
 
