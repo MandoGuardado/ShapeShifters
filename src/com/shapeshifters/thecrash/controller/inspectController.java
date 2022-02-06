@@ -305,15 +305,15 @@ class inspectController {
                 System.out.println("Looks like you will need a screwdriver to get this panel open to see what's wrong.");
             } else {
                 System.out.println("You use your screwdriver to pop the panel open and notice a broken wire.");
-                if (player.isItemInInventory("wire") || player.isItemInInventory("paper clip") &&
+                if ((player.isItemInInventory("wire") || player.isItemInInventory("paper clip")) &&
                         (!player.isItemInInventory("soldering iron") && !player.isItemInInventory("bubble gum"))){
                     System.out.println("It looks like you have something that can be used as a wire,\n" +
                             "but you will need something to connect the wire to the contact points.");
                 }else if ((!player.isItemInInventory("wire") && !player.isItemInInventory("paper clip")) &&
-                        player.isItemInInventory("soldering iron") || player.isItemInInventory("bubble gum")){
+                        (player.isItemInInventory("soldering iron") || player.isItemInInventory("bubble gum"))){
                     System.out.println("It looks like you have something that can connect a wire to the contact points,\n" +
                             "now all you need is something to use as a wire");
-                } else if (!player.isItemInInventory("wire") && player.isItemInInventory("paper clip") &&
+                } else if (!player.isItemInInventory("wire") && !player.isItemInInventory("paper clip") &&
                         !player.isItemInInventory("soldering iron") && !player.isItemInInventory("bubble gum")){
                     System.out.println("You will need to find something that can be used as a wire and something to\n" +
                             "connect the wire to the contact points.");
@@ -464,15 +464,6 @@ class inspectController {
             }
         }
         prompter.prompt("\nPress Enter to continue...");
-    }
-
-    private static void promptEnterKey() {
-        System.out.println("Press \"ENTER\" to continue...");
-        try {
-            int read = System.in.read(new byte[2]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean isFryerEmpty() {

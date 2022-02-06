@@ -82,10 +82,9 @@ public class TheCrashApp {
                             break;
                     }
                 } else {
-                    System.out.println("""
-                            Command not recognized.
-                            Try using words like go, look, use, inspect, get, remove, and view.
-                            For additional help enter I for information screen.""");
+                    System.out.println(" Command not recognized.\n" +
+                            "Try using words like go, look, use, inspect, get, remove, and view.\n" +
+                            "For additional help enter I for information screen.");
                     promptEnterKey();
                 }
             }
@@ -181,17 +180,24 @@ public class TheCrashApp {
                     System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
                     int input = in.nextInt();
                     switch (input) {
-                        case 1 -> result = "Berthing";
-                        case 2 -> result = "Mess Hall";
+                        case 1:
+                            result = "Berthing";
+                            break;
+                        case 2:
+                            result = "Mess Hall";
+                            break;
                     }
                 } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
                     System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
                     int input = in.nextInt();
-                    result = switch (input) {
-                        case 1 -> "Armory";
-                        case 2 -> "Med Bay";
-                        default -> result;
-                    };
+                    switch (input) {
+                        case 1:
+                            result ="Armory";
+                            break;
+                        case 2:
+                            result = "Med Bay";
+                            break;
+                    }
                 } else {
                     result = player.getCurrentRoom().getExits().get(dir);
                 }
@@ -208,10 +214,9 @@ public class TheCrashApp {
     }
 
     private void directionError() {
-        System.out.println("""
-                Direction not recognized.
-                Try using words like port, starboard, forward, aft, left, right, ahead, and behind.
-                For additional help enter I for the information screen.""");
+        System.out.println("Direction not recognized.\n" +
+                "Try using words like port, starboard, forward, aft, left, right, ahead, and behind.\n" +
+                "For additional help enter I for the information screen.");
         promptEnterKey();
     }
 
@@ -240,10 +245,18 @@ public class TheCrashApp {
 
         if(!viewItem.equals("null")){
             switch (viewItem) {
-                case "map" -> viewMap(player);
-                case "status" -> viewStatus();
-                case "inventory" -> viewInventory();
-                case "health" -> viewHealth();
+                case "map":
+                    viewMap(player);
+                    break;
+                case "status":
+                    viewStatus();
+                    break;
+                case "inventory":
+                    viewInventory();
+                    break;
+                case "health":
+                    viewHealth();
+                    break;
             }
 
         }
@@ -285,11 +298,9 @@ public class TheCrashApp {
 
                 case 2:
                     Console.clear();
-                    System.out.println("""
-                            The player can move forward, aft, port, and starboard(stbd) to explore
-                            different rooms in the ship. You have to find items by exploring the different rooms
-                            and use those items to repair the ship!
-                            """);
+                    System.out.println("The player can move forward, aft, port, and starboard(stbd) to explore\n" +
+                            "different rooms in the ship. You have to find items by exploring the different rooms\n" +
+                            "and use those items to repair the ship.");
                     promptEnterKey();
                     break;
 
@@ -317,6 +328,7 @@ public class TheCrashApp {
                 counter++;
             }
         }
+        promptEnterKey();
     }
 
     public void pickUpItem(String[] response){
@@ -349,7 +361,9 @@ public class TheCrashApp {
         }else{
             message = "Invalid item, is the item spelled correctly?";
         }
+        promptEnterKey();
         return message;
+
     }
 
     private String itemChecker(String[] response) {
@@ -399,7 +413,7 @@ public class TheCrashApp {
             Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
             Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
             Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
-            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "items.json")))));
+            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "inventory.json")))));
             Object obj4 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "shapeshifters.json")))));
 
             JSONObject directionWords = (JSONObject) obj1;
