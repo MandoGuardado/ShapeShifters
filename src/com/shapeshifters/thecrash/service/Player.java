@@ -41,7 +41,7 @@ public class Player {
         return this.getCurrentRoom().getItems();
     }
 
-    public boolean isItemInInventory(String item) {
+    public boolean isItemInItems(String item) {
         return getItems().contains(item);
     }
     public boolean isItemSizeUnderLimit(){
@@ -51,22 +51,22 @@ public class Player {
     public boolean pickUpItem(String item) {
         boolean result = false;
         if (isItemSizeUnderLimit()){
-            addToInventory(item);
+            addToItems(item);
             result = true;
         }
         return result;
     }
 
-    private void addToInventory(String item) {
+    private void addToItems(String item) {
         getItems().add(item);
     }
 
 
     public void dropItem(String item) {
-        removeFromInventory(item);
+        removeFromItems(item);
     }
 
-    private void removeFromInventory(String item) {
+    private void removeFromItems(String item) {
         getItems().remove(item);
     }
 

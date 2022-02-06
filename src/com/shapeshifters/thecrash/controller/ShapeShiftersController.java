@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.spec.RSAOtherPrimeInfo;
 import java.util.*;
 
 class ShapeShiftersController {
@@ -35,7 +34,7 @@ class ShapeShiftersController {
         boolean isEncounterOver = false;
         int correctAnswer = 0;
         int numberOfQuestion = 0;
-        if (player.isItemInInventory("gun")){
+        if (player.isItemInItems("gun")){
             System.out.println("You have a gun in your inventory do you want to use it against the ShapeShifter?");
             String response = in.nextLine().toLowerCase();
             if ("y".equals(response) || "yes".equals(response)){
@@ -76,7 +75,7 @@ class ShapeShiftersController {
         }
         if (correctAnswer >= 2 || isShapeShifterDead){
             didPlayerWin =true;
-            System.out.println("You won! You can now pick up the item.");;
+            System.out.println("You won! You can now pick up the item.");
 
         }
         else {

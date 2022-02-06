@@ -66,7 +66,7 @@ public class TheCrashApp {
                             inspect.inspect(response, getPlayer());
                             break;
                         case "get":
-                            getItem(response);
+                            pickUpItem(response);
                             break;
                         case "remove":
                             break;
@@ -318,11 +318,15 @@ public class TheCrashApp {
             }
         }
     }
+
+    public void pickUpItem(String[] response){
+        System.out.println(getItem(response));
+    }
     public String getItem(String[] response){
         String item = itemChecker(response);
         String message = "";
         if(!item.equals("null")){
-            if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInDroppedRoomInventory(item)){
+            if(player.getCurrentRoom().isItemInRoomItems(item) || player.getCurrentRoom().isItemInRoomDroppedItems(item)){
                 if(player.getItems().contains(item)){
                     message = "Item is already in the inventory";
                 }else if (!player.isItemSizeUnderLimit()){
@@ -440,7 +444,7 @@ public class TheCrashApp {
     }
 
     static void viewMap(Player player) {
-        if(player.isItemInInventory("map")){
+        if(player.isItemInItems("map")){
             printBanner("map");
         }else{
             System.out.println("You don't have a map in your possession.");

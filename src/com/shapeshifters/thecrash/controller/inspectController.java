@@ -246,13 +246,13 @@ class inspectController {
     private void inspectEngine(Player player) {
         if (!isEngineFixed()){
             System.out.println("It looks like the hose that connects the cooling tower to the reactor burst");
-            if (player.isItemInInventory("screwdriver") && !player.isItemInInventory("hose")){
+            if (player.isItemInItems("screwdriver") && !player.isItemInItems("hose")){
                 System.out.println("You have a screwdriver to remove the clamps holding the old hose in place,\n" +
                         "but you still need a new hose to replace the broken one.");
-            } else if (player.isItemInInventory("hose") && !player.isItemInInventory("screwdriver")){
+            } else if (player.isItemInItems("hose") && !player.isItemInItems("screwdriver")){
                 System.out.println("You have a hose that can be used to replace the broken one,\n" +
                         "but you need a screwdriver to remove the clamps holding the hose in place.");
-            } else if (!player.isItemInInventory("hose") && !player.isItemInInventory("screwdriver")){
+            } else if (!player.isItemInItems("hose") && !player.isItemInItems("screwdriver")){
                 System.out.println("You will need a new hose to replace the broken one and a screwdriver\n" +
                         "to remove the clamps holding the hose in place");
             } else {
@@ -301,20 +301,20 @@ class inspectController {
     private void inspectPanel(Player player) {
         if (!isPanelFixed()){
             System.out.println("There are scorch marks around the edges of the panel.");
-            if (!player.isItemInInventory("screwdriver")){
+            if (!player.isItemInItems("screwdriver")){
                 System.out.println("Looks like you will need a screwdriver to get this panel open to see what's wrong.");
             } else {
                 System.out.println("You use your screwdriver to pop the panel open and notice a broken wire.");
-                if (player.isItemInInventory("wire") || player.isItemInInventory("paper clip") &&
-                        (!player.isItemInInventory("soldering iron") && !player.isItemInInventory("bubble gum"))){
+                if (player.isItemInItems("wire") || player.isItemInItems("paper clip") &&
+                        (!player.isItemInItems("soldering iron") && !player.isItemInItems("bubble gum"))){
                     System.out.println("It looks like you have something that can be used as a wire,\n" +
                             "but you will need something to connect the wire to the contact points.");
-                }else if ((!player.isItemInInventory("wire") && !player.isItemInInventory("paper clip")) &&
-                        player.isItemInInventory("soldering iron") || player.isItemInInventory("bubble gum")){
+                }else if ((!player.isItemInItems("wire") && !player.isItemInItems("paper clip")) &&
+                        player.isItemInItems("soldering iron") || player.isItemInItems("bubble gum")){
                     System.out.println("It looks like you have something that can connect a wire to the contact points,\n" +
                             "now all you need is something to use as a wire");
-                } else if (!player.isItemInInventory("wire") && player.isItemInInventory("paper clip") &&
-                        !player.isItemInInventory("soldering iron") && !player.isItemInInventory("bubble gum")){
+                } else if (!player.isItemInItems("wire") && player.isItemInItems("paper clip") &&
+                        !player.isItemInItems("soldering iron") && !player.isItemInItems("bubble gum")){
                     System.out.println("You will need to find something that can be used as a wire and something to\n" +
                             "connect the wire to the contact points.");
                 } else {
@@ -322,8 +322,8 @@ class inspectController {
                     String answer = prompter.prompt("\nWould you like to repair the control panel? (y/n)",
                             "y|Y|n|N","Please select Y or N.").toLowerCase();
                     if ("y".equals(answer)){
-                        String wire = player.isItemInInventory("wire") ? "wire":"paper clip";
-                        String connector = player.isItemInInventory("soldering iron") ? "soldering iron":"bubble gum";
+                        String wire = player.isItemInItems("wire") ? "wire":"paper clip";
+                        String connector = player.isItemInItems("soldering iron") ? "soldering iron":"bubble gum";
                         player.getItems().remove(wire);
                         player.getItems().remove(connector);
                         setPanelFixed(true);
