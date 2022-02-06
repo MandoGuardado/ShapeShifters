@@ -1,5 +1,6 @@
 {
   "bolt-cutter": "bolt cutter",
+  "bolt cutter": "bolt cutter",
   "cutter": "bolt cutter",
   "cutters": "bolt cutter",
   "bolt": "bolt cutter",
@@ -9,5 +10,6 @@
   "wires": "wire",
   "soldering-iron": "soldering iron",
   "soldering": "soldering iron",
-  "iron": "soldering iron"
+  "iron": "soldering iron",
+  "soldering iron":"soldering iron"
 }
