@@ -66,8 +66,8 @@
       "port": "You see a desk.",
       "stbd": "You see a door that leads to the Armory and a locked medical cabinet."
     },
-    "inventory": ["bolt cutter", "medkit", "manual", "paper clip"],
-    "items": ["bolt cutter", "medkit", "manual", "paper clip", "desk", "cabinet"]
+    "inventory": ["bolt cutter", "med kit", "manual", "paper clip"],
+    "items": ["bolt cutter", "med kit", "manual", "paper clip", "desk", "cabinet"]
   },
   {
     "name": "Engineering",
