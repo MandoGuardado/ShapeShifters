@@ -24,6 +24,7 @@ public class TheCrashApp {
     private Map<String, String> directions;
     private Map<String, String> views;
     private Map<String, Player> players;
+    private Map<String, String> items;
     private Player player;
     private inspectController inspect = new inspectController();
 
@@ -306,6 +307,47 @@ public class TheCrashApp {
                 System.out.println((counter) + ". " + item);
                 counter++;
             }
+        }
+    }
+    public String getItem(String[] response){
+        String item = itemChecker(response);
+        String message = "";
+        if(!item.equals("null")){
+            if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInDroppedRoomInventory(item)){
+                if(player.getItems().contains(item)){
+                    message = "Item is already in the inventory";
+                }else if (!player.isItemSizeUnderLimit()){
+                    message = "You already have the max limit of items, you need to drop one";
+                }else{
+                    player.pickUpItem(item);
+                    removeItemInRoomWhenPickedUp(item);
+                    message = "You have successfully added the item to your inventory";
+                }
+            }else{
+                message = "item is not in the current room, please go the room where the item is located";
+            }
+        }else{
+            message = "Invalid item, is the item spelled correctly?";
+        }
+        return message;
+    }
+
+    private String itemChecker(String[] response) {
+        String result = "null";
+        for (String word: response) {
+            if (items.containsKey(word)) {
+                result = items.get(word);
+            }
+        }
+        return result;
+    }
+
+    public void removeItemInRoomWhenPickedUp(String item) {
+        if (player.getCurrentRoom().getDroppedItems().contains(item)) {
+            player.getCurrentRoom().getDroppedItems().remove(item);
+        } else {
+            player.getCurrentRoom().getInventory().remove(item);
+            player.getCurrentRoom().getItems().remove(item);
         }
     }
 
