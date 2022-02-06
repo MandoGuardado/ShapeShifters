@@ -381,7 +381,7 @@ public class TheCrashApp {
             Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
             Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
             Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
-            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "items.json")))));
+            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "inventory.json")))));
             Object obj4 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "shapeshifters.json")))));
 
             JSONObject directionWords = (JSONObject) obj1;
