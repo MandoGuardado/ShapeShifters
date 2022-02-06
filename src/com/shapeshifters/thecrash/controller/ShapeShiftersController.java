@@ -54,21 +54,37 @@ class ShapeShiftersController {
         }
 
         while (!isEncounterOver) {
-            System.out.println("You must answer at least 2 of the following 3 questions.");
+
             if (numberOfQuestion < NUMBER_OF_QUESTIONS) {
                 int randomIndex = randomNumberGenerator(0, getQuestions().size() - 1);
                 Map<String, String> question = questions.get(randomIndex);
-                questions.remove(randomIndex);
                 System.out.println("Question: " + question.get("question"));
                 System.out.println("What will it be True or False?");
                 String response = in.nextLine().toLowerCase();
-                if (question.get("answer").equals(response)) {
-                    System.out.println("Nice Job! You are correct.");
-                    correctAnswer++;
-                }else{
-                    System.out.println("Sorry wrong answer!");
+                String answer = "null";
+
+                if ("true".equals(response) || "t".equals(response)){
+                    answer = "true";
+                }else if ("false".equals(response) || "f".equals(response)){
+                    answer = "false";
                 }
-                numberOfQuestion++;
+
+                if (!"null".equals(answer)){
+                    questions.remove(randomIndex);
+                    if (question.get("answer").equals(answer)) {
+                        System.out.println("Nice Job! You are correct.");
+                        correctAnswer++;
+                    }
+                    else{
+                        System.out.println("Sorry wrong answer!");
+
+                    }
+                    numberOfQuestion++;
+                }
+                else{
+                    System.out.println("Invalid response. Enter valid response such as 'true (t)'  or 'false(f)'.");
+                }
+
             } else {
                 isEncounterOver = true;
             }
@@ -87,6 +103,7 @@ class ShapeShiftersController {
     }
 
     private void applyDamage(Player player) {
+        System.out.println("Your health will decrease by 25%");
         player.applyDamage(25);
     }
 
