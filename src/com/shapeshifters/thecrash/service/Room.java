@@ -32,10 +32,14 @@ public class Room {
         return getViews().get(side);
     }
 
-    public boolean isItemInRoomInventory(String item){
+    public boolean isItemInRoomItems(String item){
         return getItems().contains(item);
     }
-    public boolean isItemInDroppedRoomInventory(String item){
+
+    public boolean isItemInRoomInventory(String item){
+        return getInventory().contains(item);
+    }
+    public boolean isItemInRoomDroppedItems(String item){
        return getDroppedItems().contains(item);
     }
 
@@ -43,16 +47,7 @@ public class Room {
         getDroppedItems().add(item);
     }
 
-    public String removedItemDroppedInv(String item){
-        String message ="Item has been picked up from the floor.";
-        getDroppedItems().remove(item);
-        return message;
-    }
-    public String removedItemInv(String item){
-        String message ="Item has been picked up.";
-        getItems().remove(item);
-        return message;
-    }
+
 
 
 

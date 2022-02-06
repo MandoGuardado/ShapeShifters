@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.spec.RSAOtherPrimeInfo;
 import java.util.*;
 
 class ShapeShiftersController {
@@ -76,7 +75,7 @@ class ShapeShiftersController {
         }
         if (correctAnswer >= 2 || isShapeShifterDead){
             didPlayerWin =true;
-            System.out.println("You won! You can now pick up the item.");;
+            System.out.println("You won! You can now pick up the item.");
 
         }
         else {
