@@ -69,6 +69,7 @@ public class TheCrashApp {
                             pickUpItem(response);
                             break;
                         case "remove":
+                            removeItem(response);
                             break;
                         case "view":
                             view(response);
@@ -333,7 +334,9 @@ public class TheCrashApp {
 
     public void pickUpItem(String[] response){
         System.out.println(getItem(response));
+        promptEnterKey();
     }
+
     public String getItem(String[] response){
         String item = itemChecker(response);
         String message = "";
@@ -361,9 +364,7 @@ public class TheCrashApp {
         }else{
             message = "Invalid item, is the item spelled correctly?";
         }
-        promptEnterKey();
         return message;
-
     }
 
     private String itemChecker(String[] response) {
