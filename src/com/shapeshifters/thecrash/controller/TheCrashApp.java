@@ -356,6 +356,20 @@ public class TheCrashApp {
             player.getCurrentRoom().getItems().remove(item);
         }
     }
+    public void removeItem(String[] response){
+        String item = itemChecker(response);
+        if(!item.equals("null")){
+            if(player.isItemInInventory(item)){
+                player.dropItem(item);
+                player.getCurrentRoom().addToDroppedItemInventory(item);
+            }
+        }else{
+            System.out.println("item invalid, please check your spelling");
+        }
+
+    }
+
+
 
     @SuppressWarnings("unchecked")
     private void loadWords() {
