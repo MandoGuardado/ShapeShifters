@@ -26,8 +26,11 @@ public class TheCrashApp {
     private Map<String, String> directions;
     private Map<String, String> views;
     private Map<String, Player> players;
+    private Map<String, String> items;
+    private Map<String, String> shapeShifters;
     private Player player;
     private final inspectController inspect = new inspectController();
+    private ShapeShiftersController shapeShiftersController = new ShapeShiftersController();
 
     //NO-ARG CTOR
     public TheCrashApp() {
@@ -63,6 +66,7 @@ public class TheCrashApp {
                             inspect.inspect(response, getPlayer());
                             break;
                         case "get":
+                            getItem(response);
                             break;
                         case "remove":
                             break;
@@ -314,6 +318,55 @@ public class TheCrashApp {
             }
         }
     }
+    public String getItem(String[] response){
+        String item = itemChecker(response);
+        String message = "";
+        if(!item.equals("null")){
+            if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInDroppedRoomInventory(item)){
+                if(player.getItems().contains(item)){
+                    message = "Item is already in the inventory";
+                }else if (!player.isItemSizeUnderLimit()){
+                    message = "You already have the max limit of items, you need to drop one";
+                }else{
+                    boolean didWin = true;
+                    if (shapeShifters.containsKey(item)){
+                        didWin = shapeShiftersController.encounterShapeShifter(getPlayer(), item);
+                    }
+                    if (didWin){
+                        player.pickUpItem(item);
+                        removeItemInRoomWhenPickedUp(item);
+                        message = "You have successfully added the item to your inventory";
+                    }
+
+                }
+            }else{
+                message = "item is not in the current room, please go the room where the item is located";
+            }
+        }else{
+            message = "Invalid item, is the item spelled correctly?";
+        }
+        return message;
+    }
+
+    private String itemChecker(String[] response) {
+        String result = "null";
+        for (String word: response) {
+            if (items.containsKey(word)) {
+                result = items.get(word);
+            }
+        }
+        return result;
+    }
+
+
+    public void removeItemInRoomWhenPickedUp(String item) {
+        if (player.getCurrentRoom().getDroppedItems().contains(item)) {
+            player.getCurrentRoom().getDroppedItems().remove(item);
+        } else {
+            player.getCurrentRoom().getInventory().remove(item);
+            player.getCurrentRoom().getItems().remove(item);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     private void loadWords() {
@@ -321,17 +374,26 @@ public class TheCrashApp {
         verbs = new HashMap<>();
         directions = new HashMap<>();
         views = new HashMap<>();
+        items = new HashMap<>();
+        shapeShifters = new HashMap<>();
 
         try {
             Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
             Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
             Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
+            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "items.json")))));
+            Object obj4 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "shapeshifters.json")))));
+
             JSONObject directionWords = (JSONObject) obj1;
             JSONObject actionWords = (JSONObject) obj;
             JSONObject viewsWords = (JSONObject) obj2;
+            JSONObject roomItems = (JSONObject) obj3;
+            JSONObject shapeShifterItems = (JSONObject) obj4;
             verbs.putAll(actionWords);
             directions.putAll(directionWords);
             views.putAll(viewsWords);
+            items.putAll(roomItems);
+            shapeShifters.putAll(shapeShifterItems);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
