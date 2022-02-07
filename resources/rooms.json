@@ -62,7 +62,7 @@
     },
     "views": {
       "aft": "You see a door that leads to the Engineering compartment.",
-      "forward": "You see a door that leads to the Mess Hall.",
+      "forward": "You see a door that leads to the Mess Hall and a pair of bolt cutters in the corner.",
       "port": "You see a desk.",
       "stbd": "You see a door that leads to the Armory and a locked medical cabinet."
     },

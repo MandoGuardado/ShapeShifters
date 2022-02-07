@@ -92,6 +92,7 @@ public class TheCrashApp {
             }
         }
         printBanner("gameover");
+        promptEnterKey();
     }
 
     /**
@@ -174,6 +175,7 @@ public class TheCrashApp {
                 System.out.println("Type 'use med kit' to use the med kit and add 25 health if it is in your inventory");
             }
         }
+        promptEnterKey();
     }
 
     /**
