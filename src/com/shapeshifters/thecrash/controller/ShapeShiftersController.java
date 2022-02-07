@@ -18,11 +18,19 @@ class ShapeShiftersController {
     private static final int NUMBER_OF_QUESTIONS = 3;
     private static final Scanner in = new Scanner(System.in);
     private List<Map<String, String>> questions;
-
+    /**
+    * Constructor is used to call in setUp() method
+    * */
     public ShapeShiftersController() {
         setUp();
     }
 
+    /**
+     * Controller method that controls the flow of an encounter with a ShapeShifter
+     * @param player Player object representing current player
+     * @param item item value that has been predetermined to be a ShapeShifter
+     * @return boolean value to represent if the player won the encounter with ShapeShifter
+     */
     public boolean encounterShapeShifter(Player player, String item) {
         boolean didPlayerWin =false;
         boolean isShapeShifterDead =false;
@@ -109,6 +117,11 @@ class ShapeShiftersController {
         return didPlayerWin;
     }
 
+    /**
+     * Method that removes an items from either Dropped items list or Room's inventory and items lists.
+     * @param player Player object representing current player
+     * @param item item object that will be removed from lists
+     */
     private void removeItemWhenShapeShifterWins(Player player, String item){
         if (player.getCurrentRoom().isItemInRoomDroppedItems(item)){
             player.getCurrentRoom().getDroppedItems().remove(item);
@@ -119,11 +132,18 @@ class ShapeShiftersController {
 
     }
 
+    /**
+     * If player does not win encounter against ShapeShifter then player will receive damage to their health.
+     * @param player Player object representing current player
+     */
     private void applyDamage(Player player) {
         System.out.println("Your health will decrease by 25%");
         player.applyDamage(25);
     }
 
+    /**
+     * Initializes Question field using JAVA.Simple library to read from external file.
+     */
     private void setUp() {
         JSONParser jsonparser = new JSONParser();
         List<Map<String, String>> questionHolder = new ArrayList<>();
@@ -149,14 +169,10 @@ class ShapeShiftersController {
         setQuestions(questionHolder);
     }
 
-    public List<Map<String, String>> getQuestions() {
-        return questions;
-    }
 
-    public void setQuestions(List<Map<String, String>> questions) {
-        this.questions = questions;
-    }
-
+    /**
+     * Prompts user to press enter key to continue
+     */
     private static void promptEnterKey() {
         System.out.println("Press \"ENTER\" to continue...");
         try {
@@ -165,6 +181,11 @@ class ShapeShiftersController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Print external text file
+     * @param banner Name of text file without extension
+     */
     private static void printBanner(String banner) {
         String fileName = banner.replaceAll("\\s", "").toLowerCase();
         Console.clear();
@@ -176,8 +197,23 @@ class ShapeShiftersController {
         }
     }
 
+    /**
+     * Method to generates a random int between min and max (inclusive)
+     * @param min Minimum value of range
+     * @param max Max value of range
+     * @return int value representing random number
+     */
     public int randomNumberGenerator(int min, int max) {
         return (int) Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    // Setters and getters
+    public List<Map<String, String>> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Map<String, String>> questions) {
+        this.questions = questions;
     }
 
 }
