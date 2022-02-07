@@ -1,3 +1,7 @@
+You have encountered a ShapeShifter...
+
+In order to obtain the item you must defeat the ShapeShifter!
+
                        ______
                       /_.  ._\
                      (( \\// ))

@@ -34,9 +34,6 @@ class ShapeShiftersController {
     public boolean encounterShapeShifter(Player player, String item) {
         boolean didPlayerWin =false;
         boolean isShapeShifterDead =false;
-        Console.clear();
-        System.out.println("\n\nYou have encountered a ShapeShifter...\n\n");
-        System.out.println("In order to obtain the item you must defeat the ShapeShifter!\n\n");
         printBanner("alien");
         promptEnterKey();
         boolean isEncounterOver = false;
@@ -45,6 +42,7 @@ class ShapeShiftersController {
         if (player.isItemInInventory("gun")){
             System.out.println("You have a gun in your inventory do you want to use it against the ShapeShifter?");
             String response = in.nextLine().toLowerCase();
+            Console.clear();
             if ("y".equals(response) || "yes".equals(response)){
                 System.out.println("Boom!!");
                 printBanner("shooting");
