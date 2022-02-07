@@ -183,7 +183,6 @@ class inspectController {
                         player.getItems().add("med kit");
                         player.getCurrentRoom().getItems().remove("med kit");
                         player.getCurrentRoom().getItems().remove("med kit");
-                        prompter.prompt("\nPress Enter to continue...");
                         break;
                     } else if ("l".equals(answer)){
                         break;
@@ -264,7 +263,7 @@ class inspectController {
                     setEngineFixed(true);
                     System.out.println("You use the screwdriver to remove the old broken hose and replace it\n" +
                             "with the new one. After checking the reactor control panel, it looks\n" +
-                            "like the engine is fixed. Great job, " +player.getName()+ "!");
+                            "like the engine is fixed. Great job!");
                 } else {
                     System.out.println("Ok, but this engine needs to get fixed before we can leave.");
                 }
@@ -329,7 +328,7 @@ class inspectController {
                         setPanelFixed(true);
                         System.out.println("You place the " + wire + " across the contact points and use the " +
                                 connector + " to secure the wire in place.\n" +
-                                "The lights on the control panel start to light up. Great job " + player.getName() + "!" +
+                                "The lights on the control panel start to light up. Great job!" +
                                 "\n Inspect the panel again to make sure it works.");
                     } else {
                         System.out.println("OK, but this will need to get fixed, sooner or later.");
