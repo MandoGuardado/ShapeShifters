@@ -92,6 +92,7 @@ public class TheCrashApp {
             }
         }
         printBanner("gameover");
+        promptEnterKey();
     }
 
     /**
