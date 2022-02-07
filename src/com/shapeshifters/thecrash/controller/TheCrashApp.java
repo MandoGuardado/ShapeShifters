@@ -17,9 +17,11 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class TheCrashApp {
-    private final Prompter prompter = new Prompter(new Scanner(System.in));
     private static final Scanner in = new Scanner(System.in);
     private static boolean gameOver = false;
+    private final Prompter prompter = new Prompter(new Scanner(System.in));
+    private final inspectController inspect = new inspectController();
+    private final ShapeShiftersController shapeShiftersController = new ShapeShiftersController();
     private String currentRoom = "Berthing";
     private Map<String, Room> rooms;
     private Map<String, String> verbs;
@@ -29,8 +31,6 @@ public class TheCrashApp {
     private Map<String, String> items;
     private Map<String, String> shapeShifters;
     private Player player;
-    private final inspectController inspect = new inspectController();
-    private final ShapeShiftersController shapeShiftersController = new ShapeShiftersController();
 
     //NO-ARG CTOR
     public TheCrashApp() {
@@ -45,6 +45,7 @@ public class TheCrashApp {
         while (!isGameOver()) {
             Console.clear();
             printBanner(currentRoom);
+            droppedItemCheck();
             String[] response = prompter.prompt("What would you like to do?\n").toLowerCase().split(" ");
             if (response.length == 0) {
                 System.out.println("Invalid input: response must contain at least one word");
@@ -92,6 +93,70 @@ public class TheCrashApp {
         }
     }
 
+    /**
+     * Displays menu ascii art and prompts player to make a selection.
+     */
+    private void startMainMenu() {
+        Console.clear();
+        Console.blankLines(2);
+        printBanner("opening");
+        pause(4);
+        String choice;
+        do {
+            Console.clear();
+            printBanner("menu");
+            choice = prompter.prompt(">>","[1-3]","Invalid option: Please select between 1 - 3");
+
+            switch (choice) {
+
+                case "1":
+                    //call berthing to start game
+                    break;
+
+                case "2":
+                    Console.clear();
+                    viewInfo();
+                    break;
+
+                case "3":
+                    System.out.println("Exiting Program...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println(choice + " is not a valid Menu Option! Please Select Another.");
+
+            }
+        }
+        while (!"1".equals(choice));
+    }
+
+    /**
+     * Prints Introduction ascii art
+     */
+    private void introduction() {
+        printBanner("introduction");
+        promptEnterKey();
+    }
+
+    /**
+     * Checks a synonym Map to see if a valid verb has been entered by the player.
+     * @param response
+     * @return Valid word or "null" if verb not found
+     */
+    private String verbChecker(String[] response) {
+        String result = "null";
+        for (String word : response) {
+            if (verbs.containsKey(word)) {
+                result = verbs.get(word);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Method to use the med kit, which adds 25 health points to the player if their current health is less than 100.
+     * @param response
+     */
     private void use(String[] response) {
         for (String word:response) {
             if (("medkit".equals(word) || "kit".equals(word)) && player.getItems().contains("med kit")){
@@ -110,14 +175,373 @@ public class TheCrashApp {
         }
     }
 
-    private String verbChecker(String[] response) {
+    /**
+     * Checks for a valid direction and displays the view of that direction from the current room.
+     * @param response
+     */
+    private void look(String[] response) {
+        String dir = checkDirection(response);
+        if (!dir.equals("null")) {
+            Console.clear();
+            System.out.println(player.lookAt(dir));
+        } else {
+            directionError();
+        }
+        promptEnterKey();
+    }
+
+    /**
+     * Checks for valid direction name and valid room exit. Moves player to valid room or prints error
+     * @param response
+     * @return A String used to set the currentRoom field.
+     */
+    private String go(String[] response) {
+        String dir = checkDirection(response);
+        String currentRoom = player.getCurrentRoom().getName();
+        String result = currentRoom;
+        if (!dir.equals("null")) {
+            boolean isDirectionValid = player.isDesiredDirectionValid(dir);
+            if (isDirectionValid) {
+                // there are two exits in the same direction from bridge.
+                if ("Bridge".equals(currentRoom) && "aft".equals(dir)) {
+                    String input = prompter.prompt("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n",
+                            "[1-2]","Invalid response: Please select 1 or 2.");
+                    switch (input) {
+                        case "1":
+                            result = "Berthing";
+                            break;
+                        case "2":
+                            result = "Mess Hall";
+                            break;
+                    }
+                } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
+                    String input = prompter.prompt("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n",
+                            "[1-2]","Invalid response: Please select 1 or 2.");
+                    switch (input) {
+                        case "1":
+                            result ="Armory";
+                            break;
+                        case "2":
+                            result = "Med Bay";
+                            break;
+                    }
+                } else {
+                    result = player.getCurrentRoom().getExits().get(dir);
+                }
+            } else {
+                System.out.println("You can't go in that direction");
+                promptEnterKey();
+            }
+            getPlayer().setCurrentRoom(getRooms().get(result));
+
+        } else {
+            directionError();
+        }
+        return result;
+    }
+
+    /**
+     * Error message for invalid direction keyword.
+     */
+    private void directionError() {
+        System.out.println("Direction not recognized.\n" +
+                "Try using words like port, starboard, forward, aft, left, right, ahead, and behind.\n" +
+                "For additional help enter I for the information screen.");
+        promptEnterKey();
+    }
+
+    /**
+     * Checks for valid direction in synonym list.
+     * @param dir
+     * @return Valid keyword if found or "null" if not found.
+     */
+    private String checkDirection(String[] dir) {
         String result = "null";
-        for (String word : response) {
-            if (verbs.containsKey(word)) {
-                result = verbs.get(word);
+        for (String word : dir) {
+            if (directions.containsKey(word)) {
+                result = directions.get(word);
             }
         }
         return result;
+    }
+
+    /**
+     * Main view method. Checks for valid response and then calls appropriate view method.
+     * @param response
+     */
+    private void view(String[] response){
+        String viewItem = checkView(response);
+        if(!viewItem.equals("null")){
+            switch (viewItem) {
+                case "map":
+                    viewMap(player);
+                    break;
+                case "status":
+                    viewStatus();
+                    break;
+                case "inventory":
+                    viewInventory();
+                    break;
+                case "health":
+                    viewHealth();
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Checks view synonym list for valid view
+     * @param view
+     * @return valid view keyword or "null" if not found
+     */
+    private String checkView(String[] view) {
+        String result = "null";
+        for (String word : view) {
+            if (views.containsKey(word)) {
+                result = views.get(word);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * prints information screen to help guide player.
+     */
+    private static void viewInfo() {
+        printBanner("info");
+        promptEnterKey();
+    }
+
+    /**
+     * Prints ascii map if in player inventory
+     * @param player
+     */
+    static void viewMap(Player player) {
+        if(player.isItemInInventory("map")){
+            printBanner("map");
+        }else{
+            System.out.println("You don't have a map in your possession.");
+        }
+        promptEnterKey();
+    }
+
+    /**
+     * Displays items in players inventory
+     */
+    private void viewInventory() {
+        Collection<String> items = player.getItems();
+        if (items.size() == 0) {
+            System.out.println("You don't have any items in your inventory");
+        } else {
+            int counter = 1;
+            System.out.println("You have " + items.size() + " items in your inventory list");
+            for (String item : items) {
+                System.out.println((counter) + ". " + item);
+                counter++;
+            }
+        }
+        promptEnterKey();
+    }
+
+    /**
+     * Displays players current health
+     */
+    private void viewHealth() {
+        System.out.println("Current Health: " + player.getHealth());
+        promptEnterKey();
+    }
+
+    /**
+     * Prints player information such as inventory and health from file.
+     */
+    private void viewStatus(){
+        writeStatus();
+        printBanner("status");
+        promptEnterKey();
+    }
+
+    /**
+     * Used to print the message returned from the getItem() method.
+     * @param response
+     */
+    private void pickUpItem(String[] response){
+        System.out.println(getItem(response));
+        promptEnterKey();
+    }
+
+    /**
+     * Checks for valid item and location. If valid, adds item to the players inventory.
+     * @param response
+     * @return message
+     */
+    private String getItem(String[] response){
+        String item = itemChecker(response);
+        String message = "";
+        if(!item.equals("null")){
+            if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInRoomDroppedItems(item)){
+                if(player.getItems().contains(item)){
+                    message = "Item is already in the inventory";
+                }else if (!player.isItemSizeUnderLimit()){
+                    message = "You already have the max limit of items, you need to drop one";
+                }else{
+                    boolean didWin = true;
+                    if (shapeShifters.containsKey(item)){
+                        didWin = shapeShiftersController.encounterShapeShifter(getPlayer(), item);
+                    }
+                    if (didWin){
+                        player.pickUpItem(item);
+                        removeItemInRoomWhenPickedUp(item);
+                        message = "You have successfully added the item to your inventory";
+                    }
+
+                }
+            }else{
+                message = "item is not in the current room, please go the room where the item is located";
+            }
+        }else{
+            message = "Invalid item, is the item spelled correctly?";
+        }
+        return message;
+    }
+
+    private String itemChecker(String[] response) {
+        String result = "null";
+        for (String word: response) {
+            if (items.containsKey(word)) {
+                result = items.get(word);
+            }
+        }
+        return result;
+    }
+
+    private void removeItemInRoomWhenPickedUp(String item) {
+        if (player.getCurrentRoom().getDroppedItems().contains(item)) {
+            player.getCurrentRoom().getDroppedItems().remove(item);
+        } else {
+            player.getCurrentRoom().getInventory().remove(item);
+            player.getCurrentRoom().getItems().remove(item);
+        }
+    }
+
+    private void removeItem(String[] response){
+        String item = itemChecker(response);
+        if(!item.equals("null")){
+            if(player.isItemInInventory(item)){
+                player.dropItem(item);
+                player.getCurrentRoom().addToDroppedItemInventory(item);
+            }
+        }else{
+            System.out.println("item invalid, please check your spelling");
+        }
+
+    }
+
+    private void droppedItemCheck(){
+        if(player.getCurrentRoom().getDroppedItems().size() > 0){
+            player.getCurrentRoom().getDroppedItems().forEach(item -> System.out.println("You see a " + item + " on the floor"));
+        }
+    }
+
+    private void writeStatus() {
+       String currentRoom = "Location: " + getCurrentRoom();
+       String health = "Health: " + player.getHealth();
+       String items = "";
+       int counter = 1;
+
+
+       for(String item : player.getItems()){
+            items += (counter + ". " + item + "\n");
+            counter++;
+        }
+
+       String fileName = "resources/status.txt";
+       String data = currentRoom + "\n" + health + "\n" + items;
+
+        List<String> lines = null;
+        try {
+            lines = Files.readAllLines(Path.of(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i = 0; i < lines.size(); i++){
+            if(i > 0 && i < lines.size() - 1){
+                if(i == 1){
+                    lines.set(i, "");
+                } else {
+                    lines.remove(lines.get(i));
+                    i -=1;
+                }
+            }
+        }
+
+        lines.set(1, data);
+        try {
+            Files.write(Path.of(fileName), lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void promptEnterKey() {
+        System.out.println("Press \"ENTER\" to continue...");
+        try {
+            int read = System.in.read(new byte[2]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void printBanner(String banner) {
+        String fileName = banner.replaceAll("\\s", "").toLowerCase();
+        Console.clear();
+        Console.blankLines(2);
+        try {
+            Files.lines(Path.of("resources", fileName + ".txt")).forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void pause(int seconds) {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadWords() {
+        JSONParser parser = new JSONParser();
+        verbs = new HashMap<>();
+        directions = new HashMap<>();
+        views = new HashMap<>();
+        items = new HashMap<>();
+        shapeShifters = new HashMap<>();
+
+        try {
+            Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
+            Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
+            Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
+            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "inventory.json")))));
+            Object obj4 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "shapeshifters.json")))));
+
+            JSONObject directionWords = (JSONObject) obj1;
+            JSONObject actionWords = (JSONObject) obj;
+            JSONObject viewsWords = (JSONObject) obj2;
+            JSONObject roomItems = (JSONObject) obj3;
+            JSONObject shapeShifterItems = (JSONObject) obj4;
+            verbs.putAll(actionWords);
+            directions.putAll(directionWords);
+            views.putAll(viewsWords);
+            items.putAll(roomItems);
+            shapeShifters.putAll(shapeShifterItems);
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -171,363 +595,6 @@ public class TheCrashApp {
         setPlayers(playerSetUpMap);
         setPlayer(players.get("John"));
     }
-
-
-    private String go(String[] response) {
-        String dir = checkDirection(response);
-        String currentRoom = player.getCurrentRoom().getName();
-        String result = currentRoom;
-        if (!dir.equals("null")) {
-            boolean isDirectionValid = player.isDesiredDirectionValid(dir);
-            if (isDirectionValid) {
-                if ("Bridge".equals(currentRoom) && "aft".equals(dir)) {
-                    String input = prompter.prompt("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n",
-                            "[1-2]","Invalid response: Please select 1 or 2.");
-                    switch (input) {
-                        case "1":
-                            result = "Berthing";
-                            break;
-                        case "2":
-                            result = "Mess Hall";
-                            break;
-                    }
-                } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
-                    String input = prompter.prompt("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n",
-                            "[1-2]","Invalid response: Please select 1 or 2.");
-                    switch (input) {
-                        case "1":
-                            result ="Armory";
-                            break;
-                        case "2":
-                            result = "Med Bay";
-                            break;
-                    }
-                } else {
-                    result = player.getCurrentRoom().getExits().get(dir);
-                }
-            } else {
-                System.out.println("You can't go in that direction");
-                promptEnterKey();
-            }
-            getPlayer().setCurrentRoom(getRooms().get(result));
-
-        } else {
-            directionError();
-        }
-        return result;
-    }
-
-    private void directionError() {
-        System.out.println("Direction not recognized.\n" +
-                "Try using words like port, starboard, forward, aft, left, right, ahead, and behind.\n" +
-                "For additional help enter I for the information screen.");
-        promptEnterKey();
-    }
-
-    private String checkDirection(String[] dir) {
-        String result = "null";
-        for (String word : dir) {
-            if (directions.containsKey(word)) {
-                result = directions.get(word);
-            }
-        }
-        return result;
-    }
-
-    private String checkView(String[] view) {
-        String result = "null";
-        for (String word : view) {
-            if (views.containsKey(word)) {
-                result = views.get(word);
-            }
-        }
-        return result;
-    }
-
-    private void view(String[] response){
-        String viewItem = checkView(response);
-
-        if(!viewItem.equals("null")){
-            switch (viewItem) {
-                case "map":
-                    viewMap(player);
-                    break;
-                case "status":
-                    viewStatus();
-                    break;
-                case "inventory":
-                    viewInventory();
-                    break;
-                case "health":
-                    viewHealth();
-                    break;
-            }
-
-        }
-    }
-
-    private void look(String[] response) {
-        String dir = checkDirection(response);
-        if (!dir.equals("null")) {
-            Console.clear();
-            System.out.println(player.lookAt(dir));
-        } else {
-            directionError();
-        }
-        promptEnterKey();
-    }
-
-    private void startMainMenu() {
-        Console.clear();
-        Console.blankLines(2);
-        printBanner("opening");
-        pause(4);
-        String choice;
-        do {
-            Console.clear();
-            printBanner("menu");
-            choice = prompter.prompt(">>","[1-3]","Invalid option: Please select between 1 - 3");
-
-            switch (choice) {
-
-                case "1":
-                    //call berthing to start game
-                    break;
-
-                case "2":
-                    Console.clear();
-                    viewInfo();
-                    break;
-
-                case "3":
-                    System.out.println("Exiting Program...");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println(choice + " is not a valid Menu Option! Please Select Another.");
-
-            }
-        }
-        while (!"1".equals(choice));
-    }
-
-    private void viewInventory() {
-        Collection<String> items = player.getItems();
-        if (items.size() == 0) {
-            System.out.println("You don't have any items in your inventory");
-        } else {
-            int counter = 1;
-            System.out.println("You have " + items.size() + " items in your inventory list");
-            for (String item : items) {
-                System.out.println((counter) + ". " + item);
-                counter++;
-            }
-        }
-        promptEnterKey();
-    }
-
-    private void pickUpItem(String[] response){
-        System.out.println(getItem(response));
-        promptEnterKey();
-    }
-
-    private String getItem(String[] response){
-        String item = itemChecker(response);
-        String message = "";
-        if(!item.equals("null")){
-            if(player.getCurrentRoom().isItemInRoomInventory(item) || player.getCurrentRoom().isItemInRoomDroppedItems(item)){
-                if(player.getItems().contains(item)){
-                    message = "Item is already in the inventory";
-                }else if (!player.isItemSizeUnderLimit()){
-                    message = "You already have the max limit of items, you need to drop one";
-                }else{
-                    boolean didWin = true;
-                    if (shapeShifters.containsKey(item)){
-                        didWin = shapeShiftersController.encounterShapeShifter(getPlayer(), item);
-                    }
-                    if (didWin){
-                        player.pickUpItem(item);
-                        removeItemInRoomWhenPickedUp(item);
-                        message = "You have successfully added the item to your inventory";
-                    }
-
-                }
-            }else{
-                message = "item is not in the current room, please go the room where the item is located";
-            }
-        }else{
-            message = "Invalid item, is the item spelled correctly?";
-        }
-        return message;
-    }
-
-    private String itemChecker(String[] response) {
-        String result = "null";
-        for (String word: response) {
-            if (items.containsKey(word)) {
-                result = items.get(word);
-            }
-        }
-        return result;
-    }
-
-
-    private void removeItemInRoomWhenPickedUp(String item) {
-        if (player.getCurrentRoom().getDroppedItems().contains(item)) {
-            player.getCurrentRoom().getDroppedItems().remove(item);
-        } else {
-            player.getCurrentRoom().getInventory().remove(item);
-            player.getCurrentRoom().getItems().remove(item);
-        }
-    }
-    private void removeItem(String[] response){
-        String item = itemChecker(response);
-        if(!item.equals("null")){
-            if(player.isItemInInventory(item)){
-                player.dropItem(item);
-                player.getCurrentRoom().addToDroppedItemInventory(item);
-            }
-        }else{
-            System.out.println("item invalid, please check your spelling");
-        }
-
-    }
-
-
-
-    @SuppressWarnings("unchecked")
-    private void loadWords() {
-        JSONParser parser = new JSONParser();
-        verbs = new HashMap<>();
-        directions = new HashMap<>();
-        views = new HashMap<>();
-        items = new HashMap<>();
-        shapeShifters = new HashMap<>();
-
-        try {
-            Object obj = parser.parse(new FileReader(String.valueOf((Path.of("resources", "verbs.json")))));
-            Object obj1 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "directions.json")))));
-            Object obj2 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "views.json")))));
-            Object obj3 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "inventory.json")))));
-            Object obj4 = parser.parse(new FileReader(String.valueOf((Path.of("resources", "shapeshifters.json")))));
-
-            JSONObject directionWords = (JSONObject) obj1;
-            JSONObject actionWords = (JSONObject) obj;
-            JSONObject viewsWords = (JSONObject) obj2;
-            JSONObject roomItems = (JSONObject) obj3;
-            JSONObject shapeShifterItems = (JSONObject) obj4;
-            verbs.putAll(actionWords);
-            directions.putAll(directionWords);
-            views.putAll(viewsWords);
-            items.putAll(roomItems);
-            shapeShifters.putAll(shapeShifterItems);
-
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void introduction() {
-        printBanner("introduction");
-        promptEnterKey();
-    }
-
-    private static void printBanner(String banner) {
-        String fileName = banner.replaceAll("\\s", "").toLowerCase();
-        Console.clear();
-        Console.blankLines(2);
-        try {
-            Files.lines(Path.of("resources", fileName + ".txt")).forEach(System.out::println);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-     private static void promptEnterKey() {
-        System.out.println("Press \"ENTER\" to continue...");
-        try {
-            int read = System.in.read(new byte[2]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void pause(int seconds) {
-        try {
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void viewInfo() {
-
-        printBanner("info");
-        promptEnterKey();
-    }
-
-    static void viewMap(Player player) {
-        if(player.isItemInInventory("map")){
-            printBanner("map");
-        }else{
-            System.out.println("You don't have a map in your possession.");
-        }
-        promptEnterKey();
-    }
-
-    private void viewHealth() {
-        System.out.println("Current Health: " + player.getHealth());
-        promptEnterKey();
-    }
-
-    private void viewStatus(){
-        writeStatus();
-        printBanner("status");
-        promptEnterKey();
-    }
-
-    private void writeStatus() {
-       String currentRoom = "Location: " + getCurrentRoom();
-       String health = "Health: " + player.getHealth();
-       String items = "";
-       int counter = 1;
-
-
-       for(String item : player.getItems()){
-            items += (counter + ". " + item + "\n");
-            counter++;
-        }
-
-       String fileName = "resources/status.txt";
-       String data = currentRoom + "\n" + health + "\n" + items;
-
-        List<String> lines = null;
-        try {
-            lines = Files.readAllLines(Path.of(fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for(int i = 0; i < lines.size(); i++){
-            if(i > 0 && i < lines.size() - 1){
-                if(i == 1){
-                    lines.set(i, "");
-                } else {
-                    lines.remove(lines.get(i));
-                    i -=1;
-                }
-            }
-        }
-
-        lines.set(1, data);
-        try {
-            Files.write(Path.of(fileName), lines);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
     //GETTERS AND SETTERS
     public boolean isGameOver() {
