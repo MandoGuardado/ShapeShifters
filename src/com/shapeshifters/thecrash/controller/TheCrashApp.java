@@ -91,6 +91,7 @@ public class TheCrashApp {
                 }
             }
         }
+        printBanner("gameover");
     }
 
     /**
@@ -100,7 +101,7 @@ public class TheCrashApp {
         Console.clear();
         Console.blankLines(2);
         printBanner("opening");
-        pause(4);
+        pause();
         String choice;
         do {
             Console.clear();
@@ -433,7 +434,6 @@ public class TheCrashApp {
         }else{
             System.out.println("item invalid, please check your spelling");
         }
-
     }
 
     private void droppedItemCheck(){
@@ -493,7 +493,7 @@ public class TheCrashApp {
         }
     }
 
-    private static void printBanner(String banner) {
+    static void printBanner(String banner) {
         String fileName = banner.replaceAll("\\s", "").toLowerCase();
         Console.clear();
         Console.blankLines(2);
@@ -504,15 +504,15 @@ public class TheCrashApp {
         }
     }
 
-    private static void pause(int seconds) {
+    private static void pause() {
         try {
-            TimeUnit.SECONDS.sleep(seconds);
+            TimeUnit.SECONDS.sleep(4);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
     private void loadWords() {
         JSONParser parser = new JSONParser();
         verbs = new HashMap<>();

@@ -345,11 +345,11 @@ class inspectController {
                 String answer = prompter.prompt(">> ","[1-2]","INVALID SELECTION");
                 switch (answer){
                     case "1":
-                        System.out.println("CONGRATULATIONS YOU MADE IT OFF THE ALIEN PLANET");
+                        TheCrashApp.printBanner("congrats");
                         TheCrashApp.setGameOver(true);
                         break;
                     case "2":
-                        System.out.println("EVERYONE'S DEAD, ARE YOU HAPPY NOW?");
+                        TheCrashApp.printBanner("doom");
                         TheCrashApp.setGameOver(true);
                         break;
                 }
