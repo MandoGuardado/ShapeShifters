@@ -183,7 +183,6 @@ class inspectController {
                         player.getItems().add("med kit");
                         player.getCurrentRoom().getItems().remove("med kit");
                         player.getCurrentRoom().getItems().remove("med kit");
-                        prompter.prompt("\nPress Enter to continue...");
                         break;
                     } else if ("l".equals(answer)){
                         break;
