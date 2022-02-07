@@ -69,6 +69,7 @@ public class TheCrashApp {
                             pickUpItem(response);
                             break;
                         case "remove":
+                            removeItem(response);
                             break;
                         case "view":
                             view(response);
@@ -95,6 +96,9 @@ public class TheCrashApp {
         for (String word:response) {
             if (("medkit".equals(word) || "kit".equals(word)) && player.getItems().contains("med kit")){
                 if (player.getHealth()<100){
+                        long health = player.getHealth();
+                        health += 25;
+                        player.setHealth(health);
                         System.out.println("25 health points have been added to your health");
                         player.getItems().remove("med kit");
                 } else {
@@ -177,24 +181,24 @@ public class TheCrashApp {
             boolean isDirectionValid = player.isDesiredDirectionValid(dir);
             if (isDirectionValid) {
                 if ("Bridge".equals(currentRoom) && "aft".equals(dir)) {
-                    System.out.println("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n");
-                    int input = in.nextInt();
+                    String input = prompter.prompt("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n",
+                            "[1-2]","Invalid response: Please select 1 or 2.");
                     switch (input) {
-                        case 1:
+                        case "1":
                             result = "Berthing";
                             break;
-                        case 2:
+                        case "2":
                             result = "Mess Hall";
                             break;
                     }
                 } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
-                    System.out.println("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n");
-                    int input = in.nextInt();
+                    String input = prompter.prompt("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n",
+                            "[1-2]","Invalid response: Please select 1 or 2.");
                     switch (input) {
-                        case 1:
+                        case "1":
                             result ="Armory";
                             break;
-                        case 2:
+                        case "2":
                             result = "Med Bay";
                             break;
                     }
@@ -333,7 +337,9 @@ public class TheCrashApp {
 
     public void pickUpItem(String[] response){
         System.out.println(getItem(response));
+        promptEnterKey();
     }
+
     public String getItem(String[] response){
         String item = itemChecker(response);
         String message = "";
@@ -361,9 +367,7 @@ public class TheCrashApp {
         }else{
             message = "Invalid item, is the item spelled correctly?";
         }
-        promptEnterKey();
         return message;
-
     }
 
     private String itemChecker(String[] response) {
