@@ -11,7 +11,7 @@ public class Player {
     private long health;
     private Collection<String> items = new ArrayList<>(5);
     private Room currentRoom;
-    private Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
 
     //constructors

@@ -30,7 +30,7 @@ public class TheCrashApp {
     private Map<String, String> shapeShifters;
     private Player player;
     private final inspectController inspect = new inspectController();
-    private ShapeShiftersController shapeShiftersController = new ShapeShiftersController();
+    private final ShapeShiftersController shapeShiftersController = new ShapeShiftersController();
 
     //NO-ARG CTOR
     public TheCrashApp() {
@@ -121,7 +121,7 @@ public class TheCrashApp {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void setUp() {
+    private void setUp() {
         Map<String, Room> setUpRoomsMap = new HashMap<>();
         JSONParser jsonparser = new JSONParser();
 
@@ -173,7 +173,7 @@ public class TheCrashApp {
     }
 
 
-    public String go(String[] response) {
+    private String go(String[] response) {
         String dir = checkDirection(response);
         String currentRoom = player.getCurrentRoom().getName();
         String result = currentRoom;
@@ -244,7 +244,7 @@ public class TheCrashApp {
         return result;
     }
 
-    public void view(String[] response){
+    private void view(String[] response){
         String viewItem = checkView(response);
 
         if(!viewItem.equals("null")){
@@ -277,35 +277,29 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    public void startMainMenu() {
+    private void startMainMenu() {
         Console.clear();
         Console.blankLines(2);
         printBanner("opening");
         pause(4);
-        int choice;
+        String choice;
         do {
             Console.clear();
-            System.out.println("Tʜᴇ Cʀᴀsʜ!\n" +
-                    "Wʜᴏ's ᴅʀɪᴠɪɴɢ ᴛʜɪs ᴛʜɪɴɢ ᴀɴʏᴡᴀʏ?");
-            System.out.println("==========================================");
-            System.out.println("The Crash, Main Menu\n");
-            System.out.print("1.) Start Game \n");
-            System.out.print("2.) Instructions\n");
-            System.out.print("3.) Exit\n");
-            choice = in.nextInt();
+            printBanner("menu");
+            choice = prompter.prompt(">>","[1-3]","Invalid option: Please select between 1 - 3");
 
             switch (choice) {
 
-                case 1:
+                case "1":
                     //call berthing to start game
                     break;
 
-                case 2:
+                case "2":
                     Console.clear();
                     viewInfo();
                     break;
 
-                case 3:
+                case "3":
                     System.out.println("Exiting Program...");
                     System.exit(0);
                     break;
@@ -314,10 +308,10 @@ public class TheCrashApp {
 
             }
         }
-        while (choice != 1 /*Exit loop when choice is 4*/);
+        while (!"1".equals(choice));
     }
 
-    public void viewInventory() {
+    private void viewInventory() {
         Collection<String> items = player.getItems();
         if (items.size() == 0) {
             System.out.println("You don't have any items in your inventory");
@@ -332,12 +326,12 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    public void pickUpItem(String[] response){
+    private void pickUpItem(String[] response){
         System.out.println(getItem(response));
         promptEnterKey();
     }
 
-    public String getItem(String[] response){
+    private String getItem(String[] response){
         String item = itemChecker(response);
         String message = "";
         if(!item.equals("null")){
@@ -378,7 +372,7 @@ public class TheCrashApp {
     }
 
 
-    public void removeItemInRoomWhenPickedUp(String item) {
+    private void removeItemInRoomWhenPickedUp(String item) {
         if (player.getCurrentRoom().getDroppedItems().contains(item)) {
             player.getCurrentRoom().getDroppedItems().remove(item);
         } else {
@@ -386,7 +380,7 @@ public class TheCrashApp {
             player.getCurrentRoom().getItems().remove(item);
         }
     }
-    public void removeItem(String[] response){
+    private void removeItem(String[] response){
         String item = itemChecker(response);
         if(!item.equals("null")){
             if(player.isItemInInventory(item)){
@@ -481,7 +475,7 @@ public class TheCrashApp {
         promptEnterKey();
     }
 
-    public void viewHealth() {
+    private void viewHealth() {
         System.out.println("Current Health: " + player.getHealth());
         promptEnterKey();
     }
