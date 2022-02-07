@@ -192,7 +192,7 @@ public class TheCrashApp {
                             break;
                     }
                 } else if ("Engineering".equals(currentRoom) && "forward".equals(dir)) {
-                    String input = prompter.prompt("\nChoose 1 to go to Berthing\nChoose 2 to go to Mess Hall\n",
+                    String input = prompter.prompt("\nChoose 1 to go to Armory\nChoose 2 to go to Med Bay\n",
                             "[1-2]","Invalid response: Please select 1 or 2.");
                     switch (input) {
                         case "1":
