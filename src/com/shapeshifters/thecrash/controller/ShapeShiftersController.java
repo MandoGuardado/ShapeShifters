@@ -34,9 +34,6 @@ class ShapeShiftersController {
     public boolean encounterShapeShifter(Player player, String item) {
         boolean didPlayerWin =false;
         boolean isShapeShifterDead =false;
-        Console.clear();
-        System.out.println("\n\nYou have encountered a ShapeShifter...\n\n");
-        System.out.println("In order to obtain the item you must defeat the ShapeShifter!\n\n");
         printBanner("alien");
         promptEnterKey();
         boolean isEncounterOver = false;
