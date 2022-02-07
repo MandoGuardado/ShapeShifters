@@ -302,10 +302,7 @@ public class TheCrashApp {
 
                 case 2:
                     Console.clear();
-                    System.out.println("The player can move forward, aft, port, and starboard(stbd) to explore\n" +
-                            "different rooms in the ship. You have to find items by exploring the different rooms\n" +
-                            "and use those items to repair the ship.");
-                    promptEnterKey();
+                    viewInfo();
                     break;
 
                 case 3:
