@@ -387,6 +387,7 @@ public class TheCrashApp {
                     boolean didWin = true;
                     if (shapeShifters.containsKey(item)){
                         didWin = shapeShiftersController.encounterShapeShifter(getPlayer(), item);
+                        shapeShifters.remove(item);
                     }
                     if (didWin){
                         player.pickUpItem(item);

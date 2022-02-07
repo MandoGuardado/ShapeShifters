@@ -42,6 +42,7 @@ class ShapeShiftersController {
         if (player.isItemInInventory("gun")){
             System.out.println("You have a gun in your inventory do you want to use it against the ShapeShifter?");
             String response = in.nextLine().toLowerCase();
+            Console.clear();
             if ("y".equals(response) || "yes".equals(response)){
                 System.out.println("Boom!!");
                 printBanner("shooting");
