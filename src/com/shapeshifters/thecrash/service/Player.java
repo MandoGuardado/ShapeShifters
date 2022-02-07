@@ -27,7 +27,7 @@ public class Player {
 
     /**
      * Determines if the direction player want to travel to valid (if door exits)
-     * @param desiredDirection direction value such as 'aft', 'forward', 'port', 'starboard
+     * @param desiredDirection Direction value such as 'aft', 'forward', 'port', 'starboard
      * @return boolean representing if direction is valid
      */
     public boolean isDesiredDirectionValid(String desiredDirection) {
@@ -41,7 +41,7 @@ public class Player {
 
     /**
      * Returns a String description of the desired side based on the current room the player is in.
-     * @param wall name of side player want to see (aft, forward, port, starboard).
+     * @param wall Name of side player want to see (aft, forward, port, starboard).
      * @return Description of the side player want to see based on the room it is in.
      */
     public String lookAt(String wall) {
@@ -57,8 +57,8 @@ public class Player {
     }
 
     /**
-     * Return a boolean value determining if item is present in the items field
-     * @param item item String value
+     * Returns a boolean value determining if item is present in the items field
+     * @param item Item String value
      * @return true: if found  false: if not found
      */
     public boolean isItemInInventory(String item) {
@@ -75,7 +75,7 @@ public class Player {
 
     /**
      * Returns boolean if item was added to the players inventory and checks if player is still under the limit
-     * @param item desired item to be added to players inventory
+     * @param item Desired item to be added to players inventory
      * @return boolean value representing if item was added, true: added to inventory, false: not added to inventory
      */
     public boolean pickUpItem(String item) {
@@ -89,7 +89,7 @@ public class Player {
 
     /**
      * Adds to inventory
-     * @param item item that will be added to players inventory.
+     * @param item Item that will be added to players inventory.
      */
     private void addToInventory(String item) {
         getItems().add(item);
@@ -97,7 +97,7 @@ public class Player {
 
     /**
      * Public method that calls private method to remove item from players inventory
-     * @param item name of item that will be removed from players inventory.
+     * @param item Name of item that will be removed from players inventory.
      */
     public void dropItem(String item) {
         removeFromInventory(item);
@@ -105,7 +105,7 @@ public class Player {
 
     /**
      * Private method that completes action of removing item from players inventory.
-     * @param item name of item that will be removed from players inventory
+     * @param item Name of item that will be removed from players inventory
      */
     private void removeFromInventory(String item) {
         getItems().remove(item);
@@ -113,7 +113,7 @@ public class Player {
 
     /**
      * Applies damage to players health
-     * @param damage value of deduction to the the players health
+     * @param damage Value of deduction to the the players health
      */
     public void applyDamage(long damage){
         long updateHealth = getHealth() - damage;

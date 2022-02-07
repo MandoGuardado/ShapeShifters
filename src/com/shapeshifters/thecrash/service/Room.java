@@ -26,8 +26,8 @@ public class Room {
     //Business Methods
 
     /**
-     * Return boolean value representing of desired direction is a valid exit
-     * @param direction direction name
+     * Returns boolean value representing of desired direction is a valid exit
+     * @param direction Direction name
      * @return true: if valid exit, false: not an exit
      */
     public boolean isExitAvailable(String direction){
@@ -35,8 +35,8 @@ public class Room {
     }
 
     /**
-     * Return the description view of the desired side from room
-     * @param side name of side in room
+     * Returns the description view of the desired side from room
+     * @param side Name of side in room
      * @return String description of the desired side in room
      */
     public String getRoomView(String side){
@@ -53,16 +53,16 @@ public class Room {
     }
 
     /**
-     * Return boolean value representing if item was found inside inventory field
-     * @param item name of item being searched.
+     * Returns boolean value representing if item was found inside inventory field
+     * @param item Name of item being searched.
      * @return true: item found, false: item not found
      */
     public boolean isItemInRoomInventory(String item){
         return getInventory().contains(item);
     }
     /**
-     * Return boolean value representing if item was found inside dropped field
-     * @param item name of item being searched.
+     * Returns boolean value representing if item was found inside dropped field
+     * @param item Name of item being searched.
      * @return true: item found, false: item not found
      */
     public boolean isItemInRoomDroppedItems(String item){
@@ -71,7 +71,7 @@ public class Room {
 
     /**
      * Adds item to dropped inventory
-     * @param item name of item being added
+     * @param item Name of item being added
      */
     public void addToDroppedItemInventory(String item){
         getDroppedItems().add(item);
