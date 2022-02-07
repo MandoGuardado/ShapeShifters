@@ -15,11 +15,13 @@
   "add": "get",
   "remove": "remove",
   "drop": "remove",
-  "show": "show",
   "quit": "q",
   "q": "q",
   "i": "i",
   "info": "i",
   "information": "i",
-  "help": "i"
+  "help": "i",
+  "view": "view",
+  "show": "view",
+  "display": "view"
 }

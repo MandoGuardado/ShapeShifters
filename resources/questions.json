@@ -1,0 +1,41 @@
+[
+  {"question": "The first computer bug was formed by faulty wires.",
+  "answer": "false"
+  },
+  {"question": "All program codes have to be compiled into an executable file in order to be run. This file can then be executed on any machine.",
+    "answer": "false"
+  },
+  {"question": "The logo for Snapchat is a Bell.",
+    "answer": "false"
+  },
+  {"question": "Pointers were not used in the original C programming language; they were added later on in C++.",
+    "answer": "false"
+  },
+  {"question": "To bypass US Munitions Export Laws, the creator of the PGP published all the source code in book form. ",
+    "answer": "true"
+  },
+  {"question": "The open source program Redis is a relational database server.",
+    "answer": "false"
+  },
+  {"question": "Early RAM was directly seated onto the motherboard and could not be easily removed.",
+    "answer": "true"
+  },
+  {"question":  "The Windows 7 operating system has six main editions.",
+    "answer": "true"
+  },
+  {"question":  "Android versions are named in alphabetical order.",
+    "answer": "true"
+  },
+  {"question":  "The Python programming language gets its name from the British comedy group 'Monty Python.'",
+    "answer": "true"
+  },
+  {"question":  "The T-Mobile Sidekick smartphone is a re-branded version of the Danger Hiptop.",
+    "answer": "true"
+  },
+  {"question":  "The HTML5 standard was published in 2014.",
+    "answer": "true"
+  },
+  {"question": "Linux was first created as an alternative to Windows XP.",
+    "answer": "false"
+  }
+]

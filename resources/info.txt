@@ -1,19 +1,29 @@
-|********************************************************************************************|
-|                                                                                            |
-| Want to check out the room?                                                                |
-|    Try using words like "look" or "glance" to peek at your surroundings.                   |
-|                                                                                            |
-| Want to see a different room?                                                              |
-|    Try using words like "go", "move", or "walk" in the direction you'd like to travel.     |
-|                                                                                            |
-| Unsure of the proper direction?                                                            |
-|    Use words like "forward" or "straight" to go toward the front of the ship               |
-|    Use words like "aft" or "behind" to go toward the rear of the ship                      |
-|    Use words like "port" or "left" to go toward the left side of the ship                  |
-|    Use words like "starboard" or "stbd" to toward the right side of the ship               |
-|                                                                                            |
-| Don't forget to "inspect" or "examine" items you encounter for a closer look               |
-|         or                                                                                 |
-| "grab" or "get" items to add them to your inventory!                                       |
-|                                                                                            |
-|********************************************************************************************|
+|**********************************************************************************************|
+|               Waking from cryo-sleep can be pretty disorienting.                             |
+|      Here are some quick tips in case you've forgotten your crash landing training!          |
+|                                                                                              |
+|      As the engineer, you have to identify what is in need of repairs throughout the ship    |
+|                   and then locate the tools needed to conduct repairs.                       |
+|               But be careful.... You're on a planet of shape-shifting aliens...              |
+|                   any item could be a threat in disguise!                                    |
+|                                                                                              |
+| Want to check out the room?                                                                  |
+|    Try using words like "look" or "glance" and a direction to peek at your surroundings.     |
+|                                                                                              |
+| Want to head to a different room?                                                                |
+|    Try using words like "go", "move", or "walk" in the direction you'd like to travel.       |
+|                                                                                              |
+| Unsure of the proper direction?                                                              |
+|    Use words like "forward" or "straight" to go toward the front of the ship                 |
+|    Use words like "aft" or "behind" to go toward the rear of the ship                        |
+|    Use words like "port" or "left" to go toward the left side of the ship                    |
+|    Use words like "starboard" or "stbd" to toward the right side of the ship                 |
+|                                                                                              |
+| Don't forget to "inspect" or "examine" items you encounter for a closer look                 |
+|         or                                                                                   |
+| "grab" or "get" items to add them to your inventory!                                         |
+|                                                                                              |
+|  Finally, if you want to keep track of your current status, health, or inventory,            |
+|    Use words like "view", "show", or "display"                                               |
+|                                                                                              |
+|**********************************************************************************************|

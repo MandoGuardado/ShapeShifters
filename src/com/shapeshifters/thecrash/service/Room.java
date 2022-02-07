@@ -1,7 +1,6 @@
 package com.shapeshifters.thecrash.service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Room {
     //Fields
@@ -9,23 +8,73 @@ public class Room {
     private String description;
     private Map<String, String> exits;
     private Map<String, String> views;
+    private Collection<String> items;
+    private Collection<String> droppedItems = new ArrayList<>();
+    private Collection<String > inventory;
 
 
     //constructors
-    public Room(String name, String description, Map<String, String> exits, Map<String, String> views) {
-        this.name = name;
+    public Room(String name, String description, Map<String, String> exits, Map<String, String> views, Collection<String> items, Collection<String> inventory) {
+        setName(name);
         setDescription(description);
         setExits(exits);
         setViews(views);
+        setItems(items);
+        setInventory(inventory);
     }
 
     //Business Methods
+
+    /**
+     * Returns boolean value representing of desired direction is a valid exit
+     * @param direction Direction name
+     * @return true: if valid exit, false: not an exit
+     */
     public boolean isExitAvailable(String direction){
         return exits.containsKey(direction);
     }
 
+    /**
+     * Returns the description view of the desired side from room
+     * @param side Name of side in room
+     * @return String description of the desired side in room
+     */
     public String getRoomView(String side){
         return getViews().get(side);
+    }
+
+    /**
+     * Returns boolean value if item is found in the items field
+     * @param item The item that is being searched.
+     * @return true: item is found, false: item is not found
+     */
+    public boolean isItemInRoomItems(String item){
+        return getItems().contains(item);
+    }
+
+    /**
+     * Returns boolean value representing if item was found inside inventory field
+     * @param item Name of item being searched.
+     * @return true: item found, false: item not found
+     */
+    public boolean isItemInRoomInventory(String item){
+        return getInventory().contains(item);
+    }
+    /**
+     * Returns boolean value representing if item was found inside dropped field
+     * @param item Name of item being searched.
+     * @return true: item found, false: item not found
+     */
+    public boolean isItemInRoomDroppedItems(String item){
+       return getDroppedItems().contains(item);
+    }
+
+    /**
+     * Adds item to dropped inventory
+     * @param item Name of item being added
+     */
+    public void addToDroppedItemInventory(String item){
+        getDroppedItems().add(item);
     }
 
     //Setter and getters
@@ -49,12 +98,40 @@ public class Room {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Map<String, String> getViews() {
         return views;
     }
 
     public void setViews(Map<String, String> views) {
         this.views = views;
+    }
+
+    public Collection<String> getItems() {
+        return items;
+    }
+
+    public void setItems(Collection<String> items) {
+        this.items = items;
+    }
+
+    public Collection<String> getDroppedItems() {
+        return droppedItems;
+    }
+
+    public void setDroppedItems(Collection<String> droppedItems) {
+        this.droppedItems = droppedItems;
+    }
+
+    public Collection<String> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Collection<String> inventory) {
+        this.inventory = inventory;
     }
 
     //toString()

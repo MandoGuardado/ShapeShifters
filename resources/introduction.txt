@@ -23,6 +23,6 @@
                  _.-'  `-._                 _..||.._                  _.-` '-._
                 '--..__..--'               '-.____.-'                '--..__..-'
 
-You wake up from cryo-sleep and with a headache....It seems you have crash landed on a strange planet.
-Your crew mates are still cryo-sleep, you look around and you see the ship has taken some damage.
-You are the engineer in the ship so you must explore the ship to see what's wrong.
+You wake up from cryo-sleep with a headache....It seems you have crash landed on a strange planet.
+Your crew mates are still in cryo-sleep, you look around and you see the ship has taken some damage.
+You are the engineer on the ship so you must explore the ship to see what's wrong.
