@@ -131,7 +131,7 @@ class inspectController {
                 }else {
                     container = "bucket";
                 }
-                String response = prompter.prompt("Would you like to use the " + container + "? (Y/N)","y|Y|n|N",
+                String response = prompter.prompt("Would you like to use the " + container + "? (Y/N)\n","y|Y|n|N",
                         "Please select Y or N. ").toLowerCase();
                 if ("y".equals(response)){
                     player.getItems().remove(container);
@@ -170,11 +170,11 @@ class inspectController {
     private void inspectCabinet(Player player) {
         if (!isCabinetOpen()){
             System.out.println("It appears that the medicine cabinet is locked with a 3 digit combination padlock.\n");
-            String response = prompter.prompt("Would you like to enter the combination? (y/n)","y|Y|n|N",
+            String response = prompter.prompt("Would you like to enter the combination? (y/n)\n","y|Y|n|N",
                     "Please select Y or N. ").toLowerCase();
             if ("y".equals(response)){
                 while (true){
-                    String answer = prompter.prompt("Please enter the combination or L to leave.").toLowerCase();
+                    String answer = prompter.prompt("Please enter the combination or L to leave.\n").toLowerCase();
                     if ("954".equals(answer)){
                         setCabinetOpen(true);
                         System.out.println("The lock opens and you see a med kit inside the cabinet");
@@ -192,7 +192,7 @@ class inspectController {
                 }
             } else {
                 if (player.getItems().contains("bolt cutter")){
-                    String answer = prompter.prompt("Would you like to cut the lock with the bolt cutters? (y/n)",
+                    String answer = prompter.prompt("Would you like to cut the lock with the bolt cutters? (y/n)\n",
                             "y|Y|n|N","Please select Y or N.").toLowerCase();
                     if ("y".equals(answer)){
                         System.out.println("The lock breaks and you see a med kit inside the cabinet");
@@ -256,7 +256,7 @@ class inspectController {
                         "to remove the clamps holding the hose in place");
             } else {
                 System.out.println("\nYou have everything you need to fix the engine\n");
-                String answer = prompter.prompt("\nWould you like to replace the broken hose? (y/n)",
+                String answer = prompter.prompt("\nWould you like to replace the broken hose? (y/n)\n",
                         "y|Y|n|N","Please select Y or N.").toLowerCase();
                 if ("y".equals(answer)){
                     player.getItems().remove("hose");
@@ -318,7 +318,7 @@ class inspectController {
                             "connect the wire to the contact points.");
                 } else {
                     System.out.println("It looks like you have everything you need to fix the panel");
-                    String answer = prompter.prompt("\nWould you like to repair the control panel? (y/n)",
+                    String answer = prompter.prompt("\nWould you like to repair the control panel? (y/n)\n",
                             "y|Y|n|N","Please select Y or N.").toLowerCase();
                     if ("y".equals(answer)){
                         String wire = player.isItemInInventory("wire") ? "wire":"paper clip";
@@ -403,11 +403,11 @@ class inspectController {
             if (!isPodOpen()){
                 System.out.println("It looks like the Weapons Master's pod was damaged during the crash\n" +
                         "His vitals don't look good, you should probably use the keypad to wake him.\n");
-                String response = prompter.prompt("\nWould you like to enter the code to wake the Weapons Master? (y/n)",
+                String response = prompter.prompt("\nWould you like to enter the code to wake the Weapons Master? (y/n)\n",
                         "y|Y|n|N","Please select Y or N.").toLowerCase();
                 if ("y".equals(response)){
                     while (true){
-                        String answer1 = prompter.prompt("Enter code, or E to exit");
+                        String answer1 = prompter.prompt("Enter code, or E to exit\n");
                         if ("E".equals(answer1) || "e".equals(answer1)){
                             break;
                         } else if ("UUDDLRLRBA".equals(answer1)){
